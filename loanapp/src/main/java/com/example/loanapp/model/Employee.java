@@ -11,31 +11,51 @@ import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import java.util.List;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
 @Entity
 @Table(name="employee_master")
 public class Employee {
 	@Id
 	@Column(length=6, nullable=false, unique=true)
+	@Length(min=5,message="Enter 6 digit valid Employee ID")
+	@NotNull(message="Enter Employee ID!")
 	private String employee_id;
 	@Column(length=20)
+	@NotNull(message="Enter First name!")
 	private String first_name;
 	@Column(length=25)
+	//@NotNull(message="Enter Password!")
 	private String last_name;
 	@Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
             flags = Pattern.Flag.CASE_INSENSITIVE)
+	@NotNull(message="Enter email ID!")
 	private String email_id;
+	@Length(min=8,max=18,message="Password must contain less than 18 and greater than 8 characters")
+	@NotNull(message="Enter Password!")
 	private String password;
+	@NotNull(message="Please enter your home address!")
 	private String home_add;
+	@NotNull(message="Date of birth cannot be left blank!")
 	@JsonFormat(shape =JsonFormat.Shape.STRING,pattern="dd-MM-yyyy")
 	private Date dob;
+	@NotNull(message="Mnetion your gender")
 	private char gender;
 	@Pattern(regexp="(^$|[0-9]{10})")
+	@Length(min=10,max=10,message="Enter 10 digit valid mobile number")
+	@NotNull(message="Enter valid mobile number!")
 	private String phone_num;
+	@NotNull(message="Enter your designation!")
 	private String designation;
 	@Column(length=25)
+	@NotNull(message="Mention your department")
 	private String dept;
 	@JsonFormat(shape =JsonFormat.Shape.STRING,pattern="dd-MM-yyyy")
+	@NotNull(message="Date of joining cannot be left blank!")
 	private Date doj;
 	
 	@OneToMany(cascade=CascadeType.ALL)
