@@ -25,13 +25,34 @@ export default function Register() {
         const value = e.target.value;
         setuserRegistration({...userRegistration, [name] : value});
     }
-    const handleSubmit = (e) => {
-        alert('User registered successfully')
+    const handleSubmit = async (e) => {
+
         e.preventDefault();
         // console.log(userRegistration);
-        axios.post('https://localhost:8080/register', {userRegistration}) 
-        .then(response => console.log(response))
-        .catch(err => console.log(err));
+        // axios.post('http://localhost:8080/saveEmployee', {userRegistration}) 
+        // .then(response => console.log(response))
+        // .catch(err => console.log(err));
+        let config = {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin' : '*',
+              'Access-Control-Allow-Headers': '*',
+            }
+        }
+        
+        try {
+            await axios.post("http://localhost:8080/saveEmployee", {
+                ...userRegistration
+            }, config).then((res) => {
+                console.log(res.data);
+                
+            }, fail => {
+                console.error(fail); // Error!
+            });
+        } catch (err) {
+            alert(err);
+        }   
     }
     return (
         <div>
