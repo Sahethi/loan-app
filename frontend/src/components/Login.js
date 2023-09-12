@@ -10,12 +10,12 @@ function Login() {
     const navigate = useNavigate();
 
     async function login(event) {
-        alert("Login Sucessful");
+        // alert("Login Sucessful");
     
         event.preventDefault();
         try {
-            await axios.post("http://localhost:8080/saveUser", {
-                email: email,
+            await axios.post("http://localhost:8080/saveLogin", {
+                username: email,
                 password: password,
             }).then((res) => {
                 console.log(res.data);
@@ -49,8 +49,8 @@ function Login() {
  
                     <form>
                         <div class="form-group">
-                        <label>Email</label>
-                        <input type="email"  class="form-control" id="email" placeholder="Enter Email"
+                        <label>Username</label>
+                        <input type="text"  class="form-control" id="email" placeholder="Enter Username"
                         value={email}
                         onChange={(event) => {
                             setEmail(event.target.value);
