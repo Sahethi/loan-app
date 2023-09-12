@@ -26,6 +26,7 @@ export default function Register() {
         setuserRegistration({...userRegistration, [name] : value});
     }
     const handleSubmit = (e) => {
+        alert('User registered successfully')
         e.preventDefault();
         // console.log(userRegistration);
         axios.post('https://172.20.0.20:9191/register', {userRegistration}) 
