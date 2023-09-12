@@ -52,6 +52,7 @@ public class EmployeeService {
 		Optional<LoginModel> obj = loginRepo.findById(u.getUsername());
 		if(obj.isPresent()) {
 			user=obj.get();
+			System.out.println("jhhhghvvhj"+user);
 		}
 		if(user==null) {
 			result="Invalid username";

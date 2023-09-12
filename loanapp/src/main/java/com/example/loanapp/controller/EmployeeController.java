@@ -12,7 +12,7 @@ import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
 import com.example.loanapp.model.LoginModel;
 @RestController
-@CrossOrigin("https://localhost:3000")
+@CrossOrigin("http://localhost:3000")
 public class EmployeeController {
 		@Autowired
 		EmployeeService empService;
