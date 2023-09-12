@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,12 @@ public class EmployeeController {
 		public String test() {
 			return "Welcome to loan management app";
 		}
+		
+		@GetMapping("/fetchAllLoanTypes")
+		public List<Loan> getAllLoanTypes(){
+			return empService.getAllLoanTypes();
+		}
+		
 
 		@PostMapping("/saveEmployee")
 		/*public Employee saveEmployee(@RequestBody Employee u) {
