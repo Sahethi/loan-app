@@ -10,6 +10,8 @@ function Login() {
     const navigate = useNavigate();
 
     async function login(event) {
+        alert("Login Sucessful");
+    
         event.preventDefault();
         try {
             await axios.post("http://localhost:8080/saveUser", {
