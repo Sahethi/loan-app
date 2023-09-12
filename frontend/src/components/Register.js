@@ -26,6 +26,7 @@ export default function Register() {
         setuserRegistration({...userRegistration, [name] : value});
     }
     const handleSubmit = (e) => {
+        alert('User registered successfully')
         e.preventDefault();
         // console.log(userRegistration);
         axios.post('https://localhost:8080/register', {userRegistration}) 
