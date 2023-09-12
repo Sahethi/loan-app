@@ -10,6 +10,8 @@ import com.example.loanapp.repository.LoginModelRepository;
 import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
 import com.example.loanapp.model.LoginModel;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,7 +54,6 @@ public class EmployeeService {
 		Optional<LoginModel> obj = loginRepo.findById(u.getUsername());
 		if(obj.isPresent()) {
 			user=obj.get();
-			System.out.println("jhhhghvvhj"+user);
 		}
 		if(user==null) {
 			result="Invalid username";
@@ -66,5 +67,9 @@ public class EmployeeService {
 			}
 		}
 		return result;
+	}
+
+	public List<Loan> getAllLoanTypes() {
+		return loanRepo.findAll();
 	}
 }
