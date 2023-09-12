@@ -29,7 +29,7 @@ export default function Register() {
         alert('User registered successfully')
         e.preventDefault();
         // console.log(userRegistration);
-        axios.post('https://172.20.0.20:9191/register', {userRegistration}) 
+        axios.post('https://localhost:8080/register', {userRegistration}) 
         .then(response => console.log(response))
         .catch(err => console.log(err));
     }

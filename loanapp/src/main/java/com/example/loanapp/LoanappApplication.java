@@ -10,5 +10,4 @@ public class LoanappApplication {
 		SpringApplication.run(LoanappApplication.class, args);
 		System.out.println("Springboot successful");
 	}
-
 }
