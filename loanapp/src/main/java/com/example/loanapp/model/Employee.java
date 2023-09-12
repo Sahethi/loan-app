@@ -10,7 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import java.util.List;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 @Entity
 @Table(name="employee_master")
 public class Employee {
@@ -21,12 +22,15 @@ public class Employee {
 	private String first_name;
 	@Column(length=25)
 	private String last_name;
+	@Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
+            flags = Pattern.Flag.CASE_INSENSITIVE)
 	private String email_id;
 	private String password;
 	private String home_add;
 	@JsonFormat(shape =JsonFormat.Shape.STRING,pattern="dd-MM-yyyy")
 	private Date dob;
 	private char gender;
+	@Pattern(regexp="(^$|[0-9]{10})")
 	private String phone_num;
 	private String designation;
 	@Column(length=25)
