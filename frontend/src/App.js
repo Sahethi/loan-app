@@ -2,6 +2,7 @@ import { BrowserRouter,Routes,Route } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import ApplyLoan from "./components/ApplyLoan";
+import ItemDetails from "./components/ItemDetails";
 function App() {
   return (
     <div>
@@ -11,6 +12,7 @@ function App() {
               <Route path="/login" element= { <Login/>} />
               <Route path="/register" element={ <Register/>}/>
               <Route path="/applyloan" element={ <ApplyLoan/>}/>
+              <Route path="/itemdetails" element={<ItemDetails/>} />
             </Routes>
         </BrowserRouter>
       
