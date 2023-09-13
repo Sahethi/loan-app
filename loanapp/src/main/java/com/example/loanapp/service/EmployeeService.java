@@ -72,4 +72,11 @@ public class EmployeeService {
 	public List<Loan> getAllLoanTypes() {
 		return loanRepo.findAll();
 	}
+	
+	//***
+	//get all items purchased by user u 
+	public Optional<Employee> getAllItems(String empId){
+		return emprepo.findById(empId);
+	}
+	//***
 }
