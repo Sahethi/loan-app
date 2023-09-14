@@ -12,12 +12,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Issue {
 	@Id
 	@Column(length=6, nullable=false, unique=true)
-	@JsonBackReference
 	private String issue_id;
+	@JsonBackReference(value="IssueEmp")
 	@ManyToOne
 	private Employee employee;
 
-	@JsonBackReference
+	@JsonBackReference("IssueItem")
 	@ManyToOne
 	private Item item;
 	private Date issue_date;
