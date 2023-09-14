@@ -17,10 +17,12 @@ import org.springframework.http.ResponseEntity;
 
 //import com.example.loan.management.userin.UserInfo;
 import com.example.loanapp.model.Employee;
+import com.example.loanapp.model.Issue;
 import com.example.loanapp.service.EmployeeService;
 import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
 import com.example.loanapp.model.LoginModel;
+import com.example.loanapp.model.DisplayUserItems;
 @RestController
 @CrossOrigin("http://localhost:3000")
 public class EmployeeController {
@@ -78,8 +80,12 @@ public class EmployeeController {
 		//item details page
 		
 		@GetMapping("/items/{empId}")
-		public Optional<Employee> getEmpItems(@PathVariable("empId") String empId){
-			return empService.getAllItems(empId);
+		public ResponseEntity<Object> getEmpItems(@PathVariable("empId") String empId){
+			List<DisplayUserItems> i = empService.getEmpItems(empId);
+			if(i == null) 
+				return new ResponseEntity<>("Invalid Issue Id",HttpStatus.NOT_FOUND);
+			else
+				return new ResponseEntity<>(i,HttpStatus.OK);
 		}
 }
 
