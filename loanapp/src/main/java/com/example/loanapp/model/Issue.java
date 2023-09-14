@@ -5,15 +5,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.ManyToOne;
 import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="employee_issue_details")
 public class Issue {
 	@Id
 	@Column(length=6, nullable=false, unique=true)
+	@JsonBackReference
 	private String issue_id;
 	@ManyToOne
 	private Employee employee;
+
+	@JsonBackReference
 	@ManyToOne
 	private Item item;
 	private Date issue_date;

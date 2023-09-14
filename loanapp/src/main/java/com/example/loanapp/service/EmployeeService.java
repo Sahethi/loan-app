@@ -6,12 +6,16 @@ import com.example.loanapp.model.Employee;
 import com.example.loanapp.repository.EmployeeRepository;
 import com.example.loanapp.repository.ItemRepository;
 import com.example.loanapp.repository.LoanRepository;
+import com.example.loanapp.repository.IssueRepository;
 import com.example.loanapp.repository.LoginModelRepository;
 import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
+import com.example.loanapp.model.Issue;
+import com.example.loanapp.model.DisplayUserItems;
 import com.example.loanapp.model.LoginModel;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -74,9 +78,17 @@ public class EmployeeService {
 	}
 	
 	//***
-	//get all items purchased by user u 
-	public Optional<Employee> getAllItems(String empId){
-		return emprepo.findById(empId);
+	//get all items purchased by user u
+	@Autowired
+	IssueRepository issuerepo;
+	public List<DisplayUserItems> getEmpItems(String empId){
+		List<Item> i = issuerepo.getEmpItems(empId);
+		List<String> issue_ids = issuerepo.getEmpIssues(empId);
+		List<DisplayUserItems> ret=new ArrayList<DisplayUserItems>();
+		for(int l=0;l<i.size();l++) {
+			ret.add(new DisplayUserItems(issue_ids.get(l),i.get(l)));
+		}
+		return ret;
 	}
 	//***
 }
