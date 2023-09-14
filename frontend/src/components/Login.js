@@ -24,6 +24,7 @@ function Login() {
                     alert("Invalid Username");
                 } 
                 else if(res.data == "Login successful") { 
+                    console.log(res)
                    alert("Login Successful!")
                 } 
                 else { 
