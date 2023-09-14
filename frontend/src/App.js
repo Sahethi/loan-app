@@ -4,6 +4,14 @@ import Register from "./components/Register";
 import ApplyLoan from "./components/ApplyLoan";
 import ItemDetails from "./components/ItemDetails";
 import LoanCard from "./components/LoanCard";
+// session management code
+// useEffect (() => {
+//   let authData = sessionStorage.getItem('authData');
+//   if(authData == null ){
+
+//   }
+// })
+
 function App() {
   return (
     <div>
