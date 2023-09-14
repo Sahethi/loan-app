@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-
+import './Register.css'
 export default function Register() {
     const [userRegistration, setuserRegistration] = useState({
         first_name:"", //first_name
@@ -56,35 +56,56 @@ export default function Register() {
         }   
     }
     return (
-        <div>
-            <div>Register</div>
+        <div className= "register-wrapper">
+            
+            <div className='register-form'>
+            <h2 className='pb-3'>Register</h2>
             <form action="" onSubmit={handleSubmit}>
+                <div className='form-group'>
+                    <label for="first_name" >First name:</label>
+                    <input type="text" className = "form-control" name="first_name" value={userRegistration.first_name} onChange={handleInput}/>
+                    <br/>
+                </div>
                 
-                <label for="first_name">First name:</label>
-                <input type="text" name="first_name" value={userRegistration.first_name} onChange={handleInput}/>
-                <br/>
-                <label for="last_name">Last name:</label>
-                <input type="text" name="last_name" value={userRegistration.last_name} onChange={handleInput}/>
-                <br/>
-                <label for="home_add">Home address:</label>
-                <textarea name="home_add" value={userRegistration.home_add} onChange={handleInput}/>
-                <br></br>
-                <label for="email_id">Email:</label>
-                <input type="text" value={userRegistration.email_id} onChange={handleInput} name="email_id"/>
-                <br></br>
-                <label for="phone_num">Contact Number:</label>
-                <input type="number" maxLength={10} minLength={10} name="phone_num" value={userRegistration.phone_num} onChange={handleInput}/>
-                <br></br>
+                <div className='form-group'><label for="last_name" >Last name:</label>
+                <input type="text" className = "form-control" name="last_name" value={userRegistration.last_name} onChange={handleInput}/>
+                <br/></div>
+                
+                <div className='form-group'><label for="home_add">Home address:</label>
+                <textarea name="home_add"className = "form-control" value={userRegistration.home_add} onChange={handleInput}/>
+                <br></br></div>
+                
+                <div className='form-group'>
+                    <label for="email_id">Email:</label>
+                    <input type="text" className = "form-control" value={userRegistration.email_id} onChange={handleInput} name="email_id"/>
+                    <br></br>
+                </div>
+                
+                <div className='form-group'><label for="phone_num">Contact Number:</label>
+                <input type="number" className = "form-control" maxLength={10} minLength={10} name="phone_num" value={userRegistration.phone_num} onChange={handleInput}/>
+                <br></br></div>
+                
+                <div className='form-group'>
                 <label for="employee_id">Employee ID:</label>
-                <input type="text" name="employee_id" value={userRegistration.employee_id} onChange={handleInput}/>
+                <input type="text" className = "form-control" name="employee_id" value={userRegistration.employee_id} onChange={handleInput}/>
                 <br/>
+                </div>
+                
+                <div className='form-group'>
                 <label for="username">Username:</label>
-                <input type="text" name="username" value={userRegistration.username} onChange={handleInput} />               <br/>
-                <label for="password">Password:</label>
-                <input type="password" name="password" value={userRegistration.password} onChange={handleInput}/>                <br/>
-                <div>
+                <input type="text" className = "form-control" name="username" value={userRegistration.username} onChange={handleInput} />
+                <br/>
+                </div>
+                
+                <div className='form-group'>
+                    <label for="password">Password:</label>
+                    <input type="password" className = "form-control" name="password" value={userRegistration.password} onChange={handleInput}/>
+                    <br/>
+                </div>               
+               
+                <div className='form-group'>
                     <label for="dept">Select department:</label>
-                    <select name="dept" value={userRegistration.dept} onChange={handleInput}>
+                    <select name="dept" className = "form-control" value={userRegistration.dept} onChange={handleInput}>
                         <option disabled value="">Select</option>
                         <option value="sales">Sales</option>
                         <option value="hr">Human Resources</option>
@@ -94,9 +115,9 @@ export default function Register() {
                 </div>
                 <br>
                 </br>
-                <div>
+                <div className='form-group'>
                     <label for="designation">Select Designation:</label>
-                    <select name="designation" value={userRegistration.designation} onChange={handleInput}>
+                    <select className = "form-control" name="designation" value={userRegistration.designation} onChange={handleInput}>
                         <option disabled value="">Select</option>
                         <option value="manager">Manager</option>
                         <option value="associate">Associate</option>
@@ -105,9 +126,9 @@ export default function Register() {
                 </div>
                 <br>
                 </br>
-                <div>
+                <div className='form-group'>
                     <label for="gender">Select Gender:</label>
-                    <select name="gender" value={userRegistration.gender} onChange={handleInput}>
+                    <select className = "form-control" name="gender" value={userRegistration.gender} onChange={handleInput}>
                         <option disabled value="">Select</option>
                         <option value="m">Male</option>
                         <option value="f">Female</option>
@@ -115,14 +136,21 @@ export default function Register() {
                     </select>
                 </div>
                 <br></br>
+                <div className='form-group'>
                 <label for="dob">Date of Birth:</label>
-                <input type="date" name="dob" value={userRegistration.dob} onChange={handleInput}/>
+                <input className = "form-control" type="date" name="dob" value={userRegistration.dob} onChange={handleInput}/>
                 <br></br>
-                <label for="doj">Date of Joining:</label>
-                <input type="date" name="doj" value={userRegistration.doj} onChange={handleInput}/>
-                <br></br>
-                <button type="submit">Submit</button>
+                </div>
+                <div className='form-group'>
+                    <label for="doj">Date of Joining:</label>
+                    <input className = "form-control" type="date" name="doj" value={userRegistration.doj} onChange={handleInput}/>
+                    <br></br>
+                </div>
+                
+                <button type="submit" className= "btn btn-primary d-block w-100">Submit</button>
             </form>
+            </div>
+            
         </div>
     )
 }
