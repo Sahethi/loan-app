@@ -15,12 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.example.loanapp.model.DisplayLoans;
 //import com.example.loan.management.userin.UserInfo;
 import com.example.loanapp.model.Employee;
+import com.example.loanapp.model.Issue;
 import com.example.loanapp.service.EmployeeService;
 import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
 import com.example.loanapp.model.LoginModel;
+import com.example.loanapp.model.DisplayUserItems;
 @RestController
 @CrossOrigin("http://localhost:3000")
 public class EmployeeController {
@@ -70,16 +73,33 @@ public class EmployeeController {
 		    //UserInfo obj=userservice.saveUser(u);
 			//return "useful";
 			return new ResponseEntity<LoginModel>(empService.saveLogin(u),HttpStatus.CREATED);}		
+		
 		@PostMapping("/loginAuth")
 		public String validateUser(@RequestBody LoginModel u) {
 			return empService.chkLogin(u);
 		}
 		
+		@GetMapping("/employees/{empId}")
+		public Optional<Employee> getEmp(@PathVariable("empId") String empId){
+			return empService.getEmployee(empId);
+		}
+		
 		//item details page
 		
 		@GetMapping("/items/{empId}")
-		public Optional<Employee> getEmpItems(@PathVariable("empId") String empId){
-			return empService.getAllItems(empId);
+		public ResponseEntity<Object> getEmpItems(@PathVariable("empId") String empId){
+			List<DisplayUserItems> i = empService.getEmpItems(empId);
+			if(i == null) 
+				return new ResponseEntity<>("Invalid Issue Id",HttpStatus.NOT_FOUND);
+			else
+				return new ResponseEntity<>(i,HttpStatus.OK);
+		}
+		
+		//loan details page
+		
+		@GetMapping("/loans/{empId}")
+		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId){
+			return empService.getAllLoans(empId);
 		}
 }
 

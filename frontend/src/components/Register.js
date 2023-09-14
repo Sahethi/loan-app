@@ -45,6 +45,7 @@ export default function Register() {
             await axios.post("http://localhost:8080/saveEmployee", {
                 ...userRegistration
             }, config).then((res) => {
+                alert("User Registered Successfully")
                 console.log(res.data);
                 
             }, fail => {
