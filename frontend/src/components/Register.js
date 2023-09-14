@@ -29,7 +29,7 @@ export default function Register() {
     const designationOptions = ["Manager", "Associate", "Support"];
     const genderOptions=["Male","Female","Other"];
 
-    async function sendToLogin(response){
+    async function sendToLogin(response1){
         try{
             const response = await axios.post(`http://localhost:8080/saveLogin`, {
                 username: userRegistration.username ,
@@ -37,8 +37,8 @@ export default function Register() {
             }).then((response)=>{
                 console.log(response.data);
             });
-            setLoginRegistration(response.data);
-            console.log(response.data); 
+            setLoginRegistration(response1);
+            console.log(response1); 
         } catch (err) {
             console.log("Error:" + err);
         }
