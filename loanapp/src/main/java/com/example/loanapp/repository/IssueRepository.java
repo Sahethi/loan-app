@@ -14,6 +14,4 @@ public interface IssueRepository extends JpaRepository<Issue, String> {
 	
 	@Query("SELECT i.issue_id from Issue i WHERE i.employee.employee_id=?1")
 	public List<String> getEmpIssues(String empid);
-	//"SELECT new DisplayItm(i.item, i.issue_id) from..." 
-	// note that dispitm
 }
