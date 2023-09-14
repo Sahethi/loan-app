@@ -1,18 +1,29 @@
 import {  useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 
 //Login
 
 function Login() {
    
+    const {empID, res1} = useParams();
+    const [employeeDetails, setEmployeeDetails] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+            
+    async function sendEmployeeDetails(res){
+        try{
+            const response = await axios.get(`http://localhost:8080/employees/${res}`);
+            setEmployeeDetails(response.data);
+            console.log(response.data);
+        } catch (err) {
+            console.log("Error:" + err);
+        }
+    }
+
     async function login(event) {
-        // alert("Login Sucessful");
-    
         event.preventDefault();
         try {
             await axios.post("http://localhost:8080/loginAuth", {
@@ -23,12 +34,13 @@ function Login() {
                 if (res.data == "Invalid username") {
                     alert("Invalid Username");
                 } 
-                else if(res.data == "Login successful") { 
-                   alert("Login Successful!")
-                } 
-                else { 
+                else if (res.data == "Incorrect username or password") { 
                     alert("Incorrect Email or Password");
-                }
+                } else { 
+                    //Successful
+                    alert(res.data)
+                    sendEmployeeDetails(res.data);
+                 } 
             }, fail => {
                 console.error(fail); // Error!
             });

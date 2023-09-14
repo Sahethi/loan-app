@@ -64,8 +64,6 @@ public class Employee {
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Issue> issue;
 
-	
-
 	public String getEmployee_id() {
 		return employee_id;
 	}
