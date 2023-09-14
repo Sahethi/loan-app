@@ -3,6 +3,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ApplyLoan from "./components/ApplyLoan";
 import ItemDetails from "./components/ItemDetails";
+import LoanDetails from "./components/LoanDetails";
 function App() {
   return (
     <div>
@@ -13,6 +14,7 @@ function App() {
               <Route path="/register" element={ <Register/>}/>
               <Route path="/applyloan" element={ <ApplyLoan/>}/>
               <Route path="/items/:empID" element={<ItemDetails/>} />
+              <Route path="/loans/:empID" element={<LoanDetails/>} />
             </Routes>
         </BrowserRouter>
       
