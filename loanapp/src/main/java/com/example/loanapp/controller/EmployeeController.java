@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.example.loanapp.model.DisplayLoans;
 //import com.example.loan.management.userin.UserInfo;
 import com.example.loanapp.model.Employee;
 import com.example.loanapp.model.Issue;
@@ -72,6 +73,7 @@ public class EmployeeController {
 		    //UserInfo obj=userservice.saveUser(u);
 			//return "useful";
 			return new ResponseEntity<LoginModel>(empService.saveLogin(u),HttpStatus.CREATED);}		
+		
 		@PostMapping("/loginAuth")
 		public String validateUser(@RequestBody LoginModel u) {
 			return empService.chkLogin(u);
@@ -86,6 +88,13 @@ public class EmployeeController {
 				return new ResponseEntity<>("Invalid Issue Id",HttpStatus.NOT_FOUND);
 			else
 				return new ResponseEntity<>(i,HttpStatus.OK);
+		}
+		
+		//loan details page
+		
+		@GetMapping("/loans/{empId}")
+		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId){
+			return empService.getAllLoans(empId);
 		}
 }
 

@@ -2,7 +2,10 @@ package com.example.loanapp.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.loanapp.model.DisplayLoans;
 import com.example.loanapp.model.Employee;
+import com.example.loanapp.repository.EmployeeCardRepository;
 import com.example.loanapp.repository.EmployeeRepository;
 import com.example.loanapp.repository.ItemRepository;
 import com.example.loanapp.repository.LoanRepository;
@@ -14,6 +17,8 @@ import com.example.loanapp.model.Issue;
 import com.example.loanapp.model.DisplayUserItems;
 import com.example.loanapp.model.LoginModel;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -22,6 +27,9 @@ import java.util.Optional;
 public class EmployeeService {
 	@Autowired
 	EmployeeRepository emprepo;
+	
+	@Autowired
+	EmployeeCardRepository empCardRepo;
 	
 	public Employee saveEmployee(Employee u) {
 		Employee obj = emprepo.save(u);
@@ -64,7 +72,8 @@ public class EmployeeService {
 		}
 		else {
 			if(u.getPassword().equals(user.getPassword())){
-				result="Login successful";
+				//LOGIN SUCCESSFULL
+				result=u.getUsername();
 			}
 			else {
 				result="Incorrect username or password";
@@ -90,5 +99,15 @@ public class EmployeeService {
 		}
 		return ret;
 	}
-	//***
+	
+	public List<DisplayLoans> getAllLoans(String empId) {
+		// TODO Auto-generated method stub
+		List<Loan> l = empCardRepo.getEmpLoans(empId);
+		List<Date> d = empCardRepo.getEmpIssueDate(empId);
+		List<DisplayLoans> dl= new ArrayList<DisplayLoans>();
+		for(int i=0; i<l.size(); i++) {
+			dl.add(new DisplayLoans(l.get(i), d.get(i)));
+		}
+		return dl;
+	}
 }

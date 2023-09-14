@@ -17,6 +17,8 @@ public class LoginModel {
 	@Column(nullable=false)
 	@NotNull(message="Enter your password!")
 	private String password;
+
+	
 	public String getUsername() {
 		return username;
 	}
