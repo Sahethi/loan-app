@@ -18,7 +18,7 @@ public class Issue {
 	@ManyToOne
 	private Employee employee;
 
-	@JsonBackReference("IssueItem")
+	@JsonBackReference(value="IssueItem")
 	@ManyToOne
 	private Item item;
 	private Date issue_date;
