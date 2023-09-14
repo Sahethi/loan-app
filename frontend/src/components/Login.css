@@ -1,0 +1,17 @@
+.login-container{
+    height : 100vh;
+    width : 100vw;
+    padding : auto;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+}
+.wrapper{
+    display : block;
+    margin :auto;
+    width : 40vw;
+}
+.login-header{
+    text-align: center;
+    padding : 20px
+}
