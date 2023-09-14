@@ -79,6 +79,11 @@ public class EmployeeController {
 			return empService.chkLogin(u);
 		}
 		
+		@GetMapping("/employees/{empId}")
+		public Optional<Employee> getEmp(@PathVariable("empId") String empId){
+			return empService.getEmployee(empId);
+		}
+		
 		//item details page
 		
 		@GetMapping("/items/{empId}")

@@ -81,6 +81,10 @@ public class EmployeeService {
 		}
 		return result;
 	}
+	
+	public Optional<Employee> getEmployee(String username) {
+		return emprepo.findById(username);
+	}
 
 	public List<Loan> getAllLoanTypes() {
 		return loanRepo.findAll();
