@@ -1,10 +1,12 @@
 package com.example.loanapp.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.loanapp.model.DisplayLoans;
 import com.example.loanapp.model.Employee;
+import com.example.loanapp.model.EmployeeCard;
 import com.example.loanapp.repository.EmployeeCardRepository;
 import com.example.loanapp.repository.EmployeeRepository;
 import com.example.loanapp.repository.ItemRepository;
@@ -13,11 +15,13 @@ import com.example.loanapp.repository.IssueRepository;
 import com.example.loanapp.repository.LoginModelRepository;
 import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
+import com.example.loanapp.model.LoanModel;
 import com.example.loanapp.model.Issue;
 import com.example.loanapp.model.DisplayUserItems;
 import com.example.loanapp.model.LoginModel;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
@@ -31,10 +35,45 @@ public class EmployeeService {
 	@Autowired
 	EmployeeCardRepository empCardRepo;
 	
+	@Autowired
+	IssueRepository issueRepo;
+	
 	public Employee saveEmployee(Employee u) {
 		Employee obj = emprepo.save(u);
 		return obj;
 	}
+	@Transactional
+	public String savedata(LoanModel u) {
+		String result="";
+		Employee emp=null;
+		Optional<Employee>opt=emprepo.findById(u.getEmployee_id());
+		if(opt.isPresent()) emp=opt.get();
+		String loanid=loanRepo.findbylt(u.getItem_category());
+		Loan loan=loanRepo.findById(loanid).get();
+		EmployeeCard ecd=new EmployeeCard();
+		//String cid="2345";
+		LocalDate dt=LocalDate.now();
+		//ecd.setCard_id(cid);
+		ecd.setCard_issue_date(dt);
+		ecd.setEmployee(emp);
+		ecd.setLoan(loan);
+		EmployeeCard ec=empCardRepo.save(ecd);
+		String ii="1245";
+		
+		String itm=itemRepo.findbymake(u.getItem_category(),u.getItem_make());
+		Item ita=itemRepo.findById(itm).get();
+		Issue is=new Issue();
+		is.setIssue_id(ii);
+		is.setEmployee(emp);
+		is.setItem(ita);
+		is.setIssue_date(dt);
+		is.setReturn_date(dt);
+		Issue isi=issueRepo.save(is);
+		
+		
+		return ita+"hello"+itemRepo.findById(itm).get();
+	}
+	
 	
 	@Autowired
 	private ItemRepository itemRepo;
