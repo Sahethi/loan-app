@@ -31,10 +31,11 @@ export default function ItemDetails() {
     <h2>Item Details</h2>
 
     <div class="row">
-        <div class="col-4">Employee ID:{empID}</div>
-        <div class="col-4">Designation:</div>
-        <div class="col-4">Department:</div>
-    </div>
+            <div class="col-4">Employee ID: {empID}</div>
+            <div class="col-4">Designation: {sessionStorage.getItem("designation")}
+            </div>
+            <div class="col-4">Department: {sessionStorage.getItem("dept")}</div>
+        </div>
     <br/>
     <table class="table table-striped">
   <thead>

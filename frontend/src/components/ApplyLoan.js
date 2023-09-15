@@ -69,25 +69,6 @@ function ApplyLoan(){
         setcurrMake(e.target.value);
     }
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         await axios.post("http://localhost:8080/saveEmployee", {
-    //             ...userLoan
-    //         }, config).then((res) => {
-    //             alert("User Registered Successfully")
-    //             console.log(res.data);
-                
-    //         }, fail => {
-    //             console.error(fail); // Error!
-    //         });
-    //     } catch (err) {
-    //         alert(err);
-    //     }  
-    // }
-
-
-
 if(loading) {
     return <p>Loading...</p>
 }
@@ -104,7 +85,7 @@ return(
         <form onSubmit="handleSubmit">
                         <div class="form-group">
                         <label>Employee Id</label>
-                        <input type="text"  class="form-control"/><br></br>
+                        <input type="text" value={sessionStorage.getItem('sessionId')} class="form-control"/><br></br>
                         </div>
                         <div class="form-group">
                         <label>Item Category</label>&nbsp;&nbsp;
