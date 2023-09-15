@@ -129,6 +129,10 @@ public class EmployeeService {
 		return loanRepo.findAll();
 	}
 	
+	public List<Item> getItems(){
+		return itemRepo.findAll();
+	}
+	
 	//***
 	//get all items purchased by user u
 	@Autowired
