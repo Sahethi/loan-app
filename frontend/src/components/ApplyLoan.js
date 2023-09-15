@@ -3,24 +3,94 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 function ApplyLoan(){
-    const [loans, setLoans] = useState([]);
 
-    const uniqueLoanTypes = (LoanArray) => {
-        const loanset = new Set();
-        LoanArray.map((loan)=> loanset.add(loan.loan_type));
-        return Array.from(loanset);
-    }
-    const setLoanData = () => {
-        axios.get("http://localhost:8080/fetchAllLoanTypes").then((response) => {
-            setLoans(uniqueLoanTypes(response.data));
-            console.log(response.data)
-        }).catch(error => {
-            alert("Error: "+error);
-        });
-    }
+    const [items, setItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const [cats, setCats] = useState([]);
+    const [currCat, setcurrCat] = useState("");
+
+    //set current descriptions based on category selected
+    const [desc, setDesc] = useState([]);
+    const [currDesc, setcurrDesc] = useState("");
+
+    //set current make based on description selected
+    const [make, setMake] = useState([]);
+    const [currMake, setcurrMake] = useState("");
+    
+
+    
     useEffect(() => {
-        setLoanData();
+        axios.get("http://localhost:8080/items").then((response) => {
+            setItems(response.data);
+            setCats([...new Set(response.data.map(item => item.item_category))])
+            console.log(response.data);
+            setLoading(false);
+        }).catch(error => {
+            alert("Error: " + error);
+            setLoading(false);
+        });
+
     }, []);
+
+    const handle1 = (e) => {
+        //e.target.value is the currently selected category
+        setcurrCat(e.target.value);
+        //we also need to set desc to a set of descriptions under the current category
+        const all = items.map(item => {
+            if(item.item_category === e.target.value) {
+                return item.item_description;
+            }
+        });
+    
+        setDesc([...new Set(all)]);
+        setcurrDesc("");
+        setcurrMake("");
+    }
+
+    const handle2 = (e) => {
+        //e.target.value is the currently selected description
+        setcurrDesc(e.target.value);
+        //we also need to set make to a set of makes under the current description
+        const all = items.map(item => {
+            if(item.item_description === e.target.value) {
+                return item.item_make;
+            }
+        });
+
+        setMake([...new Set(all)]);
+
+        setcurrMake("");
+        console.log("handle2\ncurrCat:" + currCat + " currDesc:" + e.target.value + " currMake:" + currMake + " make: " + make);
+
+    }
+
+    const handle3 = (e) => {
+        setcurrMake(e.target.value);
+    }
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         await axios.post("http://localhost:8080/saveEmployee", {
+    //             ...userLoan
+    //         }, config).then((res) => {
+    //             alert("User Registered Successfully")
+    //             console.log(res.data);
+                
+    //         }, fail => {
+    //             console.error(fail); // Error!
+    //         });
+    //     } catch (err) {
+    //         alert(err);
+    //     }  
+    // }
+
+
+
+if(loading) {
+    return <p>Loading...</p>
+}
     
 return(
     <div>
@@ -29,35 +99,57 @@ return(
             <h2>Apply Loan</h2>
         <hr/>
         </div>
-
         <div class="row">
         <div class="col-sm-6">
-        <form>
+        <form onSubmit="handleSubmit">
                         <div class="form-group">
                         <label>Employee Id</label>
                         <input type="text"  class="form-control"/><br></br>
                         </div>
                         <div class="form-group">
                         <label>Item Category</label>&nbsp;&nbsp;
-                        <select>
+                        <select defaultValue={""} onChange={handle1} value={currCat}> 
+                            <option disabled value="">Select</option> 
+                        
                             {
-                                loans.map((loan,index)=>(
-                                    <option key={loan} value={loan}>{loan}</option>
-                                ))
+                                cats.map(item =>  <option>{item}</option>)
                             }
                         </select>
+                        
                         </div><br></br>
-                        <div class="form-group">
+                        {
+                            currCat != "" && 
+                            <div class="form-group">
                         <label>Item Description</label>
-                        <input type="text"  class="form-control"/>
-                        </div><br></br>
-                        <div class="form-group">
-                        <label>Item value</label>
-                        <input type="text"  class="form-control"/>
-                        </div><br></br>
-                        <div class="form-group">
+                        <select defaultValue={""} onChange={handle2} value={currDesc}>
+                        <option disabled value="">Select</option>
+                        {       
+                          desc.map(curr => curr!=undefined && <option>{curr}</option>)   
+                        }
+                        </select>
+                        {/* <input type="text"  class="form-control"/> */}
+                        </div>
+                        }
+                        <br></br>
+                        {
+                            currDesc != "" &&
+                            <div class="form-group">
                         <label>Item make</label>
-                        <input type="text"  class="form-control"/>
+                        <select defaultValue={""} onChange = {handle3} value={currMake}>
+                        <option disabled value="">Select</option>
+                        {
+                            make.map(curr => curr!=undefined && <option>{curr}</option>)
+                        }
+                        </select>
+                        {/* <input type="text"  class="form-control"/> */}
+                        </div>
+                        }
+                        <br></br>
+                        <div class="form-group">
+                        
+                        {
+                            currCat != "" && currDesc != ""   && items.find(item => (item.item_description === currDesc && item.item_make === currMake)) != undefined && <p>Item value:{items.find(item => (item.item_description === currDesc && item.item_make === currMake)).item_valuation}</p>
+                        }
                         </div><br></br>
                     
                         <button type="submit" class="btn btn-primary">Apply Loan</button>
