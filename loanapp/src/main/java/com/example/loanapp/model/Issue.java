@@ -13,6 +13,7 @@ public class Issue {
 	@Id
 	@Column(length=6, nullable=false, unique=true)
 	private String issue_id;
+	
 	@JsonBackReference(value="IssueEmp")
 	@ManyToOne
 	private Employee employee;
