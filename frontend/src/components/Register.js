@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import './Register.css'
+import { useNavigate } from 'react-router';
 
 
 export default function Register() {
@@ -20,6 +21,7 @@ export default function Register() {
         doj:""
     });
 
+    const navigate = useNavigate();
     const [loginRegistration, setLoginRegistration] = useState({
         username:"",
         password:""
@@ -39,6 +41,7 @@ export default function Register() {
             });
             setLoginRegistration(response1);
             console.log(response1); 
+            navigate("/login")
         } catch (err) {
             console.log("Error:" + err);
         }
