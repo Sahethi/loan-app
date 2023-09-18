@@ -1,4 +1,4 @@
-package com.example.loanapp.controller;
+package com.loanapp.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -101,5 +101,11 @@ public class EmployeeController {
 		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId){
 			return empService.getAllLoans(empId);
 		}
-}
+		
+		//apply loan page
+		
+		@GetMapping("/items")
+		public List<Item> getItems(){
+			return empService.getAllItems();
+		}
 
