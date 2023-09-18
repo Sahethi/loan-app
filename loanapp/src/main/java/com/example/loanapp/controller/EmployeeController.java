@@ -86,7 +86,6 @@ public class EmployeeController {
 		}
 		
 		//item details page
-		
 		@GetMapping("/items/{empId}")
 		public ResponseEntity<Object> getEmpItems(@PathVariable("empId") String empId){
 			List<DisplayUserItems> i = empService.getEmpItems(empId);
@@ -96,18 +95,21 @@ public class EmployeeController {
 				return new ResponseEntity<>(i,HttpStatus.OK);
 		}
 		
-		//loan details page
+		//items
+		@GetMapping("/items")
+		public ResponseEntity<Object> getItems(){
+			List<Item> i = empService.getItems();
+			if(i == null) 
+				return new ResponseEntity<>("Invalid Issue Id",HttpStatus.NOT_FOUND);
+			else
+				return new ResponseEntity<>(i,HttpStatus.OK);
+		}
 		
+		//loan details page
 		@GetMapping("/loans/{empId}")
 		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId){
 			return empService.getAllLoans(empId);
 		}
 		
-		//apply loan page
-		
-		@GetMapping("/items")
-		public List<Item> getItems(){
-			return empService.getAllItems();
-		}
 }
 

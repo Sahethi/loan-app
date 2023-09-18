@@ -17,6 +17,8 @@ function Login() {
         try{
             const response = await axios.get(`http://localhost:8080/employees/${res}`);
             sessionStorage.setItem("sessionId", res);
+            sessionStorage.setItem("dept", response.data.dept);
+            sessionStorage.setItem("designation", response.data.designation);
             setEmployeeDetails(response.data);
             console.log(response.data);
         } catch (err) {

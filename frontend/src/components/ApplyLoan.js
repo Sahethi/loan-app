@@ -102,10 +102,10 @@ return(
         <div class="row">
         <div class="col-sm-6">
         <form onSubmit="handleSubmit">
-                        {/* <div class="form-group">
+                        <div class="form-group">
                         <label>Employee Id</label>
-                        <input type="text"  class="form-control"/><br></br>
-                        </div> */}
+                        <input type="text" value={sessionStorage.getItem('sessionId')} class="form-control"/><br></br>
+                        </div>
                         <div class="form-group">
                         <label>Item Category</label>&nbsp;&nbsp;
                         <select defaultValue={""} onChange={handle1} value={currCat}> 

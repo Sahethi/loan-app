@@ -90,10 +90,9 @@ public class EmployeeService {
 		return loanRepo.findAll();
 	}
 	
-	//return all items 
-		public List<Item> getAllItems() {
-			return itemRepo.findAll();
-		}
+	public List<Item> getItems(){
+		return itemRepo.findAll();
+	}
 	
 	//***
 	//get all items purchased by user u
