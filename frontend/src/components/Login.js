@@ -16,6 +16,7 @@ function Login() {
     async function sendEmployeeDetails(res){
         try{
             const response = await axios.get(`http://localhost:8080/employees/${res}`);
+            sessionStorage.setItem("sessionId", res);
             setEmployeeDetails(response.data);
             console.log(response.data);
         } catch (err) {
@@ -40,6 +41,8 @@ function Login() {
                     //Successful
                     alert(res.data)
                     sendEmployeeDetails(res.data);
+                    sessionStorage.setItem("sessionId", res.data);
+                    navigate("/userDashboard");
                  } 
             }, fail => {
                 console.error(fail); // Error!

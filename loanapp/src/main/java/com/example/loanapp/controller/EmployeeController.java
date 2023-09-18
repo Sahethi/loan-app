@@ -42,10 +42,11 @@ public class EmployeeController {
 		
 
 		@PostMapping("/saveEmployee")
-		/*public Employee saveEmployee(@RequestBody Employee u) {
-			Employee obj = empService.saveEmployee(u);
-			return obj;
-		}*/
+//		public Employee saveEmployee(@RequestBody Employee u) {
+//			Employee obj = empService.saveEmployee(u);
+//			return obj;
+//		}
+//		
 		public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody Employee u) {
 		    //UserInfo obj=userservice.saveUser(u);
 			//return "useful";
@@ -65,10 +66,10 @@ public class EmployeeController {
 		}
 		
 		@PostMapping("/saveLogin")
-		/*public LoginModel saveLogin(@RequestBody LoginModel log) {
+		public LoginModel saveLogin(@RequestBody LoginModel log) {
 			LoginModel obj = empService.saveLogin(log);
 			return obj;
-		}*/
+		}
 		public ResponseEntity<LoginModel>saveUser(@Valid @RequestBody LoginModel u) {
 		    //UserInfo obj=userservice.saveUser(u);
 			//return "useful";

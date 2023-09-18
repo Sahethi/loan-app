@@ -103,7 +103,7 @@ const twoline={
 const options={weekday:'long',year:'numeric',month:'long',day:'numeric'};
     const formattedDateTiem=currentDateTime.toLocaleDateString('en-US',options)+' '+' | '+currentDateTime.toLocaleTimeString();
   
-    sessionStorage.setItem('Name:','Virat');
+    // sessionStorage.setItem('Name:','Virat');
     
 
     return (
@@ -135,16 +135,16 @@ const options={weekday:'long',year:'numeric',month:'long',day:'numeric'};
     
     
     <h1 style={titleStyle}> Loan Management Application</h1>
-    <h2 style={titleStyle}> {sessionStorage.getItem('Name:')}'s Dashboard</h2>
+    <h2 style={titleStyle}> {sessionStorage.getItem('sessionId')}'s Dashboard</h2>
     <div style={linkcontainerStyle}>
-      <a href="https://localhost:3000"style={linkStyleone} onMouseEnter={handleMouseEnterone} onMouseLeave={handleMouseLeaveone}>View Loans&gt;</a>
-    <a href="https://localhost:3000"style={linkStyletwo} onMouseEnter={handleMouseEntertwo} onMouseLeave={handleMouseLeavetwo}>Apply for Loans&gt;</a>
-    <a href="https://localhost:3000"style={linkStylethree} onMouseEnter={handleMouseEnterthree} onMouseLeave={handleMouseLeavethree}>View Items Purchased&gt;</a>
+      <a href={`http://localhost:3000/loans/`+sessionStorage.getItem('sessionId')}style={linkStyleone} onMouseEnter={handleMouseEnterone} onMouseLeave={handleMouseLeaveone}>View Loans&gt;</a>
+      <a href="http://localhost:3000/applyloan"style={linkStyletwo} onMouseEnter={handleMouseEntertwo} onMouseLeave={handleMouseLeavetwo}>Apply for Loans&gt;</a>
+      <a href={`http://localhost:3000/items/`+sessionStorage.getItem('sessionId')} style={linkStylethree} onMouseEnter={handleMouseEnterthree} onMouseLeave={handleMouseLeavethree}>View Items Purchased&gt;</a>
     </div>
     </div>
 <div>
     <div style={dateTimeStyle}>{formattedDateTiem}</div>
-    <div style={greetingsStyle}>{greetingmsg} {sessionStorage.getItem('Name:')}!</div>
+    <div style={greetingsStyle}>{greetingmsg} {sessionStorage.getItem('sessionId')}!</div>
     </div>
     <div style={twoline}>
     

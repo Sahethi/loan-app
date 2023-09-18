@@ -1,6 +1,9 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import './Register.css'
+import { useNavigate } from 'react-router';
+
+
 export default function Register() {
     const [userRegistration, setuserRegistration] = useState({
         first_name:"", //first_name
@@ -8,23 +11,53 @@ export default function Register() {
         home_add:"", //home_add
         email_id:"", //email_id
         phone_num:"", //phone_num
+        username: "",
+        password: "",
         employee_id:"",     
-        username:"",  // no need
-        password:"", 
         dept:"", //dept
         designation:"",
         gender:"",
         dob:"",
         doj:""
     });
+
+    const navigate = useNavigate();
+    const [loginRegistration, setLoginRegistration] = useState({
+        username:"",
+        password:""
+    });
+
     const deptOptions = ["Human Resources", "Accounting", "Technical", "Sales"];
     const designationOptions = ["Manager", "Associate", "Support"];
     const genderOptions=["Male","Female","Other"];
+
+    async function sendToLogin(response1){
+        try{
+            const response = await axios.post(`http://localhost:8080/saveLogin`, {
+                username: userRegistration.username ,
+                password: userRegistration.password
+            }).then((response)=>{
+                console.log(response.data);
+            });
+            setLoginRegistration(response1);
+            console.log(response1); 
+            navigate("/login")
+        } catch (err) {
+            console.log("Error:" + err);
+        }
+    }
+
     const handleInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
         setuserRegistration({...userRegistration, [name] : value});
+        console.log(e.target.name);
+        console.log(e.target.value)
+        if(e.target.name == 'employee_id'){
+            setuserRegistration(cur =>({...cur, username : value}));
+        }
     }
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
@@ -46,6 +79,7 @@ export default function Register() {
                 ...userRegistration
             }, config).then((res) => {
                 alert("User Registered Successfully")
+                sendToLogin(res);
                 console.log(res.data);
                 
             }, fail => {
@@ -92,14 +126,8 @@ export default function Register() {
                 </div>
                 
                 <div className='form-group'>
-                <label for="username">Username:</label>
-                <input type="text" className = "form-control" name="username" value={userRegistration.username} onChange={handleInput} />
-                <br/>
-                </div>
-                
-                <div className='form-group'>
                     <label for="password">Password:</label>
-                    <input type="password" className = "form-control" name="password" value={userRegistration.password} onChange={handleInput}/>
+                    <input type="password" className = "form-control" name="password" onChange = {handleInput} value={userRegistration.password} />
                     <br/>
                 </div>               
                
