@@ -1,4 +1,4 @@
-package com.loanapp.controller;
+package com.example.loanapp.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -109,4 +109,5 @@ public class EmployeeController {
 		public List<Item> getItems(){
 			return empService.getAllItems();
 		}
+}
 
