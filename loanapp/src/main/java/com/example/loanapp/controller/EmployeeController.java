@@ -111,6 +111,7 @@ public class EmployeeController {
 		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId){
 			return empService.getAllLoans(empId);
 		}
+
 		@PostMapping("/forapplyloans")
 		public String savedata(@RequestBody LoanModel u)
 		{
