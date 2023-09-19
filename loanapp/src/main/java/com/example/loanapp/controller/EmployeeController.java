@@ -22,6 +22,7 @@ import com.example.loanapp.model.Issue;
 import com.example.loanapp.service.EmployeeService;
 import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
+import com.example.loanapp.model.LoanModel;
 import com.example.loanapp.model.LoginModel;
 import com.example.loanapp.model.DisplayUserItems;
 @RestController
@@ -110,6 +111,12 @@ public class EmployeeController {
 		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId){
 			return empService.getAllLoans(empId);
 		}
-		
+
+		@PostMapping("/forapplyloans")
+		public String savedata(@RequestBody LoanModel u)
+		{
+		     return empService.savedata(u);
+			
+		}
 }
 
