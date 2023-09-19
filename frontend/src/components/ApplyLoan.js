@@ -69,6 +69,25 @@ function ApplyLoan(){
         setcurrMake(e.target.value);
     }
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         await axios.post("http://localhost:8080/saveEmployee", {
+    //             ...userLoan
+    //         }, config).then((res) => {
+    //             alert("User Registered Successfully")
+    //             console.log(res.data);
+                
+    //         }, fail => {
+    //             console.error(fail); // Error!
+    //         });
+    //     } catch (err) {
+    //         alert(err);
+    //     }  
+    // }
+
+
+
 if(loading) {
     return <p>Loading...</p>
 }
