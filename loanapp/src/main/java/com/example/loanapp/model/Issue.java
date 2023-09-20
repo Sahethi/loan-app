@@ -5,8 +5,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.ManyToOne;
 import java.sql.Date;
-import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
@@ -23,8 +21,8 @@ public class Issue {
 	@JsonBackReference(value="IssueItem")
 	@ManyToOne
 	private Item item;
-	private LocalDate issue_date;
-	private LocalDate return_date;
+	private Date issue_date;
+	private Date return_date;
 	public String getIssue_id() {
 		return issue_id;
 	}
@@ -43,16 +41,16 @@ public class Issue {
 	public void setItem(Item item) {
 		this.item = item;
 	}
-	public LocalDate getIssue_date() {
+	public Date getIssue_date() {
 		return issue_date;
 	}
-	public void setIssue_date(LocalDate issue_date) {
+	public void setIssue_date(Date issue_date) {
 		this.issue_date = issue_date;
 	}
-	public LocalDate getReturn_date() {
+	public Date getReturn_date() {
 		return return_date;
 	}
-	public void setReturn_date(LocalDate return_date) {
+	public void setReturn_date(Date return_date) {
 		this.return_date = return_date;
 	}
 	

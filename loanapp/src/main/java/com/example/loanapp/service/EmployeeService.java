@@ -1,12 +1,10 @@
 package com.example.loanapp.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.loanapp.model.DisplayLoans;
 import com.example.loanapp.model.Employee;
-import com.example.loanapp.model.EmployeeCard;
 import com.example.loanapp.repository.EmployeeCardRepository;
 import com.example.loanapp.repository.EmployeeRepository;
 import com.example.loanapp.repository.ItemRepository;
@@ -15,7 +13,6 @@ import com.example.loanapp.repository.IssueRepository;
 import com.example.loanapp.repository.LoginModelRepository;
 import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
-import com.example.loanapp.model.LoanModel;
 import com.example.loanapp.model.Issue;
 import com.example.loanapp.model.DisplayUserItems;
 import com.example.loanapp.model.LoginModel;
@@ -37,12 +34,23 @@ public class EmployeeService {
 	EmployeeCardRepository empCardRepo;
 	
 	@Autowired
-	IssueRepository issueRepo;
+	private ItemRepository itemRepo;
 	
+	@Autowired
+	private LoanRepository loanRepo;
+	
+	@Autowired
+	private LoginModelRepository loginRepo;
+	
+	@Autowired
+	IssueRepository issuerepo;
+	
+	//save employee
 	public Employee saveEmployee(Employee u) {
 		Employee obj = emprepo.save(u);
 		return obj;
 	}
+
 	@Transactional
 	public String savedata(LoanModel u) {
 		String result="";
@@ -83,27 +91,25 @@ public class EmployeeService {
 	@Autowired
 	private ItemRepository itemRepo;
 	
+	// save item
 	public Item saveItem(Item i) {
 		Item obj = itemRepo.save(i);
 		return obj;
 	}
-	
-	@Autowired
-	private LoanRepository loanRepo;
-	
+		
+	// save loan
 	public Loan saveLoan(Loan l) {
 		Loan obj = loanRepo.save(l);
 		return obj;
 	}
 	
-	@Autowired
-	private LoginModelRepository loginRepo;
-	
+	// save login
 	public LoginModel saveLogin(LoginModel log) {
 		LoginModel obj = loginRepo.save(log);
 		return obj;
 	}
 	
+	// check login
 	public String chkLogin(LoginModel u) {
 		LoginModel user=null;
 		String result = null;
@@ -126,22 +132,24 @@ public class EmployeeService {
 		return result;
 	}
 	
+	// get employee
 	public Optional<Employee> getEmployee(String username) {
 		return emprepo.findById(username);
 	}
-
+	
+	// get all loans
 	public List<Loan> getAllLoanTypes() {
 		return loanRepo.findAll();
 	}
 	
+	//get items
 	public List<Item> getItems(){
 		return itemRepo.findAll();
 	}
 	
-	//***
+	
 	//get all items purchased by user u
-	@Autowired
-	IssueRepository issuerepo;
+	
 	public List<DisplayUserItems> getEmpItems(String empId){
 		List<Item> i = issuerepo.getEmpItems(empId);
 		List<String> issue_ids = issuerepo.getEmpIssues(empId);
