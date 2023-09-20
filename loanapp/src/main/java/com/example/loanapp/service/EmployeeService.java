@@ -22,6 +22,7 @@ import com.example.loanapp.model.LoginModel;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
@@ -51,19 +52,23 @@ public class EmployeeService {
 		String loanid=loanRepo.findbylt(u.getItem_category());
 		Loan loan=loanRepo.findById(loanid).get();
 		EmployeeCard ecd=new EmployeeCard();
-		//String cid="2345";
+		LocalDateTime idVal = LocalDateTime.now();
+		String idVal2 = idVal.toString();
+		idVal2 = idVal2.replace(":","");
+		idVal2 = idVal2.replace("-","");
+		idVal2 = idVal2.replace("T","");
+		idVal2 = idVal2.replace(".","");
 		LocalDate dt=LocalDate.now();
-		//ecd.setCard_id(cid);
 		ecd.setCard_issue_date(dt);
+		ecd.setCard_id(idVal2);
 		ecd.setEmployee(emp);
 		ecd.setLoan(loan);
 		EmployeeCard ec=empCardRepo.save(ecd);
-		String ii="1245";
-		
+		System.out.println(dt);
 		String itm=itemRepo.findbymake(u.getItem_category(),u.getItem_make());
 		Item ita=itemRepo.findById(itm).get();
 		Issue is=new Issue();
-		is.setIssue_id(ii);
+		is.setIssue_id(idVal2);
 		is.setEmployee(emp);
 		is.setItem(ita);
 		is.setIssue_date(dt);
@@ -156,5 +161,13 @@ public class EmployeeService {
 			dl.add(new DisplayLoans(l.get(i), d.get(i)));
 		}
 		return dl;
+	}
+	
+	public Loan fetchLoan(String loanID) {
+		return loanRepo.findById(loanID).get();
+	}
+	
+	public void deleteLoan(String loanID) {
+		loanRepo.deleteById(loanID);
 	}
 }

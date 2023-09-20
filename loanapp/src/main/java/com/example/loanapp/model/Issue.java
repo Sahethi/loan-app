@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="employee_issue_details")
 public class Issue {
 	@Id
-	@Column(length=6, nullable=false, unique=true)
+	@Column(nullable=false, unique=true)
 	private String issue_id;
 	
 	@JsonBackReference(value="IssueEmp")

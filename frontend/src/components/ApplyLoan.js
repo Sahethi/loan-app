@@ -72,7 +72,7 @@ function ApplyLoan(){
     // const handleSubmit = async (e) => {
     //     e.preventDefault();
     //     try {
-    //         await axios.post("http://localhost:8080/saveEmployee", {
+    //         await axios.post("http://localhost:8080/forapplyloans/", {
     //             ...userLoan
     //         }, config).then((res) => {
     //             alert("User Registered Successfully")

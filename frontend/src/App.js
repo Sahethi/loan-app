@@ -7,8 +7,10 @@ import LoanDetails from "./components/LoanDetails";
 import LoanCard from "./components/LoanCard";
 import UserDashboard from "./components/UserDashboard"
 import AdminDashboard from "./components/AdminDashboard";
-import AdminAddLoan from "./components/AdminAddLoan"
+import AdminAddLoan from "./components/AdminAddLoan";
 import AddEmployee from "./components/admin/AddEmployee";
+import AdminLoanManagement from "./components/AdminLoanManagement";
+import AdminEditLoan from "./components/AdminEditLoan";
 // session management code
 // useEffect (() => {
 //   let authData = sessionStorage.getItem('authData');
@@ -36,6 +38,8 @@ function App() {
                 <Route path ="/loan-cards" element = {<LoanCard/>} />
              <Route path="/UserDashboard" element={<UserDashboard/>}/>
              <Route path="/admin/adduser" element={<AddEmployee/>}/>
+             <Route path="/adminLoan" element={<AdminLoanManagement/>}/>
+              <Route path="/adminEditLoan/:loanID" element={<AdminEditLoan/>} />
             </Routes>
         </BrowserRouter>
       
