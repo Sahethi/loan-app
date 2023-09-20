@@ -1,0 +1,9 @@
+.loan-details-container{
+    display: flex;
+    flex-direction : column;
+    padding : 50px
+}
+.employee-details-container{
+    padding : 20px 0;
+    
+}
