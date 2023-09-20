@@ -18,6 +18,8 @@ import com.example.loanapp.model.DisplayUserItems;
 import com.example.loanapp.model.LoginModel;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
@@ -48,6 +50,46 @@ public class EmployeeService {
 		Employee obj = emprepo.save(u);
 		return obj;
 	}
+
+	@Transactional
+	public String savedata(LoanModel u) {
+		String result="";
+		Employee emp=null;
+		Optional<Employee>opt=emprepo.findById(u.getEmployee_id());
+		if(opt.isPresent()) emp=opt.get();
+		String loanid=loanRepo.findbylt(u.getItem_category());
+		Loan loan=loanRepo.findById(loanid).get();
+		EmployeeCard ecd=new EmployeeCard();
+		LocalDateTime idVal = LocalDateTime.now();
+		String idVal2 = idVal.toString();
+		idVal2 = idVal2.replace(":","");
+		idVal2 = idVal2.replace("-","");
+		idVal2 = idVal2.replace("T","");
+		idVal2 = idVal2.replace(".","");
+		LocalDate dt=LocalDate.now();
+		ecd.setCard_issue_date(dt);
+		ecd.setCard_id(idVal2);
+		ecd.setEmployee(emp);
+		ecd.setLoan(loan);
+		EmployeeCard ec=empCardRepo.save(ecd);
+		System.out.println(dt);
+		String itm=itemRepo.findbymake(u.getItem_category(),u.getItem_make());
+		Item ita=itemRepo.findById(itm).get();
+		Issue is=new Issue();
+		is.setIssue_id(idVal2);
+		is.setEmployee(emp);
+		is.setItem(ita);
+		is.setIssue_date(dt);
+		is.setReturn_date(dt);
+		Issue isi=issueRepo.save(is);
+		
+		
+		return ita+"hello"+itemRepo.findById(itm).get();
+	}
+	
+	
+	@Autowired
+	private ItemRepository itemRepo;
 	
 	// save item
 	public Item saveItem(Item i) {
@@ -127,5 +169,13 @@ public class EmployeeService {
 			dl.add(new DisplayLoans(l.get(i), d.get(i)));
 		}
 		return dl;
+	}
+	
+	public Loan fetchLoan(String loanID) {
+		return loanRepo.findById(loanID).get();
+	}
+	
+	public void deleteLoan(String loanID) {
+		loanRepo.deleteById(loanID);
 	}
 }

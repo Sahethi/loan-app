@@ -2,6 +2,7 @@ package com.example.loanapp.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -109,7 +110,34 @@ public class EmployeeController {
 		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId){
 			return empService.getAllLoans(empId);
 		}
+
+		@PostMapping("/forapplyloans")
+		public String savedata(@RequestBody LoanModel u)
+		{
+		     return empService.savedata(u);
+			
+		}
 		
+		@GetMapping("/fetchLoan/{loanID}")
+		public Loan fetchLoan(@PathVariable("loanID") String loanID){
+			return empService.fetchLoan(loanID);
+		}
+		
+		@PutMapping("/updateLoan/{loanID}")
+		public ResponseEntity<Loan> updateLoan(@PathVariable("loanID") String loan_id, @Valid @RequestBody Loan l){
+			Loan loanObj = empService.fetchLoan(loan_id);
+			if(loanObj != null) {
+				loanObj.setLoan_type(l.getLoan_type());
+				loanObj.setDuration_in_years(l.getDuration_in_years());
+				return new ResponseEntity<>(empService.saveLoan(loanObj),HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		@GetMapping("/deleteLoan/{loanID}")
+		public void deleteLoan(@PathVariable("loanID") String loan_id) {
+			empService.deleteLoan(loan_id);
+		}
 		
 }
 

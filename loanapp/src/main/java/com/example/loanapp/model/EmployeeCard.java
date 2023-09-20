@@ -2,6 +2,7 @@ package com.example.loanapp.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.ManyToOne;
 import java.sql.Date;
@@ -10,12 +11,14 @@ import java.sql.Date;
 @Table(name="employee_card_details")
 public class EmployeeCard {	
 	@Id
+
 	@Column(length=6, nullable=false, unique=true)
 	private String card_id; 
 	@ManyToOne
 	private Employee employee;
 
 	@ManyToOne
+	@JoinColumn
 	private Loan loan;
 	
 	private Date card_issue_date;
@@ -51,5 +54,5 @@ public class EmployeeCard {
 	public void setCard_issue_date(Date card_issue_date) {
 		this.card_issue_date = card_issue_date;
 	}
-	
+
 }
