@@ -33,7 +33,7 @@ function App() {
               <Route path="/UserDashboard" element={<UserDashboard/>}/>
               <Route path="/AdminDashboard" element={<AdminDashboard/>}/>
               <Route path="/AdminAddLoan" element={<AdminAddLoan/>}/>
-                <Route path ="/loan-cards" element = {<LoanCard/>} />
+              <Route path ="/loan-cards" element = {<LoanCard/>} />
              <Route path="/UserDashboard" element={<UserDashboard/>}/>
              <Route path="/admin/adduser" element={<AddEmployee/>}/>
             </Routes>

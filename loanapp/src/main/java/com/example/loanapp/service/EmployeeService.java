@@ -42,6 +42,7 @@ public class EmployeeService {
 		Employee obj = emprepo.save(u);
 		return obj;
 	}
+	
 	@Transactional
 	public String savedata(LoanModel u) {
 		String result="";
@@ -52,16 +53,20 @@ public class EmployeeService {
 		Loan loan=loanRepo.findById(loanid).get();
 		EmployeeCard ecd=new EmployeeCard();
 		//String cid="2345";
+		
 		LocalDate dt=LocalDate.now();
 		//ecd.setCard_id(cid);
+		
 		ecd.setCard_issue_date(dt);
 		ecd.setEmployee(emp);
 		ecd.setLoan(loan);
 		EmployeeCard ec=empCardRepo.save(ecd);
+		
+		System.out.println(dt);
 		String ii="1245";
 		
-		String itm=itemRepo.findbymake(u.getItem_category(),u.getItem_make());
-		Item ita=itemRepo.findById(itm).get();
+		String itm = itemRepo.findbymake(u.getItem_category(),u.getItem_make());
+		Item ita = itemRepo.findById(itm).get();
 		Issue is=new Issue();
 		is.setIssue_id(ii);
 		is.setEmployee(emp);
