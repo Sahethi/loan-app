@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.example.loanapp.model.AdminUser;
 import com.example.loanapp.model.DisplayLoans;
 //import com.example.loan.management.userin.UserInfo;
 import com.example.loanapp.model.Employee;
@@ -22,7 +23,6 @@ import com.example.loanapp.model.Issue;
 import com.example.loanapp.service.EmployeeService;
 import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
-import com.example.loanapp.model.LoanModel;
 import com.example.loanapp.model.LoginModel;
 import com.example.loanapp.model.DisplayUserItems;
 @RestController
@@ -41,39 +41,37 @@ public class EmployeeController {
 			return empService.getAllLoanTypes();
 		}
 		
-
-		@PostMapping("/saveEmployee")
-//		public Employee saveEmployee(@RequestBody Employee u) {
-//			Employee obj = empService.saveEmployee(u);
-//			return obj;
-//		}
-//		
+//		save Employee
+		@PostMapping("/saveEmployee")		
 		public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody Employee u) {
-		    //UserInfo obj=userservice.saveUser(u);
-			//return "useful";
-			return new ResponseEntity<Employee>(empService.saveEmployee(u),HttpStatus.CREATED);}		
-		
 
+			return new ResponseEntity<Employee>(empService.saveEmployee(u),HttpStatus.CREATED);
+		}		
+		
+		// save item
 		@PostMapping("/saveItem")
 		public Item saveItem(@RequestBody Item i) {
 			Item obj = empService.saveItem(i);
 			return obj;
 		}
-
+		
+		//save loans
 		@PostMapping("/saveLoan")
 		public Loan saveLoan(@RequestBody Loan l) {
 			Loan obj = empService.saveLoan(l);
-			return obj;
+			return obj; 
 		}
 		
+		// save login
 		@PostMapping("/saveLogin")
 		public LoginModel saveLogin(@RequestBody LoginModel log) {
 			LoginModel obj = empService.saveLogin(log);
 			return obj;
 		}
+		
+		//save user
 		public ResponseEntity<LoginModel>saveUser(@Valid @RequestBody LoginModel u) {
-		    //UserInfo obj=userservice.saveUser(u);
-			//return "useful";
+
 			return new ResponseEntity<LoginModel>(empService.saveLogin(u),HttpStatus.CREATED);}		
 		
 		@PostMapping("/loginAuth")
@@ -111,12 +109,7 @@ public class EmployeeController {
 		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId){
 			return empService.getAllLoans(empId);
 		}
-
-		@PostMapping("/forapplyloans")
-		public String savedata(@RequestBody LoanModel u)
-		{
-		     return empService.savedata(u);
-			
-		}
+		
+		
 }
 
