@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router';
 import axios from 'axios';
-
+import './LoanDetails.css'
 export default function LoanDetails() {
     const {empID} = useParams();
     // const handleProceed = (e) => {
@@ -26,10 +26,12 @@ export default function LoanDetails() {
 
 
   return (
-    <div>
+    <div className='loan-details-container'>
         <h2>Loan Details</h2>
+    
 
-        <div class="row">
+    
+        <div class="row employee-details-container">
             <div class="col-4">Employee ID: {empID}</div>
             <div class="col-4">Designation: {sessionStorage.getItem("designation")}
             </div>
@@ -39,11 +41,13 @@ export default function LoanDetails() {
         <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">Loan ID</th>
-      <th scope="col">Loan Type</th>
-      <th scope="col">Loan Duration</th>
-      <th scope="col">Card Issue Date</th>
+      <th scope="col" className='col-3'>Loan ID</th>
+      <th scope="col" className='col-3'>Loan Type</th>
+      <th scope="col" className='col-3'>Loan Duration</th>
+      <th scope="col" className='col-3'>Card Issue Date</th>
     </tr>
+    </thead>
+    <tbody>
     {
       loans.map((loan,idx)=>(
         <tr>
@@ -54,8 +58,10 @@ export default function LoanDetails() {
         </tr>
       ))
     }
+    </tbody>
+    
 
-  </thead>
+  
 </table>
     </div>
   )
