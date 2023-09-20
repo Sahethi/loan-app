@@ -6,6 +6,8 @@ import ItemDetails from "./components/ItemDetails";
 import LoanDetails from "./components/LoanDetails";
 import LoanCard from "./components/LoanCard";
 import UserDashboard from "./components/UserDashboard";
+import AdminItem from "./components/AdminItem";
+import AdminItemDetails from "./components/AdminItemDetails";
 // session management code
 // useEffect (() => {
 //   let authData = sessionStorage.getItem('authData');
@@ -28,6 +30,8 @@ function App() {
               <Route path="/loans/:empID" element={<LoanDetails/>} />
                 <Route path ="/loan-cards" element = {<LoanCard/>} />
              <Route path="/UserDashboard" element={<UserDashboard/>}/>
+             <Route path="/AdminItem" element={<AdminItem/>}/>
+             <Route path="/AdminItemDetails" element={<AdminItemDetails/>}/>
             </Routes>
         </BrowserRouter>
       

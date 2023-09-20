@@ -13,12 +13,14 @@ import com.example.loanapp.repository.ItemRepository;
 import com.example.loanapp.repository.LoanRepository;
 import com.example.loanapp.repository.IssueRepository;
 import com.example.loanapp.repository.LoginModelRepository;
+import com.example.loanapp.repository.aditemrepo.AditemRepo;
 import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
 import com.example.loanapp.model.LoanModel;
 import com.example.loanapp.model.Issue;
 import com.example.loanapp.model.DisplayUserItems;
 import com.example.loanapp.model.LoginModel;
+import com.example.loanapp.model.adminitems.AdminItems;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -73,6 +75,8 @@ public class EmployeeService {
 		
 		return ita+"hello"+itemRepo.findById(itm).get();
 	}
+	@Autowired
+	private AditemRepo aditemRepo;
 	
 	
 	@Autowired
@@ -80,6 +84,10 @@ public class EmployeeService {
 	
 	public Item saveItem(Item i) {
 		Item obj = itemRepo.save(i);
+		return obj;
+	}
+	public AdminItems adminsave(AdminItems i) {
+		AdminItems obj = aditemRepo.save(i);
 		return obj;
 	}
 	
@@ -131,6 +139,9 @@ public class EmployeeService {
 	
 	public List<Item> getItems(){
 		return itemRepo.findAll();
+	}
+	public List<AdminItems> getAdminItems(){
+	    return aditemRepo.findAll();	
 	}
 	
 	//***

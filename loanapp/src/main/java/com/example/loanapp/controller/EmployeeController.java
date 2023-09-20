@@ -24,6 +24,7 @@ import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
 import com.example.loanapp.model.LoanModel;
 import com.example.loanapp.model.LoginModel;
+import com.example.loanapp.model.adminitems.AdminItems;
 import com.example.loanapp.model.DisplayUserItems;
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -80,6 +81,10 @@ public class EmployeeController {
 		public String validateUser(@RequestBody LoginModel u) {
 			return empService.chkLogin(u);
 		}
+		@PostMapping("/adminItems")
+		public AdminItems adminsave(@RequestBody AdminItems u) {
+			return empService.adminsave(u);
+		}
 		
 		@GetMapping("/employees/{empId}")
 		public Optional<Employee> getEmp(@PathVariable("empId") String empId){
@@ -116,6 +121,11 @@ public class EmployeeController {
 		{
 		     return empService.savedata(u);
 			
+		}
+		@GetMapping("/displayAdminItems")
+		public List<AdminItems>getAdminItems(){
+			List<AdminItems>i=empService.getAdminItems();
+            return i;
 		}
 }
 
