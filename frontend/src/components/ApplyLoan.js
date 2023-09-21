@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-
+import './ApplyLoan.css'
 function ApplyLoan(){
 
     const [items, setItems] = useState([]);
@@ -76,6 +76,7 @@ function ApplyLoan(){
     }
     const handleSubmit = async (e) => {
 
+<<<<<<< HEAD
         e.preventDefault();        
         try {
             await axios.post("http://localhost:8080/forapplyloans", {
@@ -87,6 +88,16 @@ function ApplyLoan(){
             }).then((res) => {
                 alert("Loan Applied")
                 console.log(res.data);
+=======
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         await axios.post("http://localhost:8080/forapplyloans/", {
+    //             ...userLoan
+    //         }, config).then((res) => {
+    //             alert("User Registered Successfully")
+    //             console.log(res.data);
+>>>>>>> main
                 
             }, fail => {
                 console.error(fail); // Error!
@@ -101,7 +112,7 @@ if(loading) {
 }
     
 return(
-    <div>
+    <div className="apply-loans-container">
     <div class="container">
         <div class="row">
             <h2>Apply Loan</h2>

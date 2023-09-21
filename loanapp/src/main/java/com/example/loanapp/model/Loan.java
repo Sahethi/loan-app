@@ -1,12 +1,15 @@
 package com.example.loanapp.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import java.util.List;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="loan_card_master")
@@ -20,8 +23,10 @@ public class Loan {
 	
 	@Column(length=2)
 	private int duration_in_years;
-	
-	@OneToMany(cascade=CascadeType.ALL)
+
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy= "loan",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+
 	private List<EmployeeCard> employeecard;
 	public String getLoan_id() {
 		return loan_id;
