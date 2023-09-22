@@ -170,4 +170,14 @@ public class EmployeeService {
 	public void deleteLoan(String loanID) {
 		loanRepo.deleteById(loanID);
 	}
+	
+	public List<Employee> fetchAllEmployees(){
+		return emprepo.findAll();
+	}
+	public Employee fetchEmployee(String username) {
+		return emprepo.findById(username).get();
+	}
+	public void deleteEmployee(String empID) {
+		emprepo.deleteById(empID);
+	}
 }

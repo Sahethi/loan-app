@@ -67,7 +67,7 @@ export default function AdminEditLoan() {
 
                 <div className='form-group'>
                     <label for="loan_type">Loan Type:</label>
-                    <select name="loan_type" className = "form-control" value={loan.loan_type} onChange={handleInput}>
+                    <select name="loan_type" className = "form-control" value={loan.loan_type} onChange={handleInput} disabled>
                         <option disabled value="">Select</option>
                         <option value="Furniture">Furniture</option>
                         <option value="Crockery">Crockery</option>

@@ -141,5 +141,36 @@ public class EmployeeController {
 			empService.deleteLoan(loan_id);
 		}
 		
+		@GetMapping("/fetchAllEmployees")
+		public List<Employee> fetchAllEmployees(){
+			return empService.fetchAllEmployees();
+		}
+		
+		@PutMapping("/updateEmployee/{employeeID}")
+		public ResponseEntity<Employee> updateEmployee(@PathVariable("employeeID") String emp_id, @Valid @RequestBody Employee e){
+			Employee empObj = empService.fetchEmployee(emp_id);
+			if(empObj != null) {
+				empObj.setFirst_name(e.getFirst_name());
+				empObj.setLast_name(e.getLast_name());
+				empObj.setEmail_id(e.getEmail_id());
+				empObj.setPassword(e.getPassword());
+				empObj.setHome_add(e.getHome_add());
+				empObj.setDob(e.getDob());
+				empObj.setGender(e.getGender());
+				empObj.setPhone_num(e.getPhone_num());
+				empObj.setDesignation(e.getDesignation());
+				empObj.setDept(e.getDept());
+				empObj.setDoj(e.getDoj());
+				return new ResponseEntity<>(empService.saveEmployee(empObj),HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		@GetMapping("/deleteEmployee/{empID}")
+		public void deleteEmployee(@PathVariable("empID") String emp_id) {
+			empService.deleteEmployee(emp_id);
+		}
+
+		
 }
 

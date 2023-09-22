@@ -81,6 +81,8 @@ export default function AddEmployee() {
                 // sendToLogin(res);
                 console.log(res.data);
                 
+                navigate("/adminEmployee");
+                
             }, fail => {
                 console.error(fail); // Error!
             });
