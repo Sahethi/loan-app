@@ -24,6 +24,7 @@ import com.example.loanapp.model.Issue;
 import com.example.loanapp.service.EmployeeService;
 import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
+import com.example.loanapp.model.LoanModel;
 import com.example.loanapp.model.LoginModel;
 import com.example.loanapp.model.DisplayUserItems;
 @RestController
