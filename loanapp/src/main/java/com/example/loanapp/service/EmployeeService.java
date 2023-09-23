@@ -60,7 +60,6 @@ public class EmployeeService {
 		Employee emp=null;
 		Optional<Employee>opt=emprepo.findById(u.getEmployee_id());
 		if(opt.isPresent()) emp=opt.get();
-		
 		String loanid=loanRepo.findbylt(u.getItem_category());
 		Loan loan=loanRepo.findById(loanid).get();
 		
@@ -178,5 +177,15 @@ public class EmployeeService {
 	
 	public void deleteLoan(String loanID) {
 		loanRepo.deleteById(loanID);
+	}
+	
+	public List<Employee> fetchAllEmployees(){
+		return emprepo.findAll();
+	}
+	public Employee fetchEmployee(String username) {
+		return emprepo.findById(username).get();
+	}
+	public void deleteEmployee(String empID) {
+		emprepo.deleteById(empID);
 	}
 }

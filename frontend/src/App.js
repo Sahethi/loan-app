@@ -11,7 +11,9 @@ import AdminAddLoan from "./components/AdminAddLoan";
 import AddEmployee from "./components/admin/AddEmployee";
 import AdminLogin from "./components/AdminLogin"
 import AdminLoanManagement from "./components/AdminLoanManagement";
+import AdminEmployeeManagement from "./components/AdminEmployeeManagement";
 import AdminEditLoan from "./components/AdminEditLoan";
+import AdminEditEmployee from "./components/AdminEditEmployee";
 
 // session management code
 // useEffect (() => {
@@ -41,7 +43,9 @@ function App() {
              <Route path="/UserDashboard" element={<UserDashboard/>}/>
              <Route path="/admin/adduser" element={<AddEmployee/>}/>
              <Route path="/adminLoan" element={<AdminLoanManagement/>}/>
+             <Route path="/adminEmployee" element={<AdminEmployeeManagement/>}/>
               <Route path="/adminEditLoan/:loanID" element={<AdminEditLoan/>} />
+              <Route path="/adminEditEmployee/:employeeID" element={<AdminEditEmployee/>} />
             </Routes>
         </BrowserRouter>
       

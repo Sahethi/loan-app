@@ -6,6 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.ManyToOne;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -16,9 +19,12 @@ public class EmployeeCard {
 	@Id
 	@Column(nullable=false, unique=true)
 	private String card_id; 
+	@JsonBackReference(value="EmpEmpCard")
 	@ManyToOne
+	@JoinColumn
 	private Employee employee;
 
+	@JsonBackReference(value="LoanEmpCard")
 	@ManyToOne
 	@JoinColumn
 	private Loan loan;

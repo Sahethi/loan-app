@@ -6,6 +6,7 @@ import javax.persistence.Table;
 import javax.persistence.ManyToOne;
 import java.sql.Date;
 import java.time.LocalDate;
+import javax.persistence.JoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -18,10 +19,12 @@ public class Issue {
 	
 	@JsonBackReference(value="IssueEmp")
 	@ManyToOne
+	@JoinColumn
 	private Employee employee;
 
 	@JsonBackReference(value="IssueItem")
 	@ManyToOne
+	@JoinColumn
 	private Item item;
 	private LocalDate issue_date;
 	private LocalDate return_date;
