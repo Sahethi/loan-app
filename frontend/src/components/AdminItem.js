@@ -3,11 +3,11 @@ import "./AdminItem.css"
 import axios from "axios";
 
 function AdminItem(){
-    const baseURL="http://localhost:8080/adminItems";
+    const baseURL="http://localhost:8080/saveItem";
     const [item_id, setitem_id]=useState('');
     const [item_description,setitem_description]=useState('');
     const [issue_status,setissue_status]=useState('');
-    const [item_value,setitem_Value]=useState('');
+    const [item_valuation,setitem_Value]=useState('');
     const [item_category,setitem_category]=useState('');
     const [item_make,setitem_make]=useState('');
 
@@ -31,7 +31,7 @@ function AdminItem(){
                         item_category:item_category,
                         item_make:item_make,
                         issue_status:issue_status,
-                        item_value:item_value,
+                        item_valuation:item_valuation,
                         item_description:item_description
                    })
                    .then((response) => {
@@ -59,14 +59,14 @@ function AdminItem(){
                  <label for="email" class="form-label">Issue Status:</label>
                  <select id="issue_status" onChange={issueHandler}value={issue_status}>
                     <option>select..</option>
-                    <option>Yes</option>
-                    <option>No</option>
+                    <option>Y</option>
+                    <option>N</option>
                  </select>
             
                  <label for="email" class="form-label">Item Category:</label>
                  <input className="inputField" type="text" onChange={categoryHandler}value={item_category}required/>
                  <label for="email" class="form-label">Item Value:</label>
-                 <input className="inputField" type="text" onChange={valueHandler}value={item_value}required/>
+                 <input className="inputField" type="text" onChange={valueHandler}value={item_valuation}required/>
                  <label for="email" class="form-label">Item Make:</label>
                  <select id="issue_status" onChange={makeHandler} value={item_make}>
                     <option>select..</option>

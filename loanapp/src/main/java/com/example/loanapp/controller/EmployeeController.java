@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -126,6 +127,29 @@ public class EmployeeController {
 		public List<AdminItems>getAdminItems(){
 			List<AdminItems>i=empService.getAdminItems();
             return i;
+		}
+		@GetMapping("/fetchitems/{item_id}")
+		public Item fetchitems(@PathVariable("item_id") String item_id){
+			return empService.fetchitems(item_id);
+		}
+		@PutMapping("/updateItem/{item_id}")
+		public ResponseEntity<Item> updateLoan(@PathVariable("item_id") String item_id, @Valid @RequestBody Item l){
+			Item itemObj = empService.fetchitems(item_id);
+			if(itemObj != null) {
+				itemObj.setItem_id(l.getItem_id());
+				itemObj.setItem_category(l.getItem_category());
+				itemObj.setItem_description(l.getItem_description());
+				itemObj.setIssue_status(l.getIssue_status());
+				itemObj.setItem_make(l.getItem_make());
+				itemObj.setItem_valuation(l.getItem_valuation());
+				return new ResponseEntity<>(empService.saveItem(itemObj),HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		@GetMapping("/deleteitem/{item_id}")
+		public void deleteitem(@PathVariable("item_id") String item_id) {
+			empService.deleteitem(item_id);
 		}
 }
 

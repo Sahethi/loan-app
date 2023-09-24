@@ -143,6 +143,13 @@ public class EmployeeService {
 	public List<AdminItems> getAdminItems(){
 	    return aditemRepo.findAll();	
 	}
+	public Item fetchitems(String item_id) {
+		return itemRepo.findById(item_id).get();
+	}
+	
+	public void deleteitem(String item_id) {
+		itemRepo.deleteById(item_id);
+	}
 	
 	//***
 	//get all items purchased by user u
