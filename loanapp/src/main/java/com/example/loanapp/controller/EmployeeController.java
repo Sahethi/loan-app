@@ -2,8 +2,10 @@ package com.example.loanapp.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -23,7 +25,9 @@ import com.example.loanapp.model.Issue;
 import com.example.loanapp.service.EmployeeService;
 import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
+import com.example.loanapp.model.LoanModel;
 import com.example.loanapp.model.LoginModel;
+import com.example.loanapp.model.adminitems.AdminItems;
 import com.example.loanapp.model.DisplayUserItems;
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -78,6 +82,10 @@ public class EmployeeController {
 		public String validateUser(@RequestBody LoginModel u) {
 			return empService.chkLogin(u);
 		}
+		@PostMapping("/adminItems")
+		public AdminItems adminsave(@RequestBody AdminItems u) {
+			return empService.adminsave(u);
+		}
 		
 		@GetMapping("/employees/{empId}")
 		public Optional<Employee> getEmp(@PathVariable("empId") String empId){
@@ -109,7 +117,94 @@ public class EmployeeController {
 		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId){
 			return empService.getAllLoans(empId);
 		}
+
+		@PostMapping("/forapplyloans")
+		public String savedata(@RequestBody LoanModel u)
+		{
+		     return empService.savedata(u);
+			
+		}
+
+		@GetMapping("/displayAdminItems")
+		public List<AdminItems>getAdminItems(){
+			List<AdminItems>i=empService.getAdminItems();
+            return i;
+		}
+		@GetMapping("/fetchitems/{item_id}")
+		public Item fetchitems(@PathVariable("item_id") String item_id){
+			return empService.fetchitems(item_id);
+		}
+		@PutMapping("/updateItem/{item_id}")
+		public ResponseEntity<Item> updateLoan(@PathVariable("item_id") String item_id, @Valid @RequestBody Item l){
+			Item itemObj = empService.fetchitems(item_id);
+			if(itemObj != null) {
+				itemObj.setItem_id(l.getItem_id());
+				itemObj.setItem_category(l.getItem_category());
+				itemObj.setItem_description(l.getItem_description());
+				itemObj.setIssue_status(l.getIssue_status());
+				itemObj.setItem_make(l.getItem_make());
+				itemObj.setItem_valuation(l.getItem_valuation());}
+				return new ResponseEntity<>(empService.saveItem(itemObj),HttpStatus.OK);
+		}
 		
+		@GetMapping("/fetchLoan/{loanID}")
+		public Loan fetchLoan(@PathVariable("loanID") String loanID){
+			return empService.fetchLoan(loanID);
+		}
 		
+		@PutMapping("/updateLoan/{loanID}")
+		public ResponseEntity<Loan> updateLoan(@PathVariable("loanID") String loan_id, @Valid @RequestBody Loan l){
+			Loan loanObj = empService.fetchLoan(loan_id);
+			if(loanObj != null) {
+				loanObj.setLoan_type(l.getLoan_type());
+				loanObj.setDuration_in_years(l.getDuration_in_years());
+				return new ResponseEntity<>(empService.saveLoan(loanObj),HttpStatus.OK);
+
+			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		@GetMapping("/deleteitem/{item_id}")
+		public void deleteitem(@PathVariable("item_id") String item_id) {
+			empService.deleteitem(item_id);
+		}
+
+		@GetMapping("/deleteLoan/{loanID}")
+		public void deleteLoan(@PathVariable("loanID") String loan_id) {
+			empService.deleteLoan(loan_id);
+		}
+		
+		@GetMapping("/fetchAllEmployees")
+		public List<Employee> fetchAllEmployees(){
+			return empService.fetchAllEmployees();
+		}
+		
+		@PutMapping("/updateEmployee/{employeeID}")
+		public ResponseEntity<Employee> updateEmployee(@PathVariable("employeeID") String emp_id, @Valid @RequestBody Employee e){
+			Employee empObj = empService.fetchEmployee(emp_id);
+			if(empObj != null) {
+				empObj.setFirst_name(e.getFirst_name());
+				empObj.setLast_name(e.getLast_name());
+				empObj.setEmail_id(e.getEmail_id());
+				empObj.setPassword(e.getPassword());
+				empObj.setHome_add(e.getHome_add());
+				empObj.setDob(e.getDob());
+				empObj.setGender(e.getGender());
+				empObj.setPhone_num(e.getPhone_num());
+				empObj.setDesignation(e.getDesignation());
+				empObj.setDept(e.getDept());
+				empObj.setDoj(e.getDoj());
+				return new ResponseEntity<>(empService.saveEmployee(empObj),HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		@GetMapping("/deleteEmployee/{empID}")
+		public void deleteEmployee(@PathVariable("empID") String emp_id) {
+			empService.deleteEmployee(emp_id);
+		}
+
+		
+
 }
 

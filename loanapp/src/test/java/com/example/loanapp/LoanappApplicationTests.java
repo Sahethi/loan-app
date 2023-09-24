@@ -3,6 +3,7 @@ package com.example.loanapp;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -286,7 +287,8 @@ class LoanappApplicationTests {
 			
 			EmployeeCard empCard= new EmployeeCard();
 			empCard.setCard_id("card01");
-			empCard.setCard_issue_date(Date.valueOf("2016-02-01"));
+			
+			empCard.setCard_issue_date(LocalDate.parse("2016-02-01"));
 			
 			
 			List<Loan> ln = new ArrayList<>();
@@ -311,7 +313,6 @@ class LoanappApplicationTests {
 	
 
 }
-
 
 
 
