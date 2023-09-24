@@ -4,7 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.ManyToOne;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -13,22 +17,25 @@ import java.time.LocalDate;
 @Table(name="employee_card_details")
 public class EmployeeCard {	
 	@Id
-	@Column(length=6, nullable=false, unique=true)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	private Long card_id; 
+	@Column(nullable=false, unique=true)
+	private String card_id; 
+	@JsonBackReference(value="EmpEmpCard")
 	@ManyToOne
+	@JoinColumn
 	private Employee employee;
 
+	@JsonBackReference(value="LoanEmpCard")
 	@ManyToOne
+	@JoinColumn
 	private Loan loan;
 	
 	private LocalDate card_issue_date;
 
-	public Long getCard_id() {
+	public String getCard_id() {
 		return card_id;
 	}
 
-	public void setCard_id(Long card_id) {
+	public void setCard_id(String card_id) {
 		this.card_id = card_id;
 	}
 
@@ -55,5 +62,5 @@ public class EmployeeCard {
 	public void setCard_issue_date(LocalDate card_issue_date) {
 		this.card_issue_date = card_issue_date;
 	}
-	
+
 }

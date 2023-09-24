@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-
+import './ApplyLoan.css'
 function ApplyLoan(){
 
     const [items, setItems] = useState([]);
@@ -17,7 +17,6 @@ function ApplyLoan(){
     //set current make based on description selected
     const [make, setMake] = useState([]);
     const [currMake, setcurrMake] = useState("");
-    
 
     
     useEffect(() => {
@@ -67,6 +66,31 @@ function ApplyLoan(){
 
     const handle3 = (e) => {
         setcurrMake(e.target.value);
+        
+    }
+
+    const handleSubmit = async (e) => {
+        console.log("yo");
+        e.preventDefault();           
+        try {
+            let x =items.find(item => (item.item_description === currDesc && item.item_make === currMake));
+            if(x)x=x.item_valuation;
+            await axios.post("http://localhost:8080/forapplyloans", {
+                employee_id: sessionStorage.getItem("sessionId") ,
+                item_category: currCat,
+                item_description: currDesc,
+                item_make: currMake,
+                item_valuation:x
+            }).then((res) => {
+                alert("Loan Applied")
+                console.log(res.data);
+                
+            }, fail => {
+                console.error(fail); // Error!
+            });
+        } catch (err) {
+            alert(err);
+        }   
     }
 
 if(loading) {
@@ -74,7 +98,7 @@ if(loading) {
 }
     
 return(
-    <div>
+    <div className="apply-loans-container">
     <div class="container">
         <div class="row">
             <h2>Apply Loan</h2>
@@ -82,7 +106,7 @@ return(
         </div>
         <div class="row">
         <div class="col-sm-6">
-        <form onSubmit="handleSubmit">
+        <form onSubmit={handleSubmit}>
                         <div class="form-group">
                         <label>Employee Id</label>
                         <input type="text" value={sessionStorage.getItem('sessionId')} class="form-control"/><br></br>
@@ -91,7 +115,6 @@ return(
                         <label>Item Category</label>&nbsp;&nbsp;
                         <select defaultValue={""} onChange={handle1} value={currCat}> 
                             <option disabled value="">Select</option> 
-                        
                             {
                                 cats.map(item =>  <option>{item}</option>)
                             }
@@ -105,7 +128,7 @@ return(
                         <select defaultValue={""} onChange={handle2} value={currDesc}>
                         <option disabled value="">Select</option>
                         {       
-                          desc.map(curr => curr!=undefined && <option>{curr}</option>)   
+                          desc.map(curr => curr!==undefined && <option>{curr}</option>)   
                         }
                         </select>
                         {/* <input type="text"  class="form-control"/> */}
@@ -113,13 +136,16 @@ return(
                         }
                         <br></br>
                         {
-                            currDesc != "" &&
+                            currDesc !== "" &&
                             <div class="form-group">
-                        <label>Item make</label>
-                        <select defaultValue={""} onChange = {handle3} value={currMake}>
+                        <label>Item Make</label>
+                        <select defaultValue={""} onChange = {(e) => {
+                            
+                            handle3(e);
+                        }} value={currMake}>
                         <option disabled value="">Select</option>
                         {
-                            make.map(curr => curr!=undefined && <option>{curr}</option>)
+                            make.map(curr => curr!==undefined && <option>{curr}</option>)
                         }
                         </select>
                         {/* <input type="text"  class="form-control"/> */}
@@ -129,7 +155,9 @@ return(
                         <div class="form-group">
                         
                         {
-                            currCat != "" && currDesc != ""   && items.find(item => (item.item_description === currDesc && item.item_make === currMake)) != undefined && <p>Item value:{items.find(item => (item.item_description === currDesc && item.item_make === currMake)).item_valuation}</p>
+                            currCat != "" && currDesc != ""   && items.find(item => (item.item_description === currDesc && item.item_make === currMake)) != undefined && 
+                            <p> Item Value: {items.find(item => (item.item_description === currDesc && item.item_make === currMake)).item_valuation}
+                            </p>
                         }
                         </div><br></br>
                     

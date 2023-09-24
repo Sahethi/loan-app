@@ -36,7 +36,5 @@ public class LoanModel {
 	public void setItem_make(String item_make) {
 		this.item_make = item_make;
 	}
-	
-	
 
 }

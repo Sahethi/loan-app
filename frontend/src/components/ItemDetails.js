@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
+import './ItemDetails.css'
 export default function ItemDetails() {
     const {empID} = useParams();
     const [items, setItems] = useState([]);
@@ -26,7 +27,8 @@ export default function ItemDetails() {
     
 
   return (
-    <div>
+    <div className='item-details-container'>
+      <Link to = "/UserDashboard">Back to Home</Link>
     <h2>Item Details</h2>
 
     <div class="row">

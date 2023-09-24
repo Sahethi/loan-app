@@ -24,6 +24,7 @@ import com.example.loanapp.model.adminitems.AdminItems;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
@@ -38,12 +39,22 @@ public class EmployeeService {
 	EmployeeCardRepository empCardRepo;
 	
 	@Autowired
-	IssueRepository issueRepo;
+	private ItemRepository itemRepo1;
 	
+
+	
+	@Autowired
+	private LoginModelRepository loginRepo;
+	
+	@Autowired
+	IssueRepository issuerepo;
+	
+	//save employee
 	public Employee saveEmployee(Employee u) {
 		Employee obj = emprepo.save(u);
 		return obj;
 	}
+
 	@Transactional
 	public String savedata(LoanModel u) {
 		String result="";
@@ -52,40 +63,43 @@ public class EmployeeService {
 		if(opt.isPresent()) emp=opt.get();
 		String loanid=loanRepo.findbylt(u.getItem_category());
 		Loan loan=loanRepo.findById(loanid).get();
-		EmployeeCard ecd=new EmployeeCard();
-		//String cid="2345";
+		
+		EmployeeCard ecd = new EmployeeCard();
+		LocalDateTime idVal = LocalDateTime.now();
+		String idVal2 = idVal.toString();
+		idVal2 = idVal2.replace(":","");
+		idVal2 = idVal2.replace("-","");
+		idVal2 = idVal2.replace("T","");
+		idVal2 = idVal2.replace(".","");
 		LocalDate dt=LocalDate.now();
-		//ecd.setCard_id(cid);
 		ecd.setCard_issue_date(dt);
+		ecd.setCard_id(idVal2);
 		ecd.setEmployee(emp);
 		ecd.setLoan(loan);
-		EmployeeCard ec=empCardRepo.save(ecd);
-		String ii="1245";
 		
-		String itm=itemRepo.findbymake(u.getItem_category(),u.getItem_make());
-		Item ita=itemRepo.findById(itm).get();
+		EmployeeCard ec = empCardRepo.save(ecd);
+		System.out.println(dt);
+		String itm=itemRepo1.findbymake(u.getItem_category(),u.getItem_make());
+		Item ita=itemRepo1.findById(itm).get();
 		Issue is=new Issue();
-		is.setIssue_id(ii);
+		is.setIssue_id(idVal2);
 		is.setEmployee(emp);
 		is.setItem(ita);
 		is.setIssue_date(dt);
 		is.setReturn_date(dt);
-		Issue isi=issueRepo.save(is);
+		Issue isi = issuerepo.save(is);
 		
-		
-		return ita+"hello"+itemRepo.findById(itm).get();
+		return ita+"hello"+itemRepo1.findById(itm).get();
 	}
 	@Autowired
 	private AditemRepo aditemRepo;
 	
-	
-	@Autowired
-	private ItemRepository itemRepo;
-	
+	// save item
 	public Item saveItem(Item i) {
-		Item obj = itemRepo.save(i);
+		Item obj = itemRepo1.save(i);
 		return obj;
 	}
+
 	public AdminItems adminsave(AdminItems i) {
 		AdminItems obj = aditemRepo.save(i);
 		return obj;
@@ -94,19 +108,22 @@ public class EmployeeService {
 	@Autowired
 	private LoanRepository loanRepo;
 	
+
+		
+	// save loan
+
 	public Loan saveLoan(Loan l) {
 		Loan obj = loanRepo.save(l);
 		return obj;
 	}
 	
-	@Autowired
-	private LoginModelRepository loginRepo;
-	
+	// save login
 	public LoginModel saveLogin(LoginModel log) {
 		LoginModel obj = loginRepo.save(log);
 		return obj;
 	}
 	
+	// check login
 	public String chkLogin(LoginModel u) {
 		LoginModel user=null;
 		String result = null;
@@ -129,32 +146,34 @@ public class EmployeeService {
 		return result;
 	}
 	
+	// get employee
 	public Optional<Employee> getEmployee(String username) {
 		return emprepo.findById(username);
 	}
-
+	
+	// get all loans
 	public List<Loan> getAllLoanTypes() {
 		return loanRepo.findAll();
 	}
 	
+	//get items
 	public List<Item> getItems(){
-		return itemRepo.findAll();
+		return itemRepo1.findAll();
 	}
 	public List<AdminItems> getAdminItems(){
 	    return aditemRepo.findAll();	
 	}
 	public Item fetchitems(String item_id) {
-		return itemRepo.findById(item_id).get();
+		return itemRepo1.findById(item_id).get();
 	}
 	
 	public void deleteitem(String item_id) {
-		itemRepo.deleteById(item_id);
+		itemRepo1.deleteById(item_id);
 	}
 	
-	//***
+	
 	//get all items purchased by user u
-	@Autowired
-	IssueRepository issuerepo;
+	
 	public List<DisplayUserItems> getEmpItems(String empId){
 		List<Item> i = issuerepo.getEmpItems(empId);
 		List<String> issue_ids = issuerepo.getEmpIssues(empId);
@@ -174,5 +193,23 @@ public class EmployeeService {
 			dl.add(new DisplayLoans(l.get(i), d.get(i)));
 		}
 		return dl;
+	}
+	
+	public Loan fetchLoan(String loanID) {
+		return loanRepo.findById(loanID).get();
+	}
+	
+	public void deleteLoan(String loanID) {
+		loanRepo.deleteById(loanID);
+	}
+	
+	public List<Employee> fetchAllEmployees(){
+		return emprepo.findAll();
+	}
+	public Employee fetchEmployee(String username) {
+		return emprepo.findById(username).get();
+	}
+	public void deleteEmployee(String empID) {
+		emprepo.deleteById(empID);
 	}
 }

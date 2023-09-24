@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import javax.persistence.ManyToOne;
 import java.sql.Date;
 import java.time.LocalDate;
+import javax.persistence.JoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -14,11 +15,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="employee_issue_details")
 public class Issue {
 	@Id
-	@Column(length=6, nullable=false, unique=true)
+	@Column(nullable=false, unique=true)
 	private String issue_id;
 	
 	@JsonBackReference(value="IssueEmp")
 	@ManyToOne
+	@JoinColumn
 	private Employee employee;
     
 	@JsonBackReference(value="IssueItem")
