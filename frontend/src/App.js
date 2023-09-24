@@ -5,13 +5,11 @@ import ApplyLoan from "./components/ApplyLoan";
 import ItemDetails from "./components/ItemDetails";
 import LoanDetails from "./components/LoanDetails";
 import LoanCard from "./components/LoanCard";
-
 import UserDashboard from "./components/UserDashboard";
 import AdminItem from "./components/AdminItem";
 import AdminItemDetails from "./components/AdminItemDetails";
 import AdminEditItem from "./components/AdminEditITem";
 
-import UserDashboard from "./components/UserDashboard"
 import AdminDashboard from "./components/AdminDashboard";
 import AdminAddLoan from "./components/AdminAddLoan";
 import AddEmployee from "./components/admin/AddEmployee";
@@ -58,6 +56,7 @@ function App() {
              <Route path="/adminEmployee" element={<AdminEmployeeManagement/>}/>
               <Route path="/adminEditLoan/:loanID" element={<AdminEditLoan/>} />
               <Route path="/adminEditEmployee/:employeeID" element={<AdminEditEmployee/>} />
+              <Route path="/admin/login" element={<AdminLogin/>}/>
 
             </Routes>
         </BrowserRouter>
