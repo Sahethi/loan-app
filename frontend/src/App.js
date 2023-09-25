@@ -26,7 +26,7 @@ function App() {
               <Route path="/applyloan" element={ <ApplyLoan/>}/>
               <Route path="/items/:empID" element={<ItemDetails/>} />
               <Route path="/loans/:empID" element={<LoanDetails/>} />
-                <Route path ="/loan-cards" element = {<LoanCard/>} />
+              <Route path ="/loan-cards" element = {<LoanCard/>} />
              <Route path="/UserDashboard" element={<UserDashboard/>}/>
             </Routes>
         </BrowserRouter>
