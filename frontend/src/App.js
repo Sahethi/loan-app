@@ -11,7 +11,6 @@ import AdminItem from "./components/AdminItem";
 import AdminItemDetails from "./components/AdminItemDetails";
 import AdminEditItem from "./components/AdminEditITem";
 
-import UserDashboard from "./components/UserDashboard"
 import AdminDashboard from "./components/AdminDashboard";
 import AdminAddLoan from "./components/AdminAddLoan";
 import AddEmployee from "./components/admin/AddEmployee";
@@ -20,6 +19,7 @@ import AdminLoanManagement from "./components/AdminLoanManagement";
 import AdminEmployeeManagement from "./components/AdminEmployeeManagement";
 import AdminEditLoan from "./components/AdminEditLoan";
 import AdminEditEmployee from "./components/AdminEditEmployee";
+import PageNotFound from "./components/PageNotFound";
 
 
 // session management code
@@ -58,6 +58,9 @@ function App() {
              <Route path="/adminEmployee" element={<AdminEmployeeManagement/>}/>
               <Route path="/adminEditLoan/:loanID" element={<AdminEditLoan/>} />
               <Route path="/adminEditEmployee/:employeeID" element={<AdminEditEmployee/>} />
+
+              <Route path="*" element={<PageNotFound/>} />
+              
 
             </Routes>
         </BrowserRouter>
