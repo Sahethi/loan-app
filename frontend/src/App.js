@@ -47,7 +47,6 @@ function App() {
               <Route path="/AdminDashboard" element={<AdminDashboard/>}/>
               <Route path="/AdminAddLoan" element={<AdminAddLoan/>}/>
                 <Route path ="/loan-cards" element = {<LoanCard/>} />
-             <Route path="/UserDashboard" element={<UserDashboard/>}/>
 
              <Route path="/AdminItem" element={<AdminItem/>}/>
              <Route path="/AdminItemDetails" element={<AdminItemDetails/>}/>
