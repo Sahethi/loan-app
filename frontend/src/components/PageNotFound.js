@@ -13,7 +13,7 @@ export default function PageNotFound() {
         <h2>The page you are looking for does not exist.</h2>
       </div>
       <div>
-      <p>Click <a href={`http://localhost:3000/UserDashboard/`+sessionStorage.getItem('sessionId')} style={{textDecoration:'none'}}>here</a> to return to the home page.</p>
+      <p>Click <a href={`http://localhost:3000/UserDashboard/`} style={{textDecoration:'none'}}>here</a> to return to the home page.</p>
       </div>
     </center>
      
