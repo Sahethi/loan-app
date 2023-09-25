@@ -1,23 +1,30 @@
 package com.example.loanapp.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.loanapp.model.DisplayLoans;
 import com.example.loanapp.model.Employee;
+import com.example.loanapp.model.EmployeeCard;
 import com.example.loanapp.repository.EmployeeCardRepository;
 import com.example.loanapp.repository.EmployeeRepository;
 import com.example.loanapp.repository.ItemRepository;
 import com.example.loanapp.repository.LoanRepository;
 import com.example.loanapp.repository.IssueRepository;
 import com.example.loanapp.repository.LoginModelRepository;
+import com.example.loanapp.repository.aditemrepo.AditemRepo;
 import com.example.loanapp.model.Item;
 import com.example.loanapp.model.Loan;
+import com.example.loanapp.model.LoanModel;
 import com.example.loanapp.model.Issue;
 import com.example.loanapp.model.DisplayUserItems;
 import com.example.loanapp.model.LoginModel;
+import com.example.loanapp.model.adminitems.AdminItems;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
@@ -31,35 +38,92 @@ public class EmployeeService {
 	@Autowired
 	EmployeeCardRepository empCardRepo;
 	
+	@Autowired
+	private ItemRepository itemRepo1;
+	
+
+	
+	@Autowired
+	private LoginModelRepository loginRepo;
+	
+	@Autowired
+	IssueRepository issuerepo;
+	
+	//save employee
 	public Employee saveEmployee(Employee u) {
 		Employee obj = emprepo.save(u);
 		return obj;
 	}
-	
+
+	@Transactional
+	public String savedata(LoanModel u) {
+		String result="";
+		Employee emp=null;
+		Optional<Employee>opt=emprepo.findById(u.getEmployee_id());
+		if(opt.isPresent()) emp=opt.get();
+		String loanid=loanRepo.findbylt(u.getItem_category());
+		Loan loan=loanRepo.findById(loanid).get();
+		
+		EmployeeCard ecd = new EmployeeCard();
+		LocalDateTime idVal = LocalDateTime.now();
+		String idVal2 = idVal.toString();
+		idVal2 = idVal2.replace(":","");
+		idVal2 = idVal2.replace("-","");
+		idVal2 = idVal2.replace("T","");
+		idVal2 = idVal2.replace(".","");
+		LocalDate dt=LocalDate.now();
+		ecd.setCard_issue_date(dt);
+		ecd.setCard_id(idVal2);
+		ecd.setEmployee(emp);
+		ecd.setLoan(loan);
+		
+		EmployeeCard ec = empCardRepo.save(ecd);
+		System.out.println(dt);
+		String itm=itemRepo1.findbymake(u.getItem_category(),u.getItem_make());
+		Item ita=itemRepo1.findById(itm).get();
+		Issue is=new Issue();
+		is.setIssue_id(idVal2);
+		is.setEmployee(emp);
+		is.setItem(ita);
+		is.setIssue_date(dt);
+		is.setReturn_date(dt);
+		Issue isi = issuerepo.save(is);
+		
+		return ita+"hello"+itemRepo1.findById(itm).get();
+	}
 	@Autowired
-	private ItemRepository itemRepo;
+	private AditemRepo aditemRepo;
 	
+	// save item
 	public Item saveItem(Item i) {
-		Item obj = itemRepo.save(i);
+		Item obj = itemRepo1.save(i);
+		return obj;
+	}
+
+	public AdminItems adminsave(AdminItems i) {
+		AdminItems obj = aditemRepo.save(i);
 		return obj;
 	}
 	
 	@Autowired
 	private LoanRepository loanRepo;
 	
+
+		
+	// save loan
+
 	public Loan saveLoan(Loan l) {
 		Loan obj = loanRepo.save(l);
 		return obj;
 	}
 	
-	@Autowired
-	private LoginModelRepository loginRepo;
-	
+	// save login
 	public LoginModel saveLogin(LoginModel log) {
 		LoginModel obj = loginRepo.save(log);
 		return obj;
 	}
 	
+	// check login
 	public String chkLogin(LoginModel u) {
 		LoginModel user=null;
 		String result = null;
@@ -82,22 +146,34 @@ public class EmployeeService {
 		return result;
 	}
 	
+	// get employee
 	public Optional<Employee> getEmployee(String username) {
 		return emprepo.findById(username);
 	}
-
+	
+	// get all loans
 	public List<Loan> getAllLoanTypes() {
 		return loanRepo.findAll();
 	}
 	
+	//get items
 	public List<Item> getItems(){
-		return itemRepo.findAll();
+		return itemRepo1.findAll();
+	}
+	public List<AdminItems> getAdminItems(){
+	    return aditemRepo.findAll();	
+	}
+	public Item fetchitems(String item_id) {
+		return itemRepo1.findById(item_id).get();
 	}
 	
-	//***
+	public void deleteitem(String item_id) {
+		itemRepo1.deleteById(item_id);
+	}
+	
+	
 	//get all items purchased by user u
-	@Autowired
-	IssueRepository issuerepo;
+	
 	public List<DisplayUserItems> getEmpItems(String empId){
 		List<Item> i = issuerepo.getEmpItems(empId);
 		List<String> issue_ids = issuerepo.getEmpIssues(empId);
@@ -117,5 +193,23 @@ public class EmployeeService {
 			dl.add(new DisplayLoans(l.get(i), d.get(i)));
 		}
 		return dl;
+	}
+	
+	public Loan fetchLoan(String loanID) {
+		return loanRepo.findById(loanID).get();
+	}
+	
+	public void deleteLoan(String loanID) {
+		loanRepo.deleteById(loanID);
+	}
+	
+	public List<Employee> fetchAllEmployees(){
+		return emprepo.findAll();
+	}
+	public Employee fetchEmployee(String username) {
+		return emprepo.findById(username).get();
+	}
+	public void deleteEmployee(String empID) {
+		emprepo.deleteById(empID);
 	}
 }

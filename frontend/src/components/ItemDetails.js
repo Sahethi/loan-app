@@ -26,7 +26,6 @@ export default function ItemDetails() {
     },[]);
     
 
-
   return (
     <div className='item-details-container'>
       <Link to = "/UserDashboard">Back to Home</Link>

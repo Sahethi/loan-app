@@ -2,6 +2,10 @@ package com.example.loanapp.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
@@ -22,7 +26,8 @@ public class Item {
 	private String item_category;
 	@Column(length=6)
 	private int item_valuation;
-	@OneToMany(cascade=CascadeType.ALL)
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy="item",cascade=CascadeType.ALL)
 	private List<Issue> issue;
 	public String getItem_id() {
 		return item_id;
