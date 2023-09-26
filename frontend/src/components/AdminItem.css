@@ -24,32 +24,25 @@
     
     
 }
-label{
+/* label{
     align-items: center;
     color:maroon;
     text-align: left;
     font-weight:bold
-}
+} */
 .column{
     display:flex;
     flex-direction:column;
     margin-right:20px;
 }
-button{
-    font-size: 200px;
-    font-weight: bold;
-    background-color: maroon;
-    color:beige;
-    margin-top:10px;
-}
 
-input[type="text"],select,button{
+
+/* input[type="text"],select,button{
     width:100%;
     padding:5px;
     border: 1px solid #ccc;
     border-radius:4px;
-    font-size:20px;
-}
+} */
 button:hover{
     background-color: black;
 }
