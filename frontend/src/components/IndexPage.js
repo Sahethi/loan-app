@@ -10,7 +10,6 @@ import landing2 from "../assets/images/employees.jpg";
 import Header from './Header';
 import {useNavigate} from 'react-router-dom';
 
-
 const IndexPage = () => {
 
     const navigate = useNavigate();
