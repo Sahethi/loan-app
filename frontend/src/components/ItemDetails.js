@@ -30,7 +30,7 @@ export default function ItemDetails() {
   return (
     <div><Navbar />
     <div className='item-details-container'>
-      <Link to = "/UserDashboard">Back to Home</Link>
+      
     <h2>Item Details</h2>
 
     <div class="row">
