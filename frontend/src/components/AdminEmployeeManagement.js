@@ -1,10 +1,12 @@
 import React, {useEffect,useState} from 'react'
 import { Link,useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import EmptyTable from './EmptyTable';
 
 export default function AdminEmployeeManagement() {
     const [employees, setEmployees] = useState([]);
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState(null);
     const url = `http://localhost:8080/fetchAllEmployees`;
     const deleteEmployee = empid => async() => {
         try{
@@ -14,13 +16,16 @@ export default function AdminEmployeeManagement() {
             window.location.reload(false)
         } catch(err){console.log(err);}
     };
+
     const fetchData = async() => {
+        let response;
         try{
-            const response = await axios(url);
+            response = await axios(url);
             setEmployees(Array.from(response.data));
-            console.log(response.data);
-        } catch (err) {
-            console.log("Error:" + err);
+        } catch (error) {
+            //when empty gives statuscode of 404 as NoDataFoundException
+            console.log("Error:" + error);
+            setErrorMessage("Employee List Empty!");
         }
     };
 
@@ -31,6 +36,7 @@ export default function AdminEmployeeManagement() {
     const AddEmployee = () => {
         navigate("/admin/adduser")
     }
+    
   return (
     <div>
         <button onClick={AddEmployee}>Create New Employee</button>
@@ -44,6 +50,11 @@ export default function AdminEmployeeManagement() {
                 <th scope="col">Department</th>
                 <th scope="col">Designation</th>
                 </tr>
+                {errorMessage && 
+                    <div className="error-message">
+                        {EmptyTable(errorMessage)}
+                    </div>
+                }
                 {
                 employees.map((employee,idx)=>(
                     <tr>
@@ -63,7 +74,6 @@ export default function AdminEmployeeManagement() {
 
             </thead>
             </table>
-
     </div>
   )
 }

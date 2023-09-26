@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.validation.Valid;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.example.loanapp.exception.NoDataFoundException;
+import com.example.loanapp.exception.ResourceNotFoundException;
 import com.example.loanapp.model.AdminUser;
 import com.example.loanapp.model.DisplayLoans;
 //import com.example.loan.management.userin.UserInfo;
@@ -196,13 +200,13 @@ public class EmployeeController {
 		
 		// fetch all employees
 		@GetMapping("/fetchAllEmployees")
-		public List<Employee> fetchAllEmployees(){
+		public List<Employee> fetchAllEmployees() throws NoDataFoundException{
 			return empService.fetchAllEmployees();
 		}
 		
 		// update employees
 		@PutMapping("/updateEmployee/{employeeID}")
-		public ResponseEntity<Employee> updateEmployee(@PathVariable("employeeID") String emp_id, @Valid @RequestBody Employee e){
+		public ResponseEntity<Employee> updateEmployee(@PathVariable("employeeID") String emp_id, @Valid @RequestBody Employee e) throws ResourceNotFoundException{
 			Employee empObj = empService.fetchEmployee(emp_id);
 			if(empObj != null) {
 				empObj.setFirst_name(e.getFirst_name());
@@ -218,7 +222,7 @@ public class EmployeeController {
 				empObj.setDoj(e.getDoj());
 				return new ResponseEntity<>(empService.saveEmployee(empObj),HttpStatus.OK);
 			}
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
 		}
 		
 		//delete employee

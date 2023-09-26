@@ -18,6 +18,7 @@ import AdminLoanManagement from "./components/AdminLoanManagement";
 import AdminEmployeeManagement from "./components/AdminEmployeeManagement";
 import AdminEditLoan from "./components/AdminEditLoan";
 import AdminEditEmployee from "./components/AdminEditEmployee";
+import PageNotFound from "./components/PageNotFound";
 
 
 // session management code
@@ -45,7 +46,6 @@ function App() {
               <Route path="/AdminDashboard" element={<AdminDashboard/>}/>
               <Route path="/AdminAddLoan" element={<AdminAddLoan/>}/>
                 <Route path ="/loan-cards" element = {<LoanCard/>} />
-             <Route path="/UserDashboard" element={<UserDashboard/>}/>
 
              <Route path="/AdminItem" element={<AdminItem/>}/>
              <Route path="/AdminItemDetails" element={<AdminItemDetails/>}/>
@@ -56,7 +56,9 @@ function App() {
              <Route path="/adminEmployee" element={<AdminEmployeeManagement/>}/>
               <Route path="/adminEditLoan/:loanID" element={<AdminEditLoan/>} />
               <Route path="/adminEditEmployee/:employeeID" element={<AdminEditEmployee/>} />
-              <Route path="/admin/login" element={<AdminLogin/>}/>
+              <Route path="/admin/login" element={<AdminLogin/>} />
+
+              <Route path="*" element={<PageNotFound/>} />
 
             </Routes>
         </BrowserRouter>
