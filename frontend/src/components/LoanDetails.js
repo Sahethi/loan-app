@@ -3,6 +3,8 @@ import { useParams } from 'react-router';
 import axios from 'axios';
 import './LoanDetails.css'
 import EmptyTable from './EmptyTable';
+import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
 
 export default function LoanDetails() {
     const {empID} = useParams();
@@ -30,7 +32,10 @@ export default function LoanDetails() {
 
 
   return (
-    <div className='loan-details-container'>
+    <div>
+      <Navbar />
+      <div className='loan-details-container'>
+      
         <h2>Loan Details</h2>
     
 
@@ -73,5 +78,7 @@ export default function LoanDetails() {
   
 </table>
     </div>
+    </div>
+    
   )
 }

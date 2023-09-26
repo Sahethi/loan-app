@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './ItemDetails.css'
 import EmptyTable from './EmptyTable';
+import Navbar from './Navbar';
 
 export default function ItemDetails() {
     const {empID} = useParams();
@@ -31,8 +32,9 @@ export default function ItemDetails() {
     
 
   return (
+    <div><Navbar />
     <div className='item-details-container'>
-      <Link to = "/UserDashboard">Back to Home</Link>
+      
     <h2>Item Details</h2>
 
     <div class="row">
@@ -70,6 +72,6 @@ export default function ItemDetails() {
 
   </thead>
 </table>
-    </div>
+    </div></div>
   )
 }
