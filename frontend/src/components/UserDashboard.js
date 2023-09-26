@@ -1,6 +1,8 @@
 import React,{useState,useEffect} from 'react';
 // import {useSpring,animated} from 'react-spring';
-
+import './UserDashboard.css';
+import ImgMoney from '../assets/images/img5.svg'
+import { Link } from 'react-router-dom';
 function UserDashboard() {
   
     const [isHoveringone,setHoveringone]=useState(false);
@@ -108,7 +110,7 @@ const options={weekday:'long',year:'numeric',month:'long',day:'numeric'};
 
     return (
     <div>
-    <div className="App" style={containerStyle}>
+    <div  >
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -134,24 +136,32 @@ const options={weekday:'long',year:'numeric',month:'long',day:'numeric'};
     </ul>*/}
     
     
-    <h1 style={titleStyle}> Loan Management Application</h1>
-    <h2 style={titleStyle}> {sessionStorage.getItem('sessionId')}'s Dashboard</h2>
-    <div style={linkcontainerStyle}>
-      <a href={`http://localhost:3000/loans/`+sessionStorage.getItem('sessionId')}style={linkStyleone} onMouseEnter={handleMouseEnterone} onMouseLeave={handleMouseLeaveone}>View Loans&gt;</a>
-      <a href="http://localhost:3000/applyloan"style={linkStyletwo} onMouseEnter={handleMouseEntertwo} onMouseLeave={handleMouseLeavetwo}>Apply for Loans&gt;</a>
-      <a href={`http://localhost:3000/items/`+sessionStorage.getItem('sessionId')} style={linkStylethree} onMouseEnter={handleMouseEnterthree} onMouseLeave={handleMouseLeavethree}>View Items Purchased&gt;</a>
+    {/* <h2 style={titleStyle}> {sessionStorage.getItem('sessionId')}'s Dashboard</h2> */}
+    <div className = "custom-navbar bg-primary" >
+      <h2 className='text-white'>KarzaLo</h2>
+      <div>
+        <a href={`http://localhost:3000/loans/`+sessionStorage.getItem('sessionId')} className='text-white'>View Loans</a>
+        <a href="http://localhost:3000/applyloan"  className='text-white'>Apply for Loans</a>
+        <a href={`http://localhost:3000/items/`+sessionStorage.getItem('sessionId')} className='text-white'>View Items Purchased</a>
+      </div>
     </div>
     </div>
-<div>
-    <div style={dateTimeStyle}>{formattedDateTiem}</div>
-    <div style={greetingsStyle}>{greetingmsg} {sessionStorage.getItem('sessionId')}!</div>
+<div className='content-area'>
+    {/* <div style={dateTimeStyle}>{formattedDateTiem}</div> */}
+    {/* <div style={greetingsStyle}>{greetingmsg} !</div> */}
     </div>
-    <div style={twoline}>
     
-    <div style={containercircle}><h1>In need of a Loan? {'\n'}
-    It's never been so simple!</h1></div>
-    <div style={containercc}><h1>Home Loans @6.80%</h1></div>
-    </div> 
+      <div className='intro-container-1'>
+      <img src = {ImgMoney} />
+        <div>
+          <h3 className='text-primary'>Hey {sessionStorage.getItem('sessionId')} !</h3>
+          <h1>In need of a Loan?</h1>
+          <h4> It's never been so simple!</h4>
+          <Link to = "/applyloan"><button className='btn btn-lg btn-primary mt-2 text-sm'>Get Now!</button></Link>
+        </div>
+      </div>
+    {/* <div style={containercc}><h1>Home Loans @6.80%</h1></div> */}
+    
     </div>
       
   );
