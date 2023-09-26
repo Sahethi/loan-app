@@ -48,13 +48,13 @@ public class EmployeeService {
 	
 	@Autowired
 	IssueRepository issuerepo;
-	
-	//save employee
-	public Employee saveEmployee(Employee u) {
-		Employee obj = empRepo.save(u);
-		return obj;
-	}
 
+	@Autowired
+	private AditemRepo aditemRepo;
+
+	@Autowired
+	private LoanRepository loanRepo;
+	
 	@Transactional
 	public String savedata(LoanModel u) throws ResourceNotFoundException{
 		
@@ -104,8 +104,12 @@ public class EmployeeService {
 		
 	}
 	
-	@Autowired
-	private AditemRepo aditemRepo;
+	//save employee
+	public Employee saveEmployee(Employee u) {
+		Employee obj = empRepo.save(u);
+		return obj;
+	}
+
 	
 	// save item
 	public Item saveItem(Item i) {
@@ -113,13 +117,12 @@ public class EmployeeService {
 		return obj;
 	}
 
+	// save admin items
 	public AdminItems adminsave(AdminItems i) {
 		AdminItems obj = aditemRepo.save(i);
 		return obj;
 	}
-	
-	@Autowired
-	private LoanRepository loanRepo;
+
 		
 	// save loan
 	public Loan saveLoan(Loan l) {
@@ -190,6 +193,7 @@ public class EmployeeService {
 			return itemList;
 	}
 	
+	// get admin items
 	public List<AdminItems> getAdminItems() throws NoDataFoundException{
 	    List<AdminItems> adminItemsList = new ArrayList<>();
 	    adminItemsList = aditemRepo.findAll();
@@ -199,6 +203,8 @@ public class EmployeeService {
 			return adminItemsList;
 	}
 	
+
+	// fetch items
 	public Item fetchitems(String item_id) throws ResourceNotFoundException{
 		Item currentItem = itemRepo.findById(item_id).get();
 		
@@ -229,6 +235,7 @@ public class EmployeeService {
 			return ret;
 	}
 	
+	//display loans
 	public List<DisplayLoans> getAllLoans(String empId) throws NoDataFoundException{
 		List<Loan> l = empCardRepo.getEmpLoans(empId);
 		List<LocalDate> d = empCardRepo.getEmpIssueDate(empId);
@@ -244,6 +251,8 @@ public class EmployeeService {
 			return dl;
 	}
 	
+
+	//fetch loans
 	public Loan fetchLoan(String loanID) throws ResourceNotFoundException{
 		Loan currentLoan = loanRepo.findById(loanID).get();
 		
@@ -267,6 +276,7 @@ public class EmployeeService {
 			return employeeList;
 	}
 	
+	// fetch employee by username
 	public Employee fetchEmployee(String username) throws ResourceNotFoundException {
 		Employee currentEmp = empRepo.findById(username).get();
 		
@@ -276,6 +286,8 @@ public class EmployeeService {
 			return currentEmp; 
 	}
 	
+
+	//delete Employee
 	public void deleteEmployee(String empID) {
 		empRepo.deleteById(empID);
 	}
