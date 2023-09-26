@@ -16,6 +16,7 @@ const AdminLogin=()=>{
     })
 
     const navigate =useNavigate();
+
     // console.log("working1");
     const handleChange =(e)=>{
         const name=e.target.name;
@@ -35,8 +36,8 @@ const AdminLogin=()=>{
         }else{
             loginAdmin(loginDetails).then((resp)=>{
                 if(resp.data===loginDetails.username){
-                    navigate("/adminDashBoard");
-
+                    window.alert("admin logged in");
+                    navigate("/AdminDashboard");
                 } else{
                     window.alert(resp.data);
                 }
