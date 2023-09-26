@@ -1,0 +1,52 @@
+.custom-navbar{
+    position: fixed;
+    top: 0;
+    width :100vw;
+    display : flex;
+    justify-content: space-between;
+    align-items: center;
+    height : 70px;
+    padding : 0 20px;
+}
+
+.custom-navbar a{
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    padding : 10px;
+    text-decoration: none;
+    font-weight : 500
+}
+.custom-navbar a:hover{
+    color : #0275D8 !important;
+    background-color: white;
+}
+.custom-navbar div{
+    display: flex;
+    height: 100%;
+}
+.content-area{
+    margin : 70px 0 0 0;
+}
+.intro-container-1{
+    display: flex;
+    justify-content: space-between;
+    width : 70vw;
+    margin : auto;
+    align-items: center;
+    padding : 30px 0 0 20px;
+}
+.intro-container-1 img{
+    width : 50%
+}
+.intro-container-1 h3{
+    text-transform: capitalize;
+}
+.intro-container-1 h1{
+    font-size: 50px;
+    font-weight: 600;
+}
+.intro-container-1 button{
+    font-size: 16px;
+    padding : 10px 15px;
+}
