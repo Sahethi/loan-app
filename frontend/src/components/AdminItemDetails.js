@@ -43,7 +43,7 @@ export default function AdminItemDetails() {
   return (
     <div>
     <h2>Item Details</h2>
-
+    <button onClick={AddItems}>Create New Item</button>
     
     <table class="table table-striped">
   <thead>

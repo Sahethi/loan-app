@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import "./AdminItem.css"
+import {useNavigate} from 'react-router'
 import axios from "axios";
 
 function AdminItem(){
@@ -10,6 +11,7 @@ function AdminItem(){
     const [item_valuation,setitem_Value]=useState('');
     const [item_category,setitem_category]=useState('');
     const [item_make,setitem_make]=useState('');
+    const navigate = useNavigate();
 
     const itemidHandler=(e)=>{
         setitem_id(e.target.value)}
@@ -37,6 +39,7 @@ function AdminItem(){
                    .then((response) => {
                     alert("Successfully added");
                     console.log(response.data);
+                    navigate("/AdminItemDetails");
                    })
                    .catch(error => {
                     alert("error===" + error)
@@ -72,6 +75,7 @@ function AdminItem(){
                     <option>select..</option>
                     <option>Wooden</option>
                     <option>Glass</option>
+                    <option>Plastic</option>
                  </select>
                  
                  <button>Submit</button>          
