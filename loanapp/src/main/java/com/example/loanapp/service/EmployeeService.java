@@ -43,8 +43,6 @@ public class EmployeeService {
 	@Autowired
 	private ItemRepository itemRepo;
 	
-
-	
 	@Autowired
 	private LoginModelRepository loginRepo;
 	
@@ -58,47 +56,52 @@ public class EmployeeService {
 	}
 
 	@Transactional
-	public String savedata(LoanModel u) {
+	public String savedata(LoanModel u) throws ResourceNotFoundException{
 		
-		Employee emp=null;
-		Optional<Employee>opt=empRepo.findById(u.getEmployee_id());
+		Employee emp = null;
+		Optional<Employee> opt = empRepo.findById(u.getEmployee_id());
 	 
-		if(opt.isPresent()) 
-			emp=opt.get();
-		
-		String loanid=loanRepo.findbylt(u.getItem_category());
-		Loan loan=loanRepo.findById(loanid).get();
-		
-		EmployeeCard ecd = new EmployeeCard();
-		LocalDateTime idVal = LocalDateTime.now();
-		String idVal2 = idVal.toString();
-		
-		idVal2 = idVal2.replace(":","").replace("-","").replace("T","").replace(".","");
-		
-		LocalDate localDate = LocalDate.now();
-		
-		ecd.setCard_issue_date(localDate);
-		ecd.setCard_id(idVal2);
-		ecd.setEmployee(emp);
-		ecd.setLoan(loan);
-		
-		EmployeeCard ec = empCardRepo.save(ecd);
-		
-		System.out.println(localDate);
-		
-		String itm=itemRepo.findbymake(u.getItem_category(),u.getItem_make());
-		Item ita=itemRepo.findById(itm).get();
-		
-		Issue is=new Issue();
-		is.setIssue_id(idVal2);
-		is.setEmployee(emp);
-		is.setItem(ita);
-		is.setIssue_date(localDate);
-		is.setReturn_date(localDate);
-		
-		Issue isi = issuerepo.save(is);
+		if(opt == null) 
+			throw new ResourceNotFoundException("Resource Not Found");
+		else {
+			if(opt.isPresent()) 
+				emp=opt.get();
+			
+			String loanid=loanRepo.findbylt(u.getItem_category());
+			Loan loan=loanRepo.findById(loanid).get();
+			
+			EmployeeCard ecd = new EmployeeCard();
+			LocalDateTime idVal = LocalDateTime.now();
+			String idVal2 = idVal.toString();
+			
+			idVal2 = idVal2.replace(":","").replace("-","").replace("T","").replace(".","");
+			
+			LocalDate localDate = LocalDate.now();
+			
+			ecd.setCard_issue_date(localDate);
+			ecd.setCard_id(idVal2);
+			ecd.setEmployee(emp);
+			ecd.setLoan(loan);
+			
+			EmployeeCard ec = empCardRepo.save(ecd);
+			
+			System.out.println(localDate);
+			
+			String itm=itemRepo.findbymake(u.getItem_category(),u.getItem_make());
+			Item ita=itemRepo.findById(itm).get();
+			
+			Issue is = new Issue();
+			is.setIssue_id(idVal2);
+			is.setEmployee(emp);
+			is.setItem(ita);
+			is.setIssue_date(localDate);
+			is.setReturn_date(localDate);
+			
+			Issue isi = issuerepo.save(is);
 
-		return ita+"hello"+itemRepo.findById(itm).get();
+			return ita+"hello"+itemRepo.findById(itm).get();
+		}
+		
 	}
 	
 	@Autowired
@@ -131,31 +134,39 @@ public class EmployeeService {
 	}
 	
 	// check login
-	public String chkLogin(LoginModel u) {
+	public String chkLogin(LoginModel u) throws ResourceNotFoundException{
 		LoginModel user=null;
 		String result = null;
 		Optional<LoginModel> obj = loginRepo.findById(u.getUsername());
-		if(obj.isPresent()) {
-			user=obj.get();
-		}
-		if(user==null) {
-			result="Invalid username";
-		}
+		if(obj==null)
+			throw new ResourceNotFoundException("Resource Not Found");
 		else {
-			if(u.getPassword().equals(user.getPassword())){
-				//LOGIN SUCCESSFULL
-				result=u.getUsername();
+			if(obj.isPresent()) {
+				user=obj.get();
+			}
+			if(user==null) {
+				result="Invalid username";
 			}
 			else {
-				result="Incorrect username or password";
+				if(u.getPassword().equals(user.getPassword())){
+					//LOGIN SUCCESSFULL
+					result=u.getUsername();
+				}
+				else {
+					result="Incorrect username or password";
+				}
 			}
+			return result;
 		}
-		return result;
 	}
 	
 	// get employee
-	public Optional<Employee> getEmployee(String username) {
-		return empRepo.findById(username);
+	public Optional<Employee> getEmployee(String username) throws ResourceNotFoundException {
+		Optional<Employee> currentEmployee = empRepo.findById(username);
+		if(currentEmployee == null)
+			throw new ResourceNotFoundException("Resource Not Found");
+		else
+			return currentEmployee;
 	}
 	
 	// get all loans
@@ -188,29 +199,37 @@ public class EmployeeService {
 			return adminItemsList;
 	}
 	
-	public Item fetchitems(String item_id) {
-		return itemRepo.findById(item_id).get();
+	public Item fetchitems(String item_id) throws ResourceNotFoundException{
+		Item currentItem = itemRepo.findById(item_id).get();
+		
+		if(currentItem == null)
+			throw new ResourceNotFoundException("Resource Not Found");
+		else 
+			return currentItem;
 	}
 	
 	public void deleteitem(String item_id) {
 		itemRepo.deleteById(item_id);
 	}
 	
-	
 	//get all items purchased by user u
-	
-	public List<DisplayUserItems> getEmpItems(String empId){
+	public List<DisplayUserItems> getEmpItems(String empId) throws NoDataFoundException{
+		
 		List<Item> i = issuerepo.getEmpItems(empId);
 		List<String> issue_ids = issuerepo.getEmpIssues(empId);
 		List<DisplayUserItems> ret=new ArrayList<DisplayUserItems>();
+		
 		for(int l=0;l<i.size();l++) {
 			ret.add(new DisplayUserItems(issue_ids.get(l),i.get(l)));
 		}
-		return ret;
+		
+		if(ret.size() == 0)
+			throw new NoDataFoundException("No Data Found");
+		else
+			return ret;
 	}
 	
 	public List<DisplayLoans> getAllLoans(String empId) throws NoDataFoundException{
-
 		List<Loan> l = empCardRepo.getEmpLoans(empId);
 		List<LocalDate> d = empCardRepo.getEmpIssueDate(empId);
 		List<DisplayLoans> dl= new ArrayList<DisplayLoans>();
@@ -225,8 +244,13 @@ public class EmployeeService {
 			return dl;
 	}
 	
-	public Loan fetchLoan(String loanID) {
-		return loanRepo.findById(loanID).get();
+	public Loan fetchLoan(String loanID) throws ResourceNotFoundException{
+		Loan currentLoan = loanRepo.findById(loanID).get();
+		
+		if(currentLoan == null)
+			throw new ResourceNotFoundException("Resource Not Found");
+		else
+			return currentLoan;
 	}
 	
 	public void deleteLoan(String loanID) {
