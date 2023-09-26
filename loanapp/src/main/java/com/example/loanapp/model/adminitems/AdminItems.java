@@ -12,6 +12,8 @@ public class AdminItems {
 	private String item_value;
 	private String issue_status;
 	private String item_category;
+	
+	
 	public String getItem_id() {
 		return item_id;
 	}

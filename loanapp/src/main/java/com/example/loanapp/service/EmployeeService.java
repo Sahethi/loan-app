@@ -3,6 +3,8 @@ package com.example.loanapp.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.example.loanapp.model.DisplayLoans;
 import com.example.loanapp.model.Employee;
@@ -41,13 +43,17 @@ public class EmployeeService {
 	@Autowired
 	private ItemRepository itemRepo1;
 	
-
-	
 	@Autowired
 	private LoginModelRepository loginRepo;
 	
 	@Autowired
 	IssueRepository issuerepo;
+	
+	@Autowired
+	private AditemRepo aditemRepo;
+	
+	@Autowired
+	private LoanRepository loanRepo;
 	
 	//save employee
 	public Employee saveEmployee(Employee u) {
@@ -55,6 +61,133 @@ public class EmployeeService {
 		return obj;
 	}
 
+	// fetch all employees
+	public List<Employee> fetchAllEmployees(){
+		return emprepo.findAll();
+	}
+	
+	//fetch employee
+	public Employee fetchEmployee(String username) {
+		return emprepo.findById(username).get();
+	}
+	
+	//delete employee
+	public void deleteEmployee(String empID) {
+		 emprepo.deleteById(empID);
+	
+	}
+
+	// save item
+	public Item saveItem(Item i) {
+		Item obj = itemRepo1.save(i);
+		return obj;
+	}
+	
+	//save admin items
+	public AdminItems adminsave(AdminItems i) {
+		AdminItems obj = aditemRepo.save(i);
+		return obj;
+	}
+		
+	// save loan
+	public Loan saveLoan(Loan l) {
+		Loan obj = loanRepo.save(l);
+		return obj;
+	}
+	
+	// save login model
+	public LoginModel saveLogin(LoginModel log) {
+		LoginModel obj = loginRepo.save(log);
+		return obj;
+	}
+	
+	// check login
+	public String chkLogin(LoginModel u) {
+		LoginModel user=null;
+		String result = null;
+		Optional<LoginModel> obj = loginRepo.findById(u.getUsername());
+		if(obj.isPresent()) {
+			user=obj.get();
+		}
+		if(user==null) {
+			result="Invalid username";
+		}
+		else {
+			if(u.getPassword().equals(user.getPassword())){
+				//LOGIN SUCCESSFULL
+				result=u.getUsername();
+			}
+			else {
+				result="Incorrect username or password";
+			}
+		}
+		return result;
+	}
+	
+	// get employee by username
+	public Optional<Employee> getEmployee(String username) {
+		return emprepo.findById(username);
+	}
+	
+	//get items all
+	public List<Item> getItems(){
+		return itemRepo1.findAll();
+	}
+	
+	//get  all admin items
+	public List<AdminItems> getAdminItems(){
+	    return aditemRepo.findAll();	
+	}
+	
+	// fetch items
+	public Item fetchitems(String item_id) {
+		return itemRepo1.findById(item_id).get();
+	}
+	
+	// delete items
+	public void deleteitem(String item_id) {
+		itemRepo1.deleteById(item_id);
+	}
+	
+	//get all items purchased by employee 
+	public List<DisplayUserItems> getEmpItems(String empId){
+		List<Item> i = issuerepo.getEmpItems(empId);
+		List<String> issue_ids = issuerepo.getEmpIssues(empId);
+		List<DisplayUserItems> ret=new ArrayList<DisplayUserItems>();
+		for(int l=0;l<i.size();l++) {
+			ret.add(new DisplayUserItems(issue_ids.get(l),i.get(l)));
+		}
+		return ret;
+	}
+	
+	//display loans
+	public List<DisplayLoans> getAllLoans(String empId) {
+		// TODO Auto-generated method stub
+		List<Loan> l = empCardRepo.getEmpLoans(empId);
+		List<Date> d = empCardRepo.getEmpIssueDate(empId);
+		List<DisplayLoans> dl= new ArrayList<DisplayLoans>();
+		for(int i=0; i<l.size(); i++) {
+			dl.add(new DisplayLoans(l.get(i), d.get(i)));
+		}
+		return dl;
+	}
+	
+	//fetch loans
+	public Loan fetchLoan(String loanID) {
+		return loanRepo.findById(loanID).get();
+	}
+	
+	//delete loans
+	public void deleteLoan(String loanID) {
+		loanRepo.deleteById(loanID);
+	}
+	
+	// get all loans
+	public List<Loan> getAllLoanTypes() {
+		return loanRepo.findAll();
+	}
+	
+	
 	@Transactional
 	public String savedata(LoanModel u) {
 		String result="";
@@ -90,126 +223,5 @@ public class EmployeeService {
 		Issue isi = issuerepo.save(is);
 		
 		return ita+"hello"+itemRepo1.findById(itm).get();
-	}
-	@Autowired
-	private AditemRepo aditemRepo;
-	
-	// save item
-	public Item saveItem(Item i) {
-		Item obj = itemRepo1.save(i);
-		return obj;
-	}
-
-	public AdminItems adminsave(AdminItems i) {
-		AdminItems obj = aditemRepo.save(i);
-		return obj;
-	}
-	
-	@Autowired
-	private LoanRepository loanRepo;
-	
-
-		
-	// save loan
-
-	public Loan saveLoan(Loan l) {
-		Loan obj = loanRepo.save(l);
-		return obj;
-	}
-	
-	// save login
-	public LoginModel saveLogin(LoginModel log) {
-		LoginModel obj = loginRepo.save(log);
-		return obj;
-	}
-	
-	// check login
-	public String chkLogin(LoginModel u) {
-		LoginModel user=null;
-		String result = null;
-		Optional<LoginModel> obj = loginRepo.findById(u.getUsername());
-		if(obj.isPresent()) {
-			user=obj.get();
-		}
-		if(user==null) {
-			result="Invalid username";
-		}
-		else {
-			if(u.getPassword().equals(user.getPassword())){
-				//LOGIN SUCCESSFULL
-				result=u.getUsername();
-			}
-			else {
-				result="Incorrect username or password";
-			}
-		}
-		return result;
-	}
-	
-	// get employee
-	public Optional<Employee> getEmployee(String username) {
-		return emprepo.findById(username);
-	}
-	
-	// get all loans
-	public List<Loan> getAllLoanTypes() {
-		return loanRepo.findAll();
-	}
-	
-	//get items
-	public List<Item> getItems(){
-		return itemRepo1.findAll();
-	}
-	public List<AdminItems> getAdminItems(){
-	    return aditemRepo.findAll();	
-	}
-	public Item fetchitems(String item_id) {
-		return itemRepo1.findById(item_id).get();
-	}
-	
-	public void deleteitem(String item_id) {
-		itemRepo1.deleteById(item_id);
-	}
-	
-	
-	//get all items purchased by user u
-	
-	public List<DisplayUserItems> getEmpItems(String empId){
-		List<Item> i = issuerepo.getEmpItems(empId);
-		List<String> issue_ids = issuerepo.getEmpIssues(empId);
-		List<DisplayUserItems> ret=new ArrayList<DisplayUserItems>();
-		for(int l=0;l<i.size();l++) {
-			ret.add(new DisplayUserItems(issue_ids.get(l),i.get(l)));
-		}
-		return ret;
-	}
-	
-	public List<DisplayLoans> getAllLoans(String empId) {
-		// TODO Auto-generated method stub
-		List<Loan> l = empCardRepo.getEmpLoans(empId);
-		List<Date> d = empCardRepo.getEmpIssueDate(empId);
-		List<DisplayLoans> dl= new ArrayList<DisplayLoans>();
-		for(int i=0; i<l.size(); i++) {
-			dl.add(new DisplayLoans(l.get(i), d.get(i)));
-		}
-		return dl;
-	}
-	
-	public Loan fetchLoan(String loanID) {
-		return loanRepo.findById(loanID).get();
-	}
-	
-	public void deleteLoan(String loanID) {
-		loanRepo.deleteById(loanID);
-	}
-	
-	public List<Employee> fetchAllEmployees(){
-		return emprepo.findAll();
-	}
-	public Employee fetchEmployee(String username) {
-		return emprepo.findById(username).get();
-	}
-	public void deleteEmployee(String empID) {
-		emprepo.deleteById(empID);
 	}
 }

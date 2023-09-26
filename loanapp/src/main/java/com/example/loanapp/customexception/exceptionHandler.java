@@ -33,6 +33,7 @@ public class exceptionHandler extends ResponseEntityExceptionHandler {
 				.collect(Collectors.toList());
 
 		responseBody.put("errors", errors);
+		
 
 		return new ResponseEntity<>(responseBody, headers, status);
 	}

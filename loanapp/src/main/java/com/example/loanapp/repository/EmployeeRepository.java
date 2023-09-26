@@ -13,5 +13,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, String>{
 //	@Query("SELECT distinct e FROM Employee e inner JOIN e.empCard c WHERE e.empid=?1 and "
 //			+ "e.partment=?2")
 //	List<Employee> findAllCard(String employeeid);
+	String deleteById();
 
 }

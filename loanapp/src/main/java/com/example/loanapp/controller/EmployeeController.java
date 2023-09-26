@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.validation.Valid;
@@ -40,16 +41,19 @@ public class EmployeeController {
 			return "Welcome to loan management app";
 		}
 		
+		
+		// fetch all loan types 
 		@GetMapping("/fetchAllLoanTypes")
 		public List<Loan> getAllLoanTypes(){
 			return empService.getAllLoanTypes();
 		}
 		
-//		save Employee
-		@PostMapping("/saveEmployee")		
+		//save Employee
+		@PostMapping("/saveEmployee")	
+		@ResponseStatus(HttpStatus.CREATED)
 		public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody Employee u) {
 
-			return new ResponseEntity<Employee>(empService.saveEmployee(u),HttpStatus.CREATED);
+			return new ResponseEntity<Employee>(empService.saveEmployee(u), HttpStatus.CREATED);
 		}		
 		
 		// save item
@@ -73,27 +77,32 @@ public class EmployeeController {
 			return obj;
 		}
 		
-		//save user
+		//save user with login model
 		public ResponseEntity<LoginModel>saveUser(@Valid @RequestBody LoginModel u) {
 
-			return new ResponseEntity<LoginModel>(empService.saveLogin(u),HttpStatus.CREATED);}		
+			return new ResponseEntity<LoginModel>(empService.saveLogin(u),HttpStatus.CREATED);
+		}		
 		
+		//validate user
 		@PostMapping("/loginAuth")
 		public String validateUser(@RequestBody LoginModel u) {
 			return empService.chkLogin(u);
 		}
+		
+		// admin save
 		@PostMapping("/adminItems")
 		public AdminItems adminsave(@RequestBody AdminItems u) {
 			return empService.adminsave(u);
 		}
 		
+		//get employees by id
 		@GetMapping("/employees/{empId}")
 		public Optional<Employee> getEmp(@PathVariable("empId") String empId){
-			return empService.getEmployee(empId);
+			return empService.getEmployee(empId); 
 		}
 		
-		//item details page
-		@GetMapping("/items/{empId}")
+		//item employee items
+		@GetMapping("/items/{empId}")  
 		public ResponseEntity<Object> getEmpItems(@PathVariable("empId") String empId){
 			List<DisplayUserItems> i = empService.getEmpItems(empId);
 			if(i == null) 
@@ -102,7 +111,7 @@ public class EmployeeController {
 				return new ResponseEntity<>(i,HttpStatus.OK);
 		}
 		
-		//items
+		//Get items  
 		@GetMapping("/items")
 		public ResponseEntity<Object> getItems(){
 			List<Item> i = empService.getItems();
@@ -112,28 +121,40 @@ public class EmployeeController {
 				return new ResponseEntity<>(i,HttpStatus.OK);
 		}
 		
-		//loan details page
+		//get employee loans 
 		@GetMapping("/loans/{empId}")
 		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId){
 			return empService.getAllLoans(empId);
 		}
-
+		
+		//save data to apply loans
 		@PostMapping("/forapplyloans")
 		public String savedata(@RequestBody LoanModel u)
 		{
 		     return empService.savedata(u);
 			
 		}
-
+		
+		// get admin items
 		@GetMapping("/displayAdminItems")
 		public List<AdminItems>getAdminItems(){
 			List<AdminItems>i=empService.getAdminItems();
             return i;
 		}
+		
+		// fetch items
 		@GetMapping("/fetchitems/{item_id}")
 		public Item fetchitems(@PathVariable("item_id") String item_id){
 			return empService.fetchitems(item_id);
 		}
+		
+		// delete items
+		@GetMapping("/deleteitem/{item_id}")
+		public void deleteitem(@PathVariable("item_id") String item_id) {
+			empService.deleteitem(item_id);
+		}
+		
+		// update loan by item ID
 		@PutMapping("/updateItem/{item_id}")
 		public ResponseEntity<Item> updateLoan(@PathVariable("item_id") String item_id, @Valid @RequestBody Item l){
 			Item itemObj = empService.fetchitems(item_id);
@@ -147,11 +168,13 @@ public class EmployeeController {
 				return new ResponseEntity<>(empService.saveItem(itemObj),HttpStatus.OK);
 		}
 		
+		// fetch loan
 		@GetMapping("/fetchLoan/{loanID}")
 		public Loan fetchLoan(@PathVariable("loanID") String loanID){
 			return empService.fetchLoan(loanID);
 		}
 		
+		// update loans by loan Id
 		@PutMapping("/updateLoan/{loanID}")
 		public ResponseEntity<Loan> updateLoan(@PathVariable("loanID") String loan_id, @Valid @RequestBody Loan l){
 			Loan loanObj = empService.fetchLoan(loan_id);
@@ -164,21 +187,20 @@ public class EmployeeController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		@GetMapping("/deleteitem/{item_id}")
-		public void deleteitem(@PathVariable("item_id") String item_id) {
-			empService.deleteitem(item_id);
-		}
-
+		
+		//delete loan
 		@GetMapping("/deleteLoan/{loanID}")
 		public void deleteLoan(@PathVariable("loanID") String loan_id) {
 			empService.deleteLoan(loan_id);
 		}
 		
+		// fetch all employees
 		@GetMapping("/fetchAllEmployees")
 		public List<Employee> fetchAllEmployees(){
 			return empService.fetchAllEmployees();
 		}
 		
+		// update employees
 		@PutMapping("/updateEmployee/{employeeID}")
 		public ResponseEntity<Employee> updateEmployee(@PathVariable("employeeID") String emp_id, @Valid @RequestBody Employee e){
 			Employee empObj = empService.fetchEmployee(emp_id);
@@ -199,6 +221,7 @@ public class EmployeeController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
+		//delete employee
 		@GetMapping("/deleteEmployee/{empID}")
 		public void deleteEmployee(@PathVariable("empID") String emp_id) {
 			empService.deleteEmployee(emp_id);
