@@ -160,7 +160,7 @@ public class EmployeeService {
 	// get all loans
 	public List<Loan> getAllLoanTypes() throws NoDataFoundException{
 		List<Loan> loanList = new ArrayList<>();
-//		loanList = loanRepo.findAll();
+		loanList = loanRepo.findAll();
 
 		if(loanList.size() == 0)
 			throw  new NoDataFoundException("No Data Found");
