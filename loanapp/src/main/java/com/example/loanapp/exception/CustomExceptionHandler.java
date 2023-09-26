@@ -1,4 +1,5 @@
-package com.example.loanapp.customexception;
+package com.example.loanapp.exception;
+
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,7 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class exceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
 	// @Override
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -37,19 +38,17 @@ public class exceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(responseBody, headers, status);
 	}
 
-	//@ExceptionHandler(value = ResourceNotFoundException.class)
-	//@ResponseStatus(HttpStatus.NOT_FOUND)
-	/*public @ResponseBody ErrorResponse handleResoureNotFoundException(ResourceNotFoundException ex) {
+	@ExceptionHandler(value = ResourceNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public @ResponseBody ErrorResponse handleResoureNotFoundException(ResourceNotFoundException ex) {
 		return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
 	}
 	
-	//@ExceptionHandler(value = NoDataFoundException.class)
+	@ExceptionHandler(value = NoDataFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public @ResponseBody ErrorResponse handleNoDataFoundException(NoDataFoundException ex) {
 		return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
 	}
 	
-
-}*/
 
 }

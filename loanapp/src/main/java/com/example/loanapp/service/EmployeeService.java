@@ -1,5 +1,30 @@
 package com.example.loanapp.service;
 
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.loanapp.exception.NoDataFoundException;
+import com.example.loanapp.exception.ResourceNotFoundException;
+import com.example.loanapp.model.DisplayLoans;
+import com.example.loanapp.model.Employee;
+import com.example.loanapp.model.EmployeeCard;
+import com.example.loanapp.repository.EmployeeCardRepository;
+import com.example.loanapp.repository.EmployeeRepository;
+import com.example.loanapp.repository.ItemRepository;
+import com.example.loanapp.repository.LoanRepository;
+import com.example.loanapp.repository.IssueRepository;
+import com.example.loanapp.repository.LoginModelRepository;
+import com.example.loanapp.repository.aditemrepo.AditemRepo;
+import com.example.loanapp.model.Item;
+import com.example.loanapp.model.Loan;
+import com.example.loanapp.model.LoanModel;
+import com.example.loanapp.model.Issue;
+import com.example.loanapp.model.DisplayUserItems;
+import com.example.loanapp.model.LoginModel;
+import com.example.loanapp.model.adminitems.AdminItems;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,7 +57,7 @@ import com.example.loanapp.repository.aditemrepo.AditemRepo;
 @Service
 public class EmployeeService {
 	@Autowired
-	EmployeeRepository emprepo;
+	EmployeeRepository empRepo;
 	
 	@Autowired
 	EmployeeCardRepository empCardRepo;
@@ -50,48 +75,56 @@ public class EmployeeService {
 	
 	//save employee
 	public Employee saveEmployee(Employee u) {
-		Employee obj = emprepo.save(u);
+		Employee obj = empRepo.save(u);
 		return obj;
 	}
 
 	@Transactional
 	public String savedata(LoanModel u) {
-		String result="";
+		
 		Employee emp=null;
-		Optional<Employee>opt=emprepo.findById(u.getEmployee_id());
-		if(opt.isPresent()) emp=opt.get();
+		Optional<Employee>opt=empRepo.findById(u.getEmployee_id());
+	 
+		if(opt.isPresent()) 
+			emp=opt.get();
+		
 		String loanid=loanRepo.findbylt(u.getItem_category());
 		Loan loan=loanRepo.findById(loanid).get();
 		
 		EmployeeCard ecd = new EmployeeCard();
 		LocalDateTime idVal = LocalDateTime.now();
 		String idVal2 = idVal.toString();
-		idVal2 = idVal2.replace(":","");
-		idVal2 = idVal2.replace("-","");
-		idVal2 = idVal2.replace("T","");
-		idVal2 = idVal2.replace(".","");
-		LocalDate dt=LocalDate.now();
-		ecd.setCard_issue_date(dt);
+		
+		idVal2 = idVal2.replace(":","").replace("-","").replace("T","").replace(".","");
+		
+		LocalDate localDate = LocalDate.now();
+		
+		ecd.setCard_issue_date(localDate);
 		ecd.setCard_id(idVal2);
 		ecd.setEmployee(emp);
 		ecd.setLoan(loan);
 		
 		EmployeeCard ec = empCardRepo.save(ecd);
-		System.out.println(dt);
+		
+		System.out.println(localDate);
+		
 		String itm=itemRepo1.findbymake(u.getItem_category(),u.getItem_make());
 		Item ita=itemRepo1.findById(itm).get();
+		
 		Issue is=new Issue();
 		is.setIssue_id(idVal2);
 		is.setEmployee(emp);
 		is.setItem(ita);
-		is.setIssue_date(dt);
+		is.setIssue_date(localDate);
 		int rt=loanRepo.findduration(loanid);
 		System.out.println(rt);
-		LocalDate rtd=dt.plusYears(rt);
+		LocalDate rtd=localDate.plusYears(rt);
 		is.setReturn_date(rtd);
 		Issue isi = issuerepo.save(is);
 		
 		return ita+"hello"+itemRepo1.findById(itm).get()+" "+rt+" "+rtd;
+
+		
 	}
 	@Autowired
 	private AditemRepo aditemRepo;
@@ -109,11 +142,8 @@ public class EmployeeService {
 	
 	@Autowired
 	private LoanRepository loanRepo;
-	
-
 		
 	// save loan
-
 	public Loan saveLoan(Loan l) {
 		Loan obj = loanRepo.save(l);
 		return obj;
@@ -150,7 +180,7 @@ public class EmployeeService {
 	
 	// get employee
 	public Optional<Employee> getEmployee(String username) {
-		return emprepo.findById(username);
+		return empRepo.findById(username);
 	}
 	
 	// get all loans
@@ -162,6 +192,7 @@ public class EmployeeService {
 	public List<Item> getItems(){
 		return itemRepo1.findAll();
 	}
+	
 	public List<AdminItems> getAdminItems(){
 	    return aditemRepo.findAll();	
 	}
@@ -189,7 +220,7 @@ public class EmployeeService {
 	public List<DisplayLoans> getAllLoans(String empId) {
 		// TODO Auto-generated method stub
 		List<Loan> l = empCardRepo.getEmpLoans(empId);
-		List<Date> d = empCardRepo.getEmpIssueDate(empId);
+		List<LocalDate> d = empCardRepo.getEmpIssueDate(empId);
 		List<DisplayLoans> dl= new ArrayList<DisplayLoans>();
 		for(int i=0; i<l.size(); i++) {
 			dl.add(new DisplayLoans(l.get(i), d.get(i)));
@@ -205,13 +236,26 @@ public class EmployeeService {
 		loanRepo.deleteById(loanID);
 	}
 	
-	public List<Employee> fetchAllEmployees(){
-		return emprepo.findAll();
+	public List<Employee> fetchAllEmployees() throws NoDataFoundException{
+		List<Employee> employeeList = new ArrayList<>();
+		employeeList = empRepo.findAll();
+
+		if(employeeList.size() == 0)
+			throw new NoDataFoundException("No Data Found");
+		else
+			return employeeList;
 	}
-	public Employee fetchEmployee(String username) {
-		return emprepo.findById(username).get();
+	
+	public Employee fetchEmployee(String username) throws ResourceNotFoundException {
+		Employee currentEmp = empRepo.findById(username).get();
+		
+		if(currentEmp == null)
+			throw new ResourceNotFoundException("Resource Not Found");
+		else 
+			return currentEmp; 
 	}
+	
 	public void deleteEmployee(String empID) {
-		emprepo.deleteById(empID);
+		empRepo.deleteById(empID);
 	}
 }

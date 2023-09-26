@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.example.loanapp.model.EmployeeCard;
 import com.example.loanapp.model.Loan;
+import java.time.LocalDate;
 
 //EmployeeRepo is for fetching details from employee card and string mentioned the primary key
 public interface EmployeeCardRepository extends JpaRepository <EmployeeCard, String>{
@@ -15,5 +16,5 @@ public interface EmployeeCardRepository extends JpaRepository <EmployeeCard, Str
 	public List<Loan> getEmpLoans(String empid);
 	
 	@Query("SELECT e.card_issue_date from EmployeeCard e WHERE e.employee.employee_id=?1")
-	public List<Date> getEmpIssueDate(String empid);
+	public List<LocalDate> getEmpIssueDate(String empid);
 }
