@@ -18,6 +18,7 @@ import AdminLoanManagement from "./components/AdminLoanManagement";
 import AdminEmployeeManagement from "./components/AdminEmployeeManagement";
 import AdminEditLoan from "./components/AdminEditLoan";
 import AdminEditEmployee from "./components/AdminEditEmployee";
+import PageNotFound from "./components/PageNotFound";
 
 
 // session management code
@@ -56,6 +57,9 @@ function App() {
               <Route path="/adminEditLoan/:loanID" element={<AdminEditLoan/>} />
               <Route path="/adminEditEmployee/:employeeID" element={<AdminEditEmployee/>} />
               <Route path="/admin/login" element={<AdminLogin/>} />
+
+              <Route path="*" element={<PageNotFound/>} />
+              
 
             </Routes>
         </BrowserRouter>
