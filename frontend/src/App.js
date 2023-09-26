@@ -5,11 +5,11 @@ import ApplyLoan from "./components/ApplyLoan";
 import ItemDetails from "./components/ItemDetails";
 import LoanDetails from "./components/LoanDetails";
 import LoanCard from "./components/LoanCard";
-
 import UserDashboard from "./components/UserDashboard";
 import AdminItem from "./components/AdminItem";
 import AdminItemDetails from "./components/AdminItemDetails";
 import AdminEditItem from "./components/AdminEditITem";
+
 import AdminDashboard from "./components/AdminDashboard";
 import AdminAddLoan from "./components/AdminAddLoan";
 import AddEmployee from "./components/admin/AddEmployee";
@@ -59,7 +59,6 @@ function App() {
               <Route path="/admin/login" element={<AdminLogin/>} />
 
               <Route path="*" element={<PageNotFound/>} />
-              
 
             </Routes>
         </BrowserRouter>
