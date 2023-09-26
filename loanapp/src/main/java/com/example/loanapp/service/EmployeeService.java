@@ -1,34 +1,33 @@
 package com.example.loanapp.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.example.loanapp.model.DisplayLoans;
-import com.example.loanapp.model.Employee;
-import com.example.loanapp.model.EmployeeCard;
-import com.example.loanapp.repository.EmployeeCardRepository;
-import com.example.loanapp.repository.EmployeeRepository;
-import com.example.loanapp.repository.ItemRepository;
-import com.example.loanapp.repository.LoanRepository;
-import com.example.loanapp.repository.IssueRepository;
-import com.example.loanapp.repository.LoginModelRepository;
-import com.example.loanapp.repository.aditemrepo.AditemRepo;
-import com.example.loanapp.model.Item;
-import com.example.loanapp.model.Loan;
-import com.example.loanapp.model.LoanModel;
-import com.example.loanapp.model.Issue;
-import com.example.loanapp.model.DisplayUserItems;
-import com.example.loanapp.model.LoginModel;
-import com.example.loanapp.model.adminitems.AdminItems;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.example.loanapp.model.DisplayLoans;
+import com.example.loanapp.model.DisplayUserItems;
+import com.example.loanapp.model.Employee;
+import com.example.loanapp.model.EmployeeCard;
+import com.example.loanapp.model.Issue;
+import com.example.loanapp.model.Item;
+import com.example.loanapp.model.Loan;
+import com.example.loanapp.model.LoanModel;
+import com.example.loanapp.model.LoginModel;
+import com.example.loanapp.model.adminitems.AdminItems;
+import com.example.loanapp.repository.EmployeeCardRepository;
+import com.example.loanapp.repository.EmployeeRepository;
+import com.example.loanapp.repository.IssueRepository;
+import com.example.loanapp.repository.ItemRepository;
+import com.example.loanapp.repository.LoanRepository;
+import com.example.loanapp.repository.LoginModelRepository;
+import com.example.loanapp.repository.aditemrepo.AditemRepo;
 
 @Service
 public class EmployeeService {
@@ -86,10 +85,13 @@ public class EmployeeService {
 		is.setEmployee(emp);
 		is.setItem(ita);
 		is.setIssue_date(dt);
-		is.setReturn_date(dt);
+		int rt=loanRepo.findduration(loanid);
+		System.out.println(rt);
+		LocalDate rtd=dt.plusYears(rt);
+		is.setReturn_date(rtd);
 		Issue isi = issuerepo.save(is);
 		
-		return ita+"hello"+itemRepo1.findById(itm).get();
+		return ita+"hello"+itemRepo1.findById(itm).get()+" "+rt+" "+rtd;
 	}
 	@Autowired
 	private AditemRepo aditemRepo;

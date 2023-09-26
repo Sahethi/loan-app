@@ -9,5 +9,7 @@ import com.example.loanapp.model.Loan;
 public interface LoanRepository extends JpaRepository<Loan, String>{
 	@Query("SELECT l.loan_id FROM Loan l WHERE l.loan_type=?1")
 	public String findbylt(String loan_type);
+	@Query("SELECT l.duration_in_years FROM Loan l WHERE l.loan_id=?1")
+	public int findduration(String loanid);
 
 }

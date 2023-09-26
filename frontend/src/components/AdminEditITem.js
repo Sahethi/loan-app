@@ -75,7 +75,7 @@ export default function AdminEditItem() {
                 
                 <div className='form-group'>
                     <label for="item_valuation" >Item Value:</label>
-                    <input type="text" className = "form-control" name="item_value" value={items.item_valuation} onChange={handleInput}/>
+                    <input type="number" className = "form-control" name="item_valuation" value={items.item_valuation} onChange={handleInput}/>
                     <br/>
                 </div>
                 <div className='form-group'>
