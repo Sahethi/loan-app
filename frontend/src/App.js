@@ -10,7 +10,6 @@ import UserDashboard from "./components/UserDashboard";
 import AdminItem from "./components/AdminItem";
 import AdminItemDetails from "./components/AdminItemDetails";
 import AdminEditItem from "./components/AdminEditITem";
-
 import AdminDashboard from "./components/AdminDashboard";
 import AdminAddLoan from "./components/AdminAddLoan";
 import AddEmployee from "./components/admin/AddEmployee";
@@ -47,7 +46,6 @@ function App() {
               <Route path="/AdminDashboard" element={<AdminDashboard/>}/>
               <Route path="/AdminAddLoan" element={<AdminAddLoan/>}/>
                 <Route path ="/loan-cards" element = {<LoanCard/>} />
-             <Route path="/UserDashboard" element={<UserDashboard/>}/>
 
              <Route path="/AdminItem" element={<AdminItem/>}/>
              <Route path="/AdminItemDetails" element={<AdminItemDetails/>}/>
@@ -58,6 +56,7 @@ function App() {
              <Route path="/adminEmployee" element={<AdminEmployeeManagement/>}/>
               <Route path="/adminEditLoan/:loanID" element={<AdminEditLoan/>} />
               <Route path="/adminEditEmployee/:employeeID" element={<AdminEditEmployee/>} />
+              <Route path="/admin/login" element={<AdminLogin/>} />
 
               <Route path="*" element={<PageNotFound/>} />
               

@@ -2,6 +2,7 @@ import {  useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import './Login.css'
+import loginImg from '../assets/images/img1.svg'
 //Login
 
 function Login() {
@@ -58,11 +59,13 @@ function Login() {
         <div>
             <div class="login-container">
                 <div className="wrapper">
-                    <h2 className="login-header">Login</h2>
+                <img src={loginImg} className = "login-img" />
+                <div>
+                <h2 className="login-header">Login</h2>
                 
 
                 <div class="row">
-                <div>
+                <div className="form-container">
  
                     <form>
                         <div class="form-group  pb-2">
@@ -90,7 +93,9 @@ function Login() {
                     </form>
                     </div>
                 </div>
-            </div>
+            
+                </div>
+                   </div> 
         </div>
      </div>
     );
