@@ -6,7 +6,11 @@ import { Link } from 'react-router-dom';
 function UserDashboard() {
   
     const [isHoveringone,setHoveringone]=useState(false);
-  
+    const handleLogout=()=>{
+      sessionStorage.removeItem('sessionId');
+      sessionStorage.removeItem('dept');
+      sessionStorage.removeItem('designation');
+    }
   const handleMouseEnterone=()=>{
     setHoveringone(true);
   }
@@ -143,6 +147,7 @@ const options={weekday:'long',year:'numeric',month:'long',day:'numeric'};
         <a href={`http://localhost:3000/loans/`+sessionStorage.getItem('sessionId')} className='text-white'>View Loans</a>
         <a href="http://localhost:3000/applyloan"  className='text-white'>Apply for Loans</a>
         <a href={`http://localhost:3000/items/`+sessionStorage.getItem('sessionId')} className='text-white'>View Items Purchased</a>
+        <a href="http://localhost:3000/login" className='text-white' onClick={handleLogout}>Logout</a>
       </div>
     </div>
     </div>

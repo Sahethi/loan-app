@@ -4,6 +4,9 @@ import customerDataPic from './images/customerDataAdmin.png'
 import itemAdmin from './images/itemAdmin.png'
 import loanCardAdmin from './images/loanCardAdmin.png'
 function AdminDashboard(){
+    const handleLogout=()=>{
+        sessionStorage.removeItem('adminSessionId');
+    }
     return(
         <div class="bckimage" style={{ height: '100%', width: '100%', position: 'absolute'}}>
         <div class="menu center">
@@ -18,6 +21,7 @@ function AdminDashboard(){
             <div class="choiceTile">
             <a href={`http://localhost:3000/AdminItemDetails/`} class="linkStyle"><img src={itemAdmin} alt="Item Master Data" class="choiceIcon"/>Item Master Data</a>
             </div>
+            <div><a href="http://localhost:3000/admin/login" onClick={handleLogout}>Logout</a></div>
         </div>
         </div>
     )
