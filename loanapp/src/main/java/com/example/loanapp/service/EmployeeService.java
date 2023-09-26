@@ -187,7 +187,7 @@ public class EmployeeService {
 	public List<DisplayLoans> getAllLoans(String empId) {
 		// TODO Auto-generated method stub
 		List<Loan> l = empCardRepo.getEmpLoans(empId);
-		List<Date> d = empCardRepo.getEmpIssueDate(empId);
+		List<LocalDate> d = empCardRepo.getEmpIssueDate(empId);
 		List<DisplayLoans> dl= new ArrayList<DisplayLoans>();
 		for(int i=0; i<l.size(); i++) {
 			dl.add(new DisplayLoans(l.get(i), d.get(i)));

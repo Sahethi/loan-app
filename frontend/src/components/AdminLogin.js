@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import {ToastContainer,toast} from 'react-toastify';
 import Button from 'react-bootstrap/Button';
+import {useNavigate} from 'react-router'
 
 const AdminLogin=()=>{
     const [loginDetails,setLoginDetails]=useState({
         username: "",
         password:""
     })
+    const navigate = useNavigate();
     // console.log("working1");
     const handleChange =(e)=>{
         const name=e.target.name;
@@ -29,6 +31,7 @@ const AdminLogin=()=>{
             loginAdmin(loginDetails).then((resp)=>{
                 if(resp.data===loginDetails.username){
                     window.alert("admin logged in");
+                    navigate("/AdminDashboard");
                 } else{
                     window.alert(resp.data);
                 }
