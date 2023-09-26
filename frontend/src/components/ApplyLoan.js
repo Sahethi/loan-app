@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import './ApplyLoan.css'
+import Navbar from "./Navbar";
 function ApplyLoan(){
 
     const [items, setItems] = useState([]);
@@ -98,7 +99,10 @@ if(loading) {
 }
     
 return(
+    <div>
+        <Navbar />
     <div className="apply-loans-container">
+        
     <div class="container">
         <div class="row">
             <h2>Apply Loan</h2>
@@ -167,7 +171,7 @@ return(
         </div>
         </div>
     </div>
-    </div>)
+    </div></div>)
 }
 
 export default ApplyLoan;
