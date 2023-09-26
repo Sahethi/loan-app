@@ -41,7 +41,7 @@ public class EmployeeService {
 	EmployeeCardRepository empCardRepo;
 	
 	@Autowired
-	private ItemRepository itemRepo1;
+	private ItemRepository itemRepo;
 	
 
 	
@@ -86,8 +86,8 @@ public class EmployeeService {
 		
 		System.out.println(localDate);
 		
-		String itm=itemRepo1.findbymake(u.getItem_category(),u.getItem_make());
-		Item ita=itemRepo1.findById(itm).get();
+		String itm=itemRepo.findbymake(u.getItem_category(),u.getItem_make());
+		Item ita=itemRepo.findById(itm).get();
 		
 		Issue is=new Issue();
 		is.setIssue_id(idVal2);
@@ -98,14 +98,14 @@ public class EmployeeService {
 		
 		Issue isi = issuerepo.save(is);
 
-		return ita+"hello"+itemRepo1.findById(itm).get();
+		return ita+"hello"+itemRepo.findById(itm).get();
 	}
 	@Autowired
 	private AditemRepo aditemRepo;
 	
 	// save item
 	public Item saveItem(Item i) {
-		Item obj = itemRepo1.save(i);
+		Item obj = itemRepo.save(i);
 		return obj;
 	}
 
@@ -158,24 +158,41 @@ public class EmployeeService {
 	}
 	
 	// get all loans
-	public List<Loan> getAllLoanTypes() {
-		return loanRepo.findAll();
+	public List<Loan> getAllLoanTypes() throws NoDataFoundException{
+		List<Loan> loanList = new ArrayList<>();
+//		loanList = loanRepo.findAll();
+
+		if(loanList.size() == 0)
+			throw  new NoDataFoundException("No Data Found");
+		else
+			return loanList;
 	}
 	
 	//get items
-	public List<Item> getItems(){
-		return itemRepo1.findAll();
+	public List<Item> getItems() throws NoDataFoundException{
+		List<Item> itemList = new ArrayList<>();
+		itemList = itemRepo.findAll();
+		if(itemList.size() == 0)
+			throw new NoDataFoundException("No Data Found");
+		else
+			return itemList;
 	}
 	
-	public List<AdminItems> getAdminItems(){
-	    return aditemRepo.findAll();	
+	public List<AdminItems> getAdminItems() throws NoDataFoundException{
+	    List<AdminItems> adminItemsList = new ArrayList<>();
+	    adminItemsList = aditemRepo.findAll();
+		if(adminItemsList.size() == 0)
+			throw new NoDataFoundException("No Data Found");
+		else
+			return adminItemsList;
 	}
+	
 	public Item fetchitems(String item_id) {
-		return itemRepo1.findById(item_id).get();
+		return itemRepo.findById(item_id).get();
 	}
 	
 	public void deleteitem(String item_id) {
-		itemRepo1.deleteById(item_id);
+		itemRepo.deleteById(item_id);
 	}
 	
 	

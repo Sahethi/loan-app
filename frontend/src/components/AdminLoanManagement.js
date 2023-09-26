@@ -1,10 +1,12 @@
 import React, {useEffect,useState} from 'react'
 import { Link,useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import EmptyTable from './EmptyTable';
 
 export default function AdminLoanManagement() {
     const [loans, setLoans] = useState([]);
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState(null);
     const url = `http://localhost:8080/fetchAllLoanTypes`;
     const deleteLoan = loanid => async() => {
         try{
@@ -22,6 +24,7 @@ export default function AdminLoanManagement() {
             console.log(response.data);
         } catch (err) {
             console.log("Error:" + err);
+            setErrorMessage("Loan List Empty!");
         }
     };
 
@@ -43,6 +46,11 @@ export default function AdminLoanManagement() {
                 <th scope="col">Loan Duration</th>
                 <th scope="col">Actions</th>
                 </tr>
+                {errorMessage && 
+                    <div className="error-message">
+                        {EmptyTable(errorMessage)}
+                    </div>
+                }
                 {
                 loans.map((loan,idx)=>(
                     <tr>

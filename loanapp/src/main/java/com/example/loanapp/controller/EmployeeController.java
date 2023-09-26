@@ -45,7 +45,7 @@ public class EmployeeController {
 		}
 		
 		@GetMapping("/fetchAllLoanTypes")
-		public List<Loan> getAllLoanTypes(){
+		public List<Loan> getAllLoanTypes() throws NoDataFoundException{
 			return empService.getAllLoanTypes();
 		}
 		
@@ -108,7 +108,7 @@ public class EmployeeController {
 		
 		//items
 		@GetMapping("/items")
-		public ResponseEntity<Object> getItems(){
+		public ResponseEntity<Object> getItems() throws NoDataFoundException{
 			List<Item> i = empService.getItems();
 			if(i == null) 
 				return new ResponseEntity<>("Invalid Issue Id",HttpStatus.NOT_FOUND);
@@ -130,10 +130,11 @@ public class EmployeeController {
 		}
 
 		@GetMapping("/displayAdminItems")
-		public List<AdminItems>getAdminItems(){
+		public List<AdminItems>getAdminItems() throws NoDataFoundException{
 			List<AdminItems>i=empService.getAdminItems();
             return i;
 		}
+		
 		@GetMapping("/fetchitems/{item_id}")
 		public Item fetchitems(@PathVariable("item_id") String item_id){
 			return empService.fetchitems(item_id);
