@@ -100,6 +100,7 @@ public class EmployeeService {
 
 		return ita+"hello"+itemRepo.findById(itm).get();
 	}
+	
 	@Autowired
 	private AditemRepo aditemRepo;
 	
@@ -208,15 +209,20 @@ public class EmployeeService {
 		return ret;
 	}
 	
-	public List<DisplayLoans> getAllLoans(String empId) {
-		// TODO Auto-generated method stub
+	public List<DisplayLoans> getAllLoans(String empId) throws NoDataFoundException{
+
 		List<Loan> l = empCardRepo.getEmpLoans(empId);
 		List<LocalDate> d = empCardRepo.getEmpIssueDate(empId);
 		List<DisplayLoans> dl= new ArrayList<DisplayLoans>();
+		
 		for(int i=0; i<l.size(); i++) {
 			dl.add(new DisplayLoans(l.get(i), d.get(i)));
 		}
-		return dl;
+		
+		if(dl.size() == 0)
+			throw new NoDataFoundException("No Data Found");
+		else
+			return dl;
 	}
 	
 	public Loan fetchLoan(String loanID) {

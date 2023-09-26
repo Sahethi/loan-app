@@ -97,7 +97,7 @@ public class EmployeeController {
 		}
 		
 		//item details page
-		@GetMapping("/items/{empId}")
+		@GetMapping("/items/{empId}") 
 		public ResponseEntity<Object> getEmpItems(@PathVariable("empId") String empId){
 			List<DisplayUserItems> i = empService.getEmpItems(empId);
 			if(i == null) 
@@ -118,7 +118,7 @@ public class EmployeeController {
 		
 		//loan details page
 		@GetMapping("/loans/{empId}")
-		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId){
+		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId) throws NoDataFoundException{
 			return empService.getAllLoans(empId);
 		}
 
@@ -131,7 +131,7 @@ public class EmployeeController {
 
 		@GetMapping("/displayAdminItems")
 		public List<AdminItems>getAdminItems() throws NoDataFoundException{
-			List<AdminItems>i=empService.getAdminItems();
+			List<AdminItems>i = empService.getAdminItems();
             return i;
 		}
 		
