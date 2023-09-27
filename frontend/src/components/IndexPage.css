@@ -1,0 +1,32 @@
+/* LoginAsk.css */
+
+/* Center the container vertically and horizontally */
+.container-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; 
+  }
+  
+  /* Add margin at the top of the cards */
+  .mt-4 {
+    margin-top: 1rem; 
+  }
+  
+  /* Add margin at the bottom of the cards */
+  .mb-4 {
+    margin-bottom: 2rem; 
+  }
+  
+  /* Style for the button container */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  /* Style for the login button */
+  .login-button {
+    background-color: #48b4bb; /* Change button color to the desired color */
+    color: white; /* Add text color to make sure it's visible */
+  }

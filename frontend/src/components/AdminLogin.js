@@ -9,7 +9,7 @@ import {Navigate, useNavigate} from 'react-router-dom';
 import './adminLogin.css';
 
 
-const AdminLogin=()=>{
+const AdminLogin = () => {
     const [loginDetails,setLoginDetails]=useState({
         username: "",
         password:""
@@ -53,6 +53,11 @@ const AdminLogin=()=>{
         console.log(loginDetails);
 
         
+        //validation
+        if(loginDetails.username.trim()==="" || loginDetails.password.trim()===""){
+            // window.alert("Username and Passowrd is required");
+            return;
+        }else{
             loginAdmin(loginDetails).then((resp)=>{
                 if(resp.data===loginDetails.username){
                     // window.alert("admin logged in");
@@ -160,5 +165,5 @@ const AdminLogin=()=>{
         
     )
 }
-
+}
 export default AdminLogin;
