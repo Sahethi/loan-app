@@ -82,7 +82,7 @@ function ApplyLoan(){
                 item_make: currMake,
                 item_valuation:x
             }).then((res) => {
-                alert("Loan Applied")
+                // alert("Loan Applied")
                 console.log(res.data);
                 
             }, fail => {
@@ -161,7 +161,7 @@ return(
                         }
                         </div><br></br>
                     
-                        <button type="submit" class="btn btn-primary">Apply Loan</button>
+                        <button type="submit" class="btn btn-primary" disabled={!currMake}>Apply Loan</button>
                     </form>
 
         </div>

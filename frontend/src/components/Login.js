@@ -44,7 +44,7 @@ function Login() {
                     setformErrors(errors => {
                         return {
                             ...errors,
-                            username: "Invalid username"
+                            username: "Invalid username or password"
                         }
                     });
                     isSubmit(false);

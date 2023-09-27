@@ -1,6 +1,8 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import "./AdminItem.css"
 import axios from "axios";
+import {useNavigate} from 'react-router';
+
 
 function AdminItem(){
     const baseURL="http://localhost:8080/saveItem";
@@ -10,19 +12,68 @@ function AdminItem(){
     const [item_valuation,setitem_Value]=useState('');
     const [item_category,setitem_category]=useState('');
     const [item_make,setitem_make]=useState('');
+    const [error, setError] = useState({
+        item_id:" ",
+        item_description:" ",
+        issue_status:" ",
+        item_valuation:" ",
+        item_category:" ",
+        item_make:" ",
+    });
+    const [submit, isSubmit] = useState(true);
+    const navigate = useNavigate();
+
 
     const itemidHandler=(e)=>{
-        setitem_id(e.target.value)}
+        setitem_id(e.target.value)
+        if(e.target.value.length != 6) {
+            setError({...error, item_id:"Item ID must be exactly 6 characters"});
+        } else{
+            setError({...error, item_id:""});
+        }
+    }
     const itemdescrpHandler=(e)=>{
-        setitem_description(e.target.value)}
+        setitem_description(e.target.value)
+        if(!e.target.value.replace(/\s/g,'').length) {
+            setError({...error, item_description:"Please enter a valid description"});
+        } else {
+            setError({...error, item_description:""});
+        }
+    }
     const issueHandler=(e)=>{
-        setissue_status(e.target.value)}
+        setissue_status(e.target.value)
+        if(!e.target.value.replace(/\s/g,'').length) {
+            setError({...error, issue_status:"Please select issue status"});
+        } else {
+            setError({...error, issue_status:""});
+
+        }
+    }
     const valueHandler=(e)=>{
-        setitem_Value(e.target.value)}
+        setitem_Value(e.target.value)
+        if(!e.target.value.replace(/\s/g,'').length || !/^\d+$/.test(e.target.value)) {
+            setError({...error, item_valuation:"Please enter a valid value"});
+        } else {
+            setError({...error, item_valuation:""});
+        }
+    }
     const categoryHandler=(e)=>{
-            setitem_category(e.target.value)}
+            setitem_category(e.target.value)
+            if(!e.target.value.replace(/\s/g,'').length) {
+                setError({...error, item_category:"Please select item category"});
+            } else {
+                setError({...error, item_category:""});
+            }
+    }
     const makeHandler=(e)=>{
-            setitem_make(e.target.value)}
+            setitem_make(e.target.value)
+            if(!e.target.value.replace(/\s/g,'').length) {
+                setError({...error, item_make:"Please select item make"});
+            } else {
+                setError({...error, item_make:""});
+
+            }
+    }
             const submitHandler = (event) => {
                 event.preventDefault();
                 axios
@@ -35,13 +86,28 @@ function AdminItem(){
                         item_description:item_description
                    })
                    .then((response) => {
-                    alert("Successfully added");
+                    // alert("Successfully added");
+                    navigate("/AdminItemDetails");
                     console.log(response.data);
                    })
                    .catch(error => {
-                    alert("error===" + error)
+                    // alert("error===" + error)
                    });
                 }
+
+                useEffect(() => {
+                    let ans = true;
+                    Object.values(error).map((value,index) => {
+                        // const value = error.key;
+                        if(value != "") {
+                            ans = false;
+                            // console.log(index + ": " + value);
+                            // return;
+                        }
+                    });
+                    isSubmit(ans);
+                    
+                }, [error]);
     
         return (
             
@@ -52,29 +118,51 @@ function AdminItem(){
             
             <form className="centred" onSubmit={submitHandler}>
     
-                <label for="email" class="form-label">Item ID:</label>
+                 <label for="email" class="form-label">Item ID:</label>
                  <input className="inputField" type="text" onChange={itemidHandler} value={item_id}required/>
+                 <span style={{color:"red"}}>{error.item_id}</span>
+                 <br />
+                 
                  <label for="email" class="form-label">Item Description:</label>
                  <input class="inputField" type="text" onChange={itemdescrpHandler}value={item_description}required/>
+                 <span style={{color:"red"}}>{error.item_description}</span>
+                 <br />
+
                  <label for="email" class="form-label">Issue Status:</label>
                  <select id="issue_status" onChange={issueHandler}value={issue_status}>
-                    <option>select..</option>
-                    <option>Y</option>
-                    <option>N</option>
+                    <option value="">select..</option>
+                    <option value="y">Y</option>
+                    <option value="n">N</option>
                  </select>
+                 <span style={{color:"red"}}>{error.issue_status}</span>
+                 <br />
             
                  <label for="email" class="form-label">Item Category:</label>
-                 <input className="inputField" type="text" onChange={categoryHandler}value={item_category}required/>
+                 {/* <input className="inputField" type="text" onChange={categoryHandler}value={item_category}required/> */}
+                 <select id="item_category" onChange={categoryHandler} value={item_category}>
+                    <option value="">select..</option>
+                    <option value="furniture">Furniture</option>
+                    <option value="crockery">Crockery</option>
+                 </select>
+                 <span style={{color:"red"}}>{error.item_category}</span>
+                 <br />
+
+
                  <label for="email" class="form-label">Item Value:</label>
                  <input className="inputField" type="text" onChange={valueHandler}value={item_valuation}required/>
+                 <span style={{color:"red"}}>{error.item_valuation}</span>
+                 <br />
+
                  <label for="email" class="form-label">Item Make:</label>
                  <select id="issue_status" onChange={makeHandler} value={item_make}>
-                    <option>select..</option>
-                    <option>Wooden</option>
-                    <option>Glass</option>
+                    <option value="">select..</option>
+                    <option value="wooden">Wooden</option>
+                    <option value="glass">Glass</option>
                  </select>
-                 
-                 <button>Submit</button>          
+                 <span style={{color:"red"}}>{error.item_make}</span>
+                 <br />
+
+                 <button disabled={!submit}>Submit</button>          
     </form></div> </div>)}
 
 export default AdminItem; 
