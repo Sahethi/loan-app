@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.validation.Valid;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.example.loanapp.exception.NoDataFoundException;
+import com.example.loanapp.exception.ResourceNotFoundException;
 import com.example.loanapp.model.AdminUser;
 import com.example.loanapp.model.DisplayLoans;
 //import com.example.loan.management.userin.UserInfo;
@@ -41,7 +45,7 @@ public class EmployeeController {
 		}
 		
 		@GetMapping("/fetchAllLoanTypes")
-		public List<Loan> getAllLoanTypes(){
+		public List<Loan> getAllLoanTypes() throws NoDataFoundException{
 			return empService.getAllLoanTypes();
 		}
 		
@@ -79,22 +83,23 @@ public class EmployeeController {
 			return new ResponseEntity<LoginModel>(empService.saveLogin(u),HttpStatus.CREATED);}		
 		
 		@PostMapping("/loginAuth")
-		public String validateUser(@RequestBody LoginModel u) {
+		public String validateUser(@RequestBody LoginModel u) throws ResourceNotFoundException {
 			return empService.chkLogin(u);
 		}
+		
 		@PostMapping("/adminItems")
 		public AdminItems adminsave(@RequestBody AdminItems u) {
 			return empService.adminsave(u);
 		}
 		
 		@GetMapping("/employees/{empId}")
-		public Optional<Employee> getEmp(@PathVariable("empId") String empId){
+		public Optional<Employee> getEmp(@PathVariable("empId") String empId) throws ResourceNotFoundException{
 			return empService.getEmployee(empId);
 		}
 		
 		//item details page
-		@GetMapping("/items/{empId}")
-		public ResponseEntity<Object> getEmpItems(@PathVariable("empId") String empId){
+		@GetMapping("/items/{empId}") 
+		public ResponseEntity<Object> getEmpItems(@PathVariable("empId") String empId) throws NoDataFoundException{
 			List<DisplayUserItems> i = empService.getEmpItems(empId);
 			if(i == null) 
 				return new ResponseEntity<>("Invalid Issue Id",HttpStatus.NOT_FOUND);
@@ -104,7 +109,7 @@ public class EmployeeController {
 		
 		//items
 		@GetMapping("/items")
-		public ResponseEntity<Object> getItems(){
+		public ResponseEntity<Object> getItems() throws NoDataFoundException{
 			List<Item> i = empService.getItems();
 			if(i == null) 
 				return new ResponseEntity<>("Invalid Issue Id",HttpStatus.NOT_FOUND);
@@ -114,28 +119,29 @@ public class EmployeeController {
 		
 		//loan details page
 		@GetMapping("/loans/{empId}")
-		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId){
+		public List<DisplayLoans> getEmpLoans(@PathVariable("empId") String empId) throws NoDataFoundException{
 			return empService.getAllLoans(empId);
 		}
 
 		@PostMapping("/forapplyloans")
-		public String savedata(@RequestBody LoanModel u)
+		public String savedata(@RequestBody LoanModel u) throws ResourceNotFoundException
 		{
 		     return empService.savedata(u);
 			
 		}
 
 		@GetMapping("/displayAdminItems")
-		public List<AdminItems>getAdminItems(){
-			List<AdminItems>i=empService.getAdminItems();
+		public List<AdminItems>getAdminItems() throws NoDataFoundException{
+			List<AdminItems>i = empService.getAdminItems();
             return i;
 		}
+		
 		@GetMapping("/fetchitems/{item_id}")
-		public Item fetchitems(@PathVariable("item_id") String item_id){
+		public Item fetchitems(@PathVariable("item_id") String item_id) throws ResourceNotFoundException{
 			return empService.fetchitems(item_id);
 		}
 		@PutMapping("/updateItem/{item_id}")
-		public ResponseEntity<Item> updateLoan(@PathVariable("item_id") String item_id, @Valid @RequestBody Item l){
+		public ResponseEntity<Item> updateLoan(@PathVariable("item_id") String item_id, @Valid @RequestBody Item l) throws ResourceNotFoundException{
 			Item itemObj = empService.fetchitems(item_id);
 			if(itemObj != null) {
 				itemObj.setItem_id(l.getItem_id());
@@ -148,12 +154,12 @@ public class EmployeeController {
 		}
 		
 		@GetMapping("/fetchLoan/{loanID}")
-		public Loan fetchLoan(@PathVariable("loanID") String loanID){
+		public Loan fetchLoan(@PathVariable("loanID") String loanID) throws ResourceNotFoundException{
 			return empService.fetchLoan(loanID);
 		}
 		
 		@PutMapping("/updateLoan/{loanID}")
-		public ResponseEntity<Loan> updateLoan(@PathVariable("loanID") String loan_id, @Valid @RequestBody Loan l){
+		public ResponseEntity<Loan> updateLoan(@PathVariable("loanID") String loan_id, @Valid @RequestBody Loan l) throws ResourceNotFoundException{
 			Loan loanObj = empService.fetchLoan(loan_id);
 			if(loanObj != null) {
 				loanObj.setLoan_type(l.getLoan_type());
@@ -175,12 +181,12 @@ public class EmployeeController {
 		}
 		
 		@GetMapping("/fetchAllEmployees")
-		public List<Employee> fetchAllEmployees(){
+		public List<Employee> fetchAllEmployees() throws NoDataFoundException{
 			return empService.fetchAllEmployees();
 		}
 		
 		@PutMapping("/updateEmployee/{employeeID}")
-		public ResponseEntity<Employee> updateEmployee(@PathVariable("employeeID") String emp_id, @Valid @RequestBody Employee e){
+		public ResponseEntity<Employee> updateEmployee(@PathVariable("employeeID") String emp_id, @Valid @RequestBody Employee e) throws ResourceNotFoundException{
 			Employee empObj = empService.fetchEmployee(emp_id);
 			if(empObj != null) {
 				empObj.setFirst_name(e.getFirst_name());
@@ -196,7 +202,7 @@ public class EmployeeController {
 				empObj.setDoj(e.getDoj());
 				return new ResponseEntity<>(empService.saveEmployee(empObj),HttpStatus.OK);
 			}
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
 		}
 		
 		@GetMapping("/deleteEmployee/{empID}")

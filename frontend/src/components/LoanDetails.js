@@ -2,12 +2,17 @@ import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router';
 import axios from 'axios';
 import './LoanDetails.css'
+import EmptyTable from './EmptyTable';
+import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
+
 export default function LoanDetails() {
     const {empID} = useParams();
     // const handleProceed = (e) => {
     //     history.push(`/items/${empID}`);
     // };
     const [loans, setLoans] = useState([]);
+    const [errorMessage, setErrorMessage] = useState(null);
     const url = `http://localhost:8080/loans/${empID}`;
     const fetchData = async() => {
         try{
@@ -16,6 +21,7 @@ export default function LoanDetails() {
             // console.log(items.issue);
         } catch (err) {
             console.log("Error:" + err);
+            setErrorMessage("Loan Details Empty!");
         }
     };
 
@@ -26,7 +32,10 @@ export default function LoanDetails() {
 
 
   return (
-    <div className='loan-details-container'>
+    <div>
+      <Navbar />
+      <div className='loan-details-container'>
+      
         <h2>Loan Details</h2>
     
 
@@ -46,6 +55,11 @@ export default function LoanDetails() {
       <th scope="col" className='col-3'>Loan Duration</th>
       <th scope="col" className='col-3'>Card Issue Date</th>
     </tr>
+    {errorMessage && 
+                    <div className="error-message">
+                        {EmptyTable(errorMessage)}
+                    </div>
+                }
     </thead>
     <tbody>
     {
@@ -64,5 +78,7 @@ export default function LoanDetails() {
   
 </table>
     </div>
+    </div>
+    
   )
 }

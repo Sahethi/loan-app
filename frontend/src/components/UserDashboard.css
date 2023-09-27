@@ -9,7 +9,10 @@
     padding : 0 20px;
 }
 
-.custom-navbar a{
+.custom-navbar > a:hover{
+    text-decoration: none;
+}
+.custom-navbar .navbar-container a{
     display : flex;
     justify-content: center;
     align-items: center;
@@ -17,7 +20,7 @@
     text-decoration: none;
     font-weight : 500
 }
-.custom-navbar a:hover{
+.custom-navbar .navbar-container a:hover{
     color : #0275D8 !important;
     background-color: white;
 }
