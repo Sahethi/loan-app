@@ -3,6 +3,7 @@ package com.example.loanapp;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -286,12 +287,13 @@ class LoanappApplicationTests {
 			
 			EmployeeCard empCard= new EmployeeCard();
 			empCard.setCard_id("card01");
-			empCard.setCard_issue_date(Date.valueOf("2016-02-01"));
+			
+			empCard.setCard_issue_date(LocalDate.parse("2016-02-01"));
 			
 			
 			List<Loan> ln = new ArrayList<>();
 			ln = empCardRepo.getEmpLoans("123");
-			List<Date> issue_id_date = new ArrayList<>();
+			List<LocalDate> issue_id_date = new ArrayList<>();
 			issue_id_date = empCardRepo.getEmpIssueDate("123");
 			ObjectMapper mapper = new ObjectMapper();
 			
@@ -311,7 +313,6 @@ class LoanappApplicationTests {
 	
 
 }
-
 
 
 

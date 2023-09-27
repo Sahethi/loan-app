@@ -16,6 +16,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 @Entity
 @Table(name="employee_master")
@@ -41,7 +43,7 @@ public class Employee {
 	@NotNull(message="Please enter your home address!")
 	private String home_add;
 	@NotNull(message="Date of birth cannot be left blank!")
-	@JsonFormat(shape =JsonFormat.Shape.STRING,pattern="dd-MM-yyyy")
+	//@JsonFormat(shape =JsonFormat.Shape.STRING,pattern="dd-MM-yyyy")
 	private Date dob;
 	@NotNull(message="Mnetion your gender")
 	private char gender;
@@ -54,14 +56,16 @@ public class Employee {
 	@Column(length=25)
 	@NotNull(message="Mention your department")
 	private String dept;
-	@JsonFormat(shape =JsonFormat.Shape.STRING,pattern="dd-MM-yyyy")
+//	@JsonFormat(shape =JsonFormat.Shape.STRING,pattern="dd-MM-yyyy")
 	@NotNull(message="Date of joining cannot be left blank!")
 	private Date doj;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy= "employee",cascade=CascadeType.ALL)
 	private List<EmployeeCard> EmployeeCard;
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy= "employee",cascade=CascadeType.ALL)
 	private List<Issue> issue;
 
 	public String getEmployee_id() {

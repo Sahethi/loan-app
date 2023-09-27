@@ -2,6 +2,8 @@ import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import './ApplyLoan.css'
+import applyLoanImg from '../assets/images/img2.svg'
+import UserNavbar from "./UserNavbar";
 function ApplyLoan(){
 
     const [items, setItems] = useState([]);
@@ -17,8 +19,6 @@ function ApplyLoan(){
     //set current make based on description selected
     const [make, setMake] = useState([]);
     const [currMake, setcurrMake] = useState("");
-    
-    const[valuation, setValuation] = useState("");
 
     
     useEffect(() => {
@@ -67,37 +67,24 @@ function ApplyLoan(){
     }
 
     const handle3 = (e) => {
-        setcurrMake(e.target.value);
-        
+        setcurrMake(e.target.value);        
     }
-    const changeValuation = (item) => {
-        if(item)
-            setValuation(item.item_valuation);
-    }
-    const handleSubmit = async (e) => {
 
-<<<<<<< HEAD
-        e.preventDefault();        
+    const handleSubmit = async (e) => {
+        console.log("yo");
+        e.preventDefault();           
         try {
+            let x =items.find(item => (item.item_description === currDesc && item.item_make === currMake));
+            if(x)x=x.item_valuation;
             await axios.post("http://localhost:8080/forapplyloans", {
                 employee_id: sessionStorage.getItem("sessionId") ,
                 item_category: currCat,
                 item_description: currDesc,
                 item_make: currMake,
-                item_valuation:valuation
+                item_valuation:x
             }).then((res) => {
                 alert("Loan Applied")
                 console.log(res.data);
-=======
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         await axios.post("http://localhost:8080/forapplyloans/", {
-    //             ...userLoan
-    //         }, config).then((res) => {
-    //             alert("User Registered Successfully")
-    //             console.log(res.data);
->>>>>>> main
                 
             }, fail => {
                 console.error(fail); // Error!
@@ -110,79 +97,75 @@ function ApplyLoan(){
 if(loading) {
     return <p>Loading...</p>
 }
-    
 return(
+    <div>
+        <UserNavbar />
     <div className="apply-loans-container">
+        <img src = {applyLoanImg} />
     <div class="container">
-        <div class="row">
-            <h2>Apply Loan</h2>
-        <hr/>
-        </div>
-        <div class="row">
-        <div class="col-sm-6">
+            <h2 className="apply-loan-heading text-primary">Your Loan is a few clicks away!</h2>
+        
         <form onSubmit={handleSubmit}>
                         <div class="form-group">
-                        <label>Employee Id</label>
-                        <input type="text" value={sessionStorage.getItem('sessionId')} class="form-control"/><br></br>
+                        <label className="text-muted">Employee Id</label>
+                        <input type="text" value={sessionStorage.getItem('sessionId')} class="form-control"/>
                         </div>
                         <div class="form-group">
-                        <label>Item Category</label>&nbsp;&nbsp;
-                        <select defaultValue={""} onChange={handle1} value={currCat}> 
+                        <label className="text-muted">Item Category</label>
+                        <select  className = "form-control" defaultValue={""} onChange={handle1} value={currCat}> 
                             <option disabled value="">Select</option> 
-                        
                             {
                                 cats.map(item =>  <option>{item}</option>)
                             }
                         </select>
                         
-                        </div><br></br>
+                        </div>
                         {
-                            currCat != "" && 
+                            
                             <div class="form-group">
-                        <label>Item Description</label>
-                        <select defaultValue={""} onChange={handle2} value={currDesc}>
+                        <label className="text-muted">Item Description</label>
+                        <select className = "form-control" disabled = {currCat == "" ? true : false} defaultValue={""} onChange={handle2} value={currDesc}>
                         <option disabled value="">Select</option>
                         {       
-                          desc.map(curr => curr!=undefined && <option>{curr}</option>)   
+                          desc.map(curr => curr!==undefined && <option>{curr}</option>)   
                         }
                         </select>
                         {/* <input type="text"  class="form-control"/> */}
                         </div>
                         }
-                        <br></br>
-                        {
-                            currDesc != "" &&
-                            <div class="form-group">
-                        <label>Item Make</label>
-                        <select defaultValue={""} onChange = {(e) => {
-                            let itemObj = items.find(item => (item.item_description === currDesc && item.item_make === currMake));
-                            handle3(e);
-                        changeValuation(itemObj)}} value={currMake}>
-                        <option disabled value="">Select</option>
-                        {
-                            make.map(curr => curr!=undefined && <option>{curr}</option>)
-                        }
-                        </select>
-                        {/* <input type="text"  class="form-control"/> */}
-                        </div>
-                        }
-                        <br></br>
-                        <div class="form-group">
                         
                         {
-                            currCat != "" && currDesc != ""   && items.find(item => (item.item_description === currDesc && item.item_make === currMake)) != undefined && 
+                           
+                            <div class="form-group">
+                        <label className="text-muted">Item Make</label>
+                        <select disabled = { currDesc == "" ? true : false} className = "form-control" defaultValue={""} onChange = {(e) => {
+                            
+                            handle3(e);
+                        }} value={currMake}>
+                        <option disabled value="">Select</option>
+                        {
+                            make.map(curr => curr!==undefined && <option>{curr}</option>)
+                        }
+                        </select>
+                        {/* <input type="text"  class="form-control"/> */}
+                        </div>
+                        }
+                        
+                        <div>
+                        
+                        {
+                            currCat != "" && currDesc != "" && items.find(item => (item.item_description === currDesc && item.item_make === currMake)) != undefined && 
                             <p> Item Value: {items.find(item => (item.item_description === currDesc && item.item_make === currMake)).item_valuation}
                             </p>
                         }
-                        </div><br></br>
+                        </div>
                     
                         <button type="submit" class="btn btn-primary">Apply Loan</button>
                     </form>
 
-        </div>
-        </div>
+        
     </div>
-    </div>)
+    </div></div>)
 }
 
 export default ApplyLoan;

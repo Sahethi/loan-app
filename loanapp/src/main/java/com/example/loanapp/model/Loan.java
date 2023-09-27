@@ -17,16 +17,12 @@ public class Loan {
 	@Id
 	@Column(length=6, nullable=false, unique=true)
 	private String loan_id;
-	
 	@Column(length=15)
 	private String loan_type;
-	
 	@Column(length=2)
 	private int duration_in_years;
-
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@OneToMany(mappedBy= "loan",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-
+	@OneToMany(mappedBy= "loan",cascade=CascadeType.ALL)
 	private List<EmployeeCard> employeecard;
 	public String getLoan_id() {
 		return loan_id;
