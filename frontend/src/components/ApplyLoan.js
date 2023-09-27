@@ -2,8 +2,8 @@ import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import './ApplyLoan.css'
-import Navbar from "./Navbar";
 import applyLoanImg from '../assets/images/img2.svg'
+import UserNavbar from "./UserNavbar";
 function ApplyLoan(){
 
     const [items, setItems] = useState([]);
@@ -67,8 +67,7 @@ function ApplyLoan(){
     }
 
     const handle3 = (e) => {
-        setcurrMake(e.target.value);
-        
+        setcurrMake(e.target.value);        
     }
 
     const handleSubmit = async (e) => {
@@ -100,7 +99,7 @@ if(loading) {
 }
 return(
     <div>
-        <Navbar />
+        <UserNavbar />
     <div className="apply-loans-container">
         <img src = {applyLoanImg} />
     <div class="container">
@@ -125,7 +124,7 @@ return(
                             
                             <div class="form-group">
                         <label className="text-muted">Item Description</label>
-                        <select className = "form-control" disabled = {currCat != "" ? true : false} defaultValue={""} onChange={handle2} value={currDesc}>
+                        <select className = "form-control" disabled = {currCat == "" ? true : false} defaultValue={""} onChange={handle2} value={currDesc}>
                         <option disabled value="">Select</option>
                         {       
                           desc.map(curr => curr!==undefined && <option>{curr}</option>)   
@@ -139,7 +138,7 @@ return(
                            
                             <div class="form-group">
                         <label className="text-muted">Item Make</label>
-                        <select disabled = { currDesc !== "" ? true : false} className = "form-control" defaultValue={""} onChange = {(e) => {
+                        <select disabled = { currDesc == "" ? true : false} className = "form-control" defaultValue={""} onChange = {(e) => {
                             
                             handle3(e);
                         }} value={currMake}>
@@ -155,7 +154,7 @@ return(
                         <div>
                         
                         {
-                            currCat != "" && currDesc != ""   && items.find(item => (item.item_description === currDesc && item.item_make === currMake)) != undefined && 
+                            currCat != "" && currDesc != "" && items.find(item => (item.item_description === currDesc && item.item_make === currMake)) != undefined && 
                             <p> Item Value: {items.find(item => (item.item_description === currDesc && item.item_make === currMake)).item_valuation}
                             </p>
                         }
