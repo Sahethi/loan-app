@@ -9,7 +9,7 @@ import UserDashboard from "./components/UserDashboard";
 import AdminItem from "./components/AdminItem";
 import AdminItemDetails from "./components/AdminItemDetails";
 import AdminEditItem from "./components/AdminEditITem";
-
+import IndexPage from "./components/IndexPage";
 import AdminDashboard from "./components/AdminDashboard";
 import AdminAddLoan from "./components/AdminAddLoan";
 import AddEmployee from "./components/admin/AddEmployee";
@@ -21,20 +21,13 @@ import AdminEditEmployee from "./components/AdminEditEmployee";
 import PageNotFound from "./components/PageNotFound";
 
 
-// session management code
-// useEffect (() => {
-//   let authData = sessionStorage.getItem('authData');
-//   if(authData == null ){
-
-//   }
-// })
-
 function App() {
   return (
     <div>
 
       <BrowserRouter>
             <Routes>
+            <Route path="/" element= { <IndexPage/>} />
               <Route path="/login" element= { <Login/>} />
               <Route path="/employees/:empID" element= { <Login/>} />
               <Route path="/register" element={ <Register/>}/>
@@ -45,12 +38,11 @@ function App() {
               <Route path="/UserDashboard" element={<UserDashboard/>}/>
               <Route path="/AdminDashboard" element={<AdminDashboard/>}/>
               <Route path="/AdminAddLoan" element={<AdminAddLoan/>}/>
-                <Route path ="/loan-cards" element = {<LoanCard/>} />
-
+              <Route path ="/loan-cards" element = {<LoanCard/>} />
+             <Route path="/UserDashboard" element={<UserDashboard/>}/>
              <Route path="/AdminItem" element={<AdminItem/>}/>
              <Route path="/AdminItemDetails" element={<AdminItemDetails/>}/>
              <Route path="/AdminEditITem/:item_id" element={<AdminEditItem/>}/>
-
              <Route path="/admin/adduser" element={<AddEmployee/>}/>
              <Route path="/adminLoan" element={<AdminLoanManagement/>}/>
              <Route path="/adminEmployee" element={<AdminEmployeeManagement/>}/>

@@ -9,7 +9,7 @@ import {Navigate, useNavigate} from 'react-router-dom';
 import './adminLogin.css';
 
 
-const AdminLogin=()=>{
+const AdminLogin = () => {
     const [loginDetails,setLoginDetails]=useState({
         username: "",
         password:""
@@ -31,7 +31,7 @@ const AdminLogin=()=>{
 
         //validation
         if(loginDetails.username.trim()==="" || loginDetails.password.trim()===""){
-            window.alert("username and password is required");
+            window.alert("Username and Password is required"); 
             return;
         }else{
             loginAdmin(loginDetails).then((resp)=>{

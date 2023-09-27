@@ -20,11 +20,11 @@ public class AdminController {
 	@Autowired 
 	AdminService adminService;
 	
-	//admin Get
+//	admin Get
 	@PostMapping("/adminlogin")
 	public String getAdmin(@RequestBody AdminUser a ) {
 		return adminService.getAdmin(a);
-	}
+}
 	
 
 }

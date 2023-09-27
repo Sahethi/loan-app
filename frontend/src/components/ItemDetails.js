@@ -3,9 +3,14 @@ import { useParams } from 'react-router';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './ItemDetails.css'
+import EmptyTable from './EmptyTable';
+import Navbar from './Navbar';
+import UserNavbar from './UserNavbar';
+
 export default function ItemDetails() {
     const {empID} = useParams();
     const [items, setItems] = useState([]);
+    const [errorMessage, setErrorMessage] = useState(null);
     const url = `http://localhost:8080/items/${empID}`;
     
     const fetchData = async() => {
@@ -18,6 +23,7 @@ export default function ItemDetails() {
             // console.log(Array.from(response.data));
         } catch (err) {
             console.log("Error:" + err);
+            setErrorMessage("Item Details Empty!");
         }
     };
 
@@ -27,8 +33,9 @@ export default function ItemDetails() {
     
 
   return (
+    <div><UserNavbar />
     <div className='item-details-container'>
-      <Link to = "/UserDashboard">Back to Home</Link>
+      
     <h2>Item Details</h2>
 
     <div class="row">
@@ -47,6 +54,11 @@ export default function ItemDetails() {
       <th scope="col">Item Category</th>
       <th scope="col">Item Valuation</th>
     </tr>
+    {errorMessage && 
+      <div className="error-message">
+          {EmptyTable(errorMessage)}
+      </div>
+    }
     {
       items.map((itm,idx)=>(
         <tr>
@@ -61,6 +73,6 @@ export default function ItemDetails() {
 
   </thead>
 </table>
-    </div>
+    </div></div>
   )
 }

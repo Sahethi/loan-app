@@ -293,7 +293,7 @@ class LoanappApplicationTests {
 			
 			List<Loan> ln = new ArrayList<>();
 			ln = empCardRepo.getEmpLoans("123");
-			List<Date> issue_id_date = new ArrayList<>();
+			List<LocalDate> issue_id_date = new ArrayList<>();
 			issue_id_date = empCardRepo.getEmpIssueDate("123");
 			ObjectMapper mapper = new ObjectMapper();
 			
