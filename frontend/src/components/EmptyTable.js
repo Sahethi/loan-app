@@ -2,7 +2,7 @@ import Card from 'react-bootstrap/Card';
 
 function EmptyTable(message){
     return (
-        <div className="position-absolute top-50 start-50 translate-middle">
+        <div style={{marginTop:'100px'}} className="position-absolute top-50 start-50 translate-middle">
             <Card style = {{ width: '40em'}}>
                 <Card.Body>
                     <Card.Title className="mb-3">
