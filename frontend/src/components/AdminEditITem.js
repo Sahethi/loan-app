@@ -75,7 +75,7 @@ export default function AdminEditItem() {
                 
                 <div className='form-group'>
                     <label for="item_valuation" >Item Value:</label>
-                    <input type="text" className = "form-control" name="item_value" value={items.item_valuation} onChange={handleInput}/>
+                    <input type="number" className = "form-control" name="item_valuation" value={items.item_valuation} onChange={handleInput}/>
                     <br/>
                 </div>
                 <div className='form-group'>
@@ -91,8 +91,9 @@ export default function AdminEditItem() {
                     <label for="issue_status">Item Make:</label>
                     <select name="item_make" className = "form-control" value={items.item_make} onChange={handleInput}>
                         <option disabled value="">Select</option>
-                        <option value="Wooden">WoodeN</option>
+                        <option value="Wooden">Wooden</option>
                         <option value="Glass">Glass</option>
+                        <option value="Plastic">Plastic</option>
                         
                     </select>
                 </div>
@@ -106,8 +107,8 @@ export default function AdminEditItem() {
 
                 
    
-                <button type="submit" className= "btn btn-primary d-block w-100">Update Loan Card</button>.
-                <button type="submit" className= "btn btn-primary d-block w-100" onClick={()=>navigate("/adminLoan")}>Cancel</button>
+                <button type="submit" className= "btn btn-primary d-block w-100">Update Item</button>.
+                <button type="submit" className= "btn btn-primary d-block w-100" onClick={()=>navigate("/AdminItemDetails")}>Cancel</button>
             </form>
             </div>
             

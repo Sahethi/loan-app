@@ -33,6 +33,7 @@ function AdminDashboard(){
             <div class="choiceTile">
             <a href={`http://localhost:3000/AdminItemDetails/`} class="linkStyle"><img src={itemAdmin} alt="Item Master Data" class="choiceIcon"/>Item Master Data</a>
             </div>
+            <div><a href="http://localhost:3000/admin/login" onClick={handleLogout}>Logout</a></div>
         </div>
         </div>
     )
