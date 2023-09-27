@@ -8,8 +8,8 @@ import Button from 'react-bootstrap/Button';
 import landing1 from "../assets/images/admin.jpg";
 import landing2 from "../assets/images/employees.jpg";
 import Header from './Header';
-import {useNavigate} from 'react-router-dom';
-
+import {Link, useNavigate} from 'react-router-dom';
+import Navbar from './Navbar';
 const IndexPage = () => {
 
     const navigate = useNavigate();
@@ -24,7 +24,11 @@ const IndexPage = () => {
 
     return (
         <div>
-            <Header/>
+            <Navbar >        
+                <a href="http://localhost:3000/" className='text-white'>Home</a>
+                <a href="http://localhost:3000/register"  className='text-white'>Register</a>
+                </Navbar>
+            
             <Container className="container-center position-absolute top-50 start-50 translate-middle">
                 <Card style={{ width: '60%', boxShadow: '0 8px 16px rgba(0.2, 0, 0, 0.2)', margin:"10%", marginLeft:"5%" }}>
                 <Card.Img variant="top" src={landing1} className="card-img-top" alt="Card image" />

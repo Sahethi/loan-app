@@ -26,9 +26,11 @@ public class Item {
 	private String item_category;
 	@Column(length=6)
 	private int item_valuation;
+	
 	@OnDelete(action=OnDeleteAction.CASCADE)
 	@OneToMany(mappedBy="item",cascade=CascadeType.ALL)
 	private List<Issue> issue;
+	
 	public String getItem_id() {
 		return item_id;
 	}

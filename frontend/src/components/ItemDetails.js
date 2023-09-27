@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import './ItemDetails.css'
 import EmptyTable from './EmptyTable';
 import Navbar from './Navbar';
+import UserNavbar from './UserNavbar';
 
 export default function ItemDetails() {
     const {empID} = useParams();
@@ -32,7 +33,7 @@ export default function ItemDetails() {
     
 
   return (
-    <div><Navbar />
+    <div><UserNavbar />
     <div className='item-details-container'>
       
     <h2>Item Details</h2>

@@ -264,7 +264,7 @@ public class EmployeeService {
 		if(employeeList.size() == 0)
 			throw new NoDataFoundException("No Data Found");
 		else
-			return employeeList;
+			return employeeList;  
 	}
 	
 	public Employee fetchEmployee(String username) throws ResourceNotFoundException {

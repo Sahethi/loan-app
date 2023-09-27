@@ -4,14 +4,13 @@ import './UserDashboard.css';
 import ImgMoney from '../assets/images/img5.svg'
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
+import UserNavbar from './UserNavbar';
 function UserDashboard() {
-
-
-      
-
-    return (
+  
+  
+  return (
     <div>
-    <Navbar />
+      <UserNavbar />
 <div className='content-area'>
     </div>
       <div className='intro-container-1'>
