@@ -31,12 +31,13 @@ const AdminLogin = () => {
 
         //validation
         if(loginDetails.username.trim()==="" || loginDetails.password.trim()===""){
-            window.alert("Username and Passowrd is required");
+            window.alert("Username and Password is required"); 
             return;
         }else{
             loginAdmin(loginDetails).then((resp)=>{
                 if(resp.data===loginDetails.username){
                     window.alert("admin logged in");
+                    sessionStorage.setItem("adminSessionId", loginDetails.username);
                     navigate("/AdminDashboard");
                 } else{
                     window.alert(resp.data);
