@@ -4,7 +4,7 @@ import axios from 'axios';
 import './LoanDetails.css'
 import EmptyTable from './EmptyTable';
 import { Link } from 'react-router-dom';
-import Navbar from './Navbar';
+import UserNavbar from './UserNavbar';
 
 export default function LoanDetails() {
     const {empID} = useParams();
@@ -33,7 +33,7 @@ export default function LoanDetails() {
 
   return (
     <div>
-      <Navbar />
+      <UserNavbar />
       <div className='loan-details-container'>
       
         <h2>Loan Details</h2>

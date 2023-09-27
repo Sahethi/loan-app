@@ -3,6 +3,8 @@ import { useParams } from 'react-router';
 import axios from 'axios';
 import {Link,useNavigate} from 'react-router-dom';
 import EmptyTable from './EmptyTable';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 
 export default function AdminItemDetails() {
     //const {empID} = useParams();
@@ -44,41 +46,41 @@ export default function AdminItemDetails() {
     <div>
     <h2>Item Details</h2>
     
-    <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Item_id</th>
-      <th scope="col">Item Description</th>
-      <th scope="col">Item Make</th>
-      <th scope="col">Item Category</th>
-      <th scope="col">Item Valuation</th>
-      <th scope="col">Issue Status</th>
-      <th acope="col">Actions</th>
-      {errorMessage && 
-        <div className="error-message">
-            {EmptyTable(errorMessage)}
-        </div>
-      }
-    </tr>
-    {
-      items.map((itm,idx)=>(
+    <Table striped bordered hover>
+      <thead>
         <tr>
-          <td>{itm.item_id}</td>
-          <td>{itm.item_description}</td>
-          <td>{itm.item_make}</td>
-          <td>{itm.item_category}</td>
-          <td>{itm.item_valuation}</td>
-          <td>{itm.issue_status}</td>
-          <td>
-                        <button><Link to={"/AdminEditItem/"+itm.item_id}>Edit</Link></button><br></br>
-                        <button onClick={deleteitem(itm.item_id)}>Delete</button>
-                    </td>
+          <th scope="col">Item_id</th>
+          <th scope="col">Item Description</th>
+          <th scope="col">Item Make</th>
+          <th scope="col">Item Category</th>
+          <th scope="col">Item Valuation</th>
+          <th scope="col">Issue Status</th>
+          <th acope="col">Actions</th>
+          {errorMessage && 
+            <div className="error-message">
+                {EmptyTable(errorMessage)}
+            </div>
+          }
         </tr>
-      ))
-    }
+        {
+          items.map((itm,idx)=>(
+            <tr>
+              <td>{itm.item_id}</td>
+              <td>{itm.item_description}</td>
+              <td>{itm.item_make}</td>
+              <td>{itm.item_category}</td>
+              <td>{itm.item_valuation}</td>
+              <td>{itm.issue_status}</td>
+              <td>
+                            <Button variant="secondary"><Link to={"/AdminEditItem/"+itm.item_id}>Edit</Link></Button><br></br>
+                            <Button variant="secondary" onClick={deleteitem(itm.item_id)}>Delete</Button>
+                        </td>
+            </tr>
+          ))
+        }
 
-  </thead>
-</table>
+      </thead>
+    </Table>
     </div>
   )
 }
