@@ -67,7 +67,7 @@ function ApplyLoan(){
     }
 
     const handle3 = (e) => {
-        setcurrMake(e.target.value);        
+        setcurrMake(e.target.value);
     }
 
     const handleSubmit = async (e) => {
@@ -83,7 +83,7 @@ function ApplyLoan(){
                 item_make: currMake,
                 item_valuation:x
             }).then((res) => {
-                alert("Loan Applied")
+                // alert("Loan Applied")
                 console.log(res.data);
                 
             }, fail => {
@@ -160,7 +160,7 @@ return(
                         }
                         </div>
                     
-                        <button type="submit" class="btn btn-primary">Apply Loan</button>
+                        <button type="submit" class="btn btn-primary" disabled={!currMake}>Apply Loan</button>
                     </form>
 
         
