@@ -20,6 +20,22 @@ export default function AdminEditEmployee() {
         doj:"",
         password: ""
     });
+
+    const [error, setError] = useState({
+        first_name:"", //first_name
+        last_name:"",// last_name
+        home_add:"", //home_add
+        email_id:"", //email_id
+        phone_num:"", //phone_num     
+        dept:"", //dept
+        designation:"",
+        gender:"",
+        dob:"",
+        doj:""
+    });
+
+    const [submit, isSubmit] = useState(true);
+
     const navigate = useNavigate();
     const url = `http://localhost:8080/employees/${employeeID}`;
 
@@ -40,9 +56,79 @@ export default function AdminEditEmployee() {
     const handleInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
+
+        switch(name) {
+            case 'email_id':
+                const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+                if(!emailRegex.test(value)){
+                    setError(errors => {
+                        return {
+                            ...errors,
+                            [name]: "Please enter a valid email"
+                        }
+                    });
+                    // isSubmit(false);
+                }
+                else{
+                    setError(errors => {
+                        return {
+                            ...errors,
+                            [name]: ""
+                        }
+                    });
+                }
+        setEmployee({...employee, [name] : value});
+
+                return;
+            case 'phone_num':
+                if(value.length != 10 || !/^\d+$/.test(value)){
+                    setError(errors => {
+                        return {
+                            ...errors,
+                            [name]: "Please enter a valid 10-digit contact number"
+                        }
+                    });
+                    // isSubmit(false);
+                }
+                else{
+                    setError(errors => {
+                        return {
+                            ...errors,
+                            [name]: ""
+                        }
+                    });
+                }
+        setEmployee({...employee, [name] : value});
+
+                return;
+            
+            
+            default:
+                if(!value.replace(/\s/g,'').length){
+                    setError(errors => {
+                        return {
+                            ...errors,
+                            [name]: "Field cannot be blank"
+                        }
+                    });
+                    // isSubmit(false);
+                }
+                else{
+                    setError(errors => {
+                        return {
+                            ...errors,
+                            [name]: ""
+                        }
+                    });
+                }
+                
+        }
+
+
         setEmployee({...employee, [name] : value});
         console.log(e.target.name);
-        console.log(e.target.value)
+        console.log(e.target.value);
+
     }
 
     const handleSubmit = async (e) => {
@@ -51,16 +137,32 @@ export default function AdminEditEmployee() {
             await axios.put("http://localhost:8080/updateEmployee/"+employee.employee_id, {
                 ...employee
             }).then((res) => {
-                alert("Employee Updated Successfully")
+                // alert("Employee Updated Successfully")
                 console.log(res.data);
                 navigate("/adminEmployee");
             }, fail => {
                 console.error(fail); // Error!
             });
         } catch (err) {
-            alert(err);
+            // alert(err);
         }   
     }
+
+
+    useEffect(() => {
+        let ans = true;
+        Object.values(error).map((value,index) => {
+            // const value = error.key;
+            if(value != "") {
+                ans = false;
+                // console.log(index + ": " + value);
+                // return;
+            }
+        });
+        isSubmit(ans);
+        
+    }, [error]);
+
     return (
         <div className= "register-wrapper">
             
@@ -78,25 +180,35 @@ export default function AdminEditEmployee() {
                 <div className='form-group'>
                     <label for="first_name" >First name:</label>
                     <input type="text" className = "form-control" name="first_name" value={employee.first_name} onChange={handleInput}/>
+                    <span style={{color:"red"}}>{error.first_name}</span>
+                    
                     <br/>
                 </div>
                 
                 <div className='form-group'><label for="last_name" >Last name:</label>
                 <input type="text" className = "form-control" name="last_name" value={employee.last_name} onChange={handleInput}/>
+                <span style={{color:"red"}}>{error.last_name}</span>
+                
                 <br/></div>
                 
                 <div className='form-group'><label for="home_add">Home address:</label>
                 <textarea name="home_add"className = "form-control" value={employee.home_add} onChange={handleInput}/>
+                <span style={{color:"red"}}>{error.home_add}</span>
+            
                 <br></br></div>
                 
                 <div className='form-group'>
                     <label for="email_id">Email:</label>
                     <input type="text" className = "form-control" value={employee.email_id} onChange={handleInput} name="email_id"/>
+                    <span style={{color:"red"}}>{error.email_id}</span>
+                    
                     <br></br>
                 </div>
                 
                 <div className='form-group'><label for="phone_num">Contact Number:</label>
                 <input type="number" className = "form-control" maxLength={10} minLength={10} name="phone_num" value={employee.phone_num} onChange={handleInput}/>
+                <span style={{color:"red"}}>{error.phone_num}</span>
+            
                 <br></br></div>
                 
                 <div className='form-group'>
@@ -114,6 +226,8 @@ export default function AdminEditEmployee() {
                         <option value="accounting">Accounting</option>
                         <option value="technical">Technical</option>
                     </select>
+                    <span style={{color:"red"}}>{error.dept}</span>
+
                 </div>
                 <br>
                 </br>
@@ -125,6 +239,8 @@ export default function AdminEditEmployee() {
                         <option value="associate">Associate</option>
                         <option value="support">Support</option>
                     </select>
+                    <span style={{color:"red"}}>{error.designation}</span>
+
                 </div>
                 <br>
                 </br>
@@ -136,20 +252,26 @@ export default function AdminEditEmployee() {
                         <option value="f">Female</option>
                         <option value="o">Other</option>
                     </select>
+                    <span style={{color:"red"}}>{error.gender}</span>
+
                 </div>
                 <br></br>
                 <div className='form-group'>
                 <label for="dob">Date of Birth:</label>
                 <input className = "form-control" type="date" name="dob" value={employee.dob} onChange={handleInput}/>
+                <span style={{color:"red"}}>{error.dob}</span>
+                
                 <br></br>
                 </div>
                 <div className='form-group'>
                     <label for="doj">Date of Joining:</label>
                     <input className = "form-control" type="date" name="doj" value={employee.doj} onChange={handleInput}/>
+                    <span style={{color:"red"}}>{error.doj}</span>
+                
                     <br></br>
                 </div>
    
-                <button type="submit" className= "btn btn-primary d-block w-100">Update Employee</button>.
+                <button type="submit" className= "btn btn-primary d-block w-100" disabled={!submit}>Update Employee</button>.
                 <button type="submit" className= "btn btn-primary d-block w-100" onClick={()=>navigate("/adminEmployee")}>Cancel</button>
             </form>
             </div>
