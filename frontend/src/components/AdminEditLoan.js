@@ -3,7 +3,6 @@ import axios from 'axios'
 import {useNavigate} from 'react-router';
 import { useParams } from 'react-router';
 import './Register.css'
-
 export default function AdminEditLoan() {
     const {loanID} = useParams(); 
     const [loan, setLoan] = useState({
@@ -69,7 +68,6 @@ export default function AdminEditLoan() {
     }, [error]);
     return (
         <div className= "register-wrapper">
-            
             <div className='register-form'>
             <h2 className='pb-3'>Loan Management Application</h2>
             <h3 className='pb-3'>Edit Loan Card Details</h3>
