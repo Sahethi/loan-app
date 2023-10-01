@@ -2,7 +2,8 @@ import React, {useEffect,useState} from 'react'
 import { Link,useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import EmptyTable from './EmptyTable';
-
+import AdminNavbar from './AdminNavbar';
+import './AdminEmployeeManagement.css'
 export default function AdminEmployeeManagement() {
     const [employees, setEmployees] = useState([]);
     const navigate = useNavigate();
@@ -39,6 +40,8 @@ export default function AdminEmployeeManagement() {
     
   return (
     <div>
+        <AdminNavbar />
+        <div className='manage-employee-container'>
         <button onClick={AddEmployee}>Create New Employee</button>
         <table class="table table-striped">
             <thead>
@@ -74,6 +77,7 @@ export default function AdminEmployeeManagement() {
 
             </thead>
             </table>
+            </div>
     </div>
   )
 }

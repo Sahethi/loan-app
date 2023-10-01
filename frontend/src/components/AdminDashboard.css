@@ -8,13 +8,18 @@
 div.center{
     padding: 20px;
 }
-
-div.bckimage{
-    background-image: url("./images/adminBackground2.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+.admin-intro-container{
+    margin : 70px auto 0;
+    padding: 30px;
+    width : 80vw;
+    display: flex;
+    align-items: center;
+}
+.admin-intro-img{
+    width : 60%
+}
+.admin-intro-container h4{
+    color : #017BFE;
 }
 div.menu{  
     border:2px solid black;

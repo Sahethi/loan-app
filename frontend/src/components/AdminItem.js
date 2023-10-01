@@ -2,6 +2,7 @@ import React,{useState, useEffect} from "react";
 import "./AdminItem.css"
 import axios from "axios";
 import {useNavigate} from 'react-router';
+import AdminNavbar from "./AdminNavbar";
 
 
 function AdminItem(){
@@ -112,6 +113,7 @@ function AdminItem(){
         return (
             
             <div className="whole">
+                
             <div className="custom"><h1>Loan Management System</h1>
             <h2>Item Master Data</h2></div>
             <div className="container">
