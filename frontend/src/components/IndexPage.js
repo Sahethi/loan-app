@@ -21,10 +21,10 @@ const IndexPage = () => {
     const employeeLogin = () => {
         navigate("/login")
     }
-
+    const HomeButton = () => <Link to = "/"><h2 className='text-white'>KarzaLo</h2></Link>
     return (
         <div>
-            <Navbar >        
+            <Navbar homeButton={HomeButton}>        
                 <a href="http://localhost:3000/" className='text-white'>Home</a>
                 <a href="http://localhost:3000/register"  className='text-white'>Register</a>
             </Navbar>
