@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { Toast, ToastBody, ToastContainer } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-
+import registerImg from '../assets/images/img4.svg';
 
 export default function Register() {
     const [userRegistration, setuserRegistration] = useState({
@@ -347,8 +347,7 @@ export default function Register() {
 
     return (
         <div className= "register-wrapper">
-            
-            
+            <img src ={registerImg} />
             <div className='register-form'>
             <ToastContainer className='toast-com position-fixed' >
                 <Toast bg='success' className='p-1' show={show} onClose={() => setShow(false)} delay={2000} autohide>
