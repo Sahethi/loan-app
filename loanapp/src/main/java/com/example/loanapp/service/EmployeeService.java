@@ -51,6 +51,10 @@ public class EmployeeService {
 	
 	//save employee
 	public Employee saveEmployee(Employee u) {
+		Optional<Employee> emp = empRepo.findById(u.getEmployee_id());
+		if(emp != null) {
+			return null;
+		}
 		Employee obj = empRepo.save(u);
 		return obj;
 	}

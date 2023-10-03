@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import './Login.css'
 import loginImg from '../assets/images/img1.svg'
+import { Link } from "react-router-dom";
+import { Toast } from "react-bootstrap";
 //Login
 
 function Login() {
@@ -14,17 +16,22 @@ function Login() {
     const navigate = useNavigate();
     const [formErrors, setformErrors] = useState({username:" ", password:" "});
     const [submit, isSubmit] = useState(false);
+    
+    //toast
+    const [show, setShow] = useState(false);
 
             
     async function sendEmployeeDetails(res){
         try{
             const response = await axios.get(`http://localhost:8080/employees/${res}`);
+            
             sessionStorage.setItem("sessionId", res);
             sessionStorage.setItem("dept", response.data.dept);
             sessionStorage.setItem("designation", response.data.designation);
             setEmployeeDetails(response.data);
             console.log(response.data);
         } catch (err) {
+
             console.log("Error:" + err);
         }
     }
@@ -49,13 +56,13 @@ function Login() {
                 } 
                 else if (res.data == "Incorrect username or password") { 
                     // alert("Incorrect Email or Password");
-                    setformErrors(errors => {
-                        return {
-                            ...errors,
-                            username: "Incorrect username or password"
-                        }
-                    });
-                    isSubmit(false);
+                    // setformErrors(errors => {
+                    //     return {
+                    //         ...errors,
+                    //         username: "Incorrect username or password"
+                    //     }
+                    // });
+                    // isSubmit(false);
                 } else { 
                     //Successful
                     // alert(res.data)
@@ -167,6 +174,8 @@ function Login() {
                         <button type="submit" disabled = {!submit} class="btn btn-primary mt-2 mx-auto d-block w-100" onClick={login}>Login</button>
                     </form>
                     </div>
+                    <p>New to KarzaLo? Click <Link to = "/register"><a style={{textDecoration:'none'}}>here</a></Link> to register</p>
+                    <br></br>
                 </div>
             
                 </div>
