@@ -3,7 +3,7 @@ import axios from 'axios'
 import './Register.css'
 import { useNavigate } from 'react-router';
 
-
+import registerImg from '../assets/images/img4.svg';
 
 export default function Register() {
     const [userRegistration, setuserRegistration] = useState({
@@ -336,7 +336,7 @@ export default function Register() {
 
     return (
         <div className= "register-wrapper">
-            
+            <img src ={registerImg} />
             <div className='register-form'>
             <h2 className='pb-3'>Register</h2>
             <form action="" onSubmit={handleSubmit}>
