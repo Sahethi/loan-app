@@ -203,7 +203,7 @@ public class EmployeeController {
 				empObj.setDesignation(e.getDesignation());
 				empObj.setDept(e.getDept());
 				empObj.setDoj(e.getDoj());
-				return new ResponseEntity<>(empService.saveEmployee(empObj),HttpStatus.OK);
+				return new ResponseEntity<>(empService.saveEmployee1(empObj),HttpStatus.OK);
 			}
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
 		}

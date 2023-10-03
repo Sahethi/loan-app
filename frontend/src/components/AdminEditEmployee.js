@@ -2,7 +2,7 @@ import React, {useEffect,useState} from 'react'
 import axios from 'axios'
 import {useNavigate, useParams } from 'react-router';
 import './Register.css'
-
+import './AdminEditEmployee.css'
 export default function AdminEditEmployee() {
     const {employeeID} = useParams(); 
     const [employee, setEmployee] = useState({
@@ -232,7 +232,7 @@ export default function AdminEditEmployee() {
             await axios.put("http://localhost:8080/updateEmployee/"+employee.employee_id, {
                 ...employee
             }).then((res) => {
-                // alert("Employee Updated Successfully")
+                alert("Employee Updated Successfully")
                 console.log(res.data);
                 navigate("/adminEmployee");
             }, fail => {
@@ -261,7 +261,7 @@ export default function AdminEditEmployee() {
     return (
         <div className= "register-wrapper">
             
-            <div className='register-form'>
+            <div style = {{justifySelf : 'center'}}className='register-form loan-form'>
             <h2 className='pb-3'>Loan Management Application</h2>
             <h3 className='pb-3'>Edit Employee Details</h3>
             <form action="" onSubmit={handleSubmit}>

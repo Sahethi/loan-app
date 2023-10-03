@@ -56,14 +56,19 @@ public class EmployeeService {
 		if(emp.isPresent()) {
 			System.out.println("Hello1");
 			return null;
-		}else {
-			Employee obj = empRepo.save(u);
-			return obj;
-		
 		}
-		
+		Employee obj = empRepo.save(u);
+		return obj;
+	
 	}
 
+	public Employee saveEmployee1(Employee u) {
+		Optional<Employee> emp = empRepo.findById(u.getEmployee_id());
+		System.out.println("Employee obj"+emp);
+			System.out.println("Hello1");
+		Employee obj = empRepo.save(u);
+		return obj;
+	}
 	@Transactional
 	public String savedata(LoanModel u) throws ResourceNotFoundException{
 		
@@ -278,7 +283,7 @@ public class EmployeeService {
 	
 	public Employee fetchEmployee(String username) throws ResourceNotFoundException {
 		Employee currentEmp = empRepo.findById(username).get();
-		
+		System.out.println(currentEmp);
 		if(currentEmp == null)
 			throw new ResourceNotFoundException("Resource Not Found");
 		else 
