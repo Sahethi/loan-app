@@ -47,8 +47,9 @@ export default function AdminItemDetails() {
     <div>
       <AdminNavbar />
       <div className='admin-item-details-container'>
-    <h2>Item Details</h2>
-    <button onClick={AddItems}>Create New Item</button>
+        <div className = "item-details-header"> <h2>Item Details</h2>
+    <button className='btn btn-primary mt-2 mb-4' onClick={AddItems}>Create New Item +</button></div>
+   
     
     <Table striped bordered hover>
       <thead>
