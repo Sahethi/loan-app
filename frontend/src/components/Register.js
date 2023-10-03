@@ -177,7 +177,7 @@ export default function Register() {
                         const vj = new Date(value).getTime();
                         console.log("vb " + vb);
                         console.log("vj " + vj);
-                        if(vj < vb) {
+                        if(vj <= vb) {
                             setError(errors => {
                                 return {
                                     ...errors,
@@ -222,7 +222,7 @@ export default function Register() {
                         const vj = new Date(userRegistration.doj).getTime();
                         console.log("vb " + vb);
                         console.log("vj " + vj);
-                        if(vj < vb) {
+                        if(vj <= vb) {
                             setError(errors => {
                                 return {
                                     ...errors,
@@ -244,7 +244,7 @@ export default function Register() {
                         }
                     }
                     else {
-                        console.log("DOB sert");
+                        console.log("DOB set");
                         setError(errors => {
                             return {
                                 ...errors,
@@ -309,7 +309,7 @@ export default function Register() {
                 ...userRegistration
             }, config).then((res) => {
                 // alert("User Registered Successfully");
-                if(res.status==404) {
+                if(res.status===404) {
                     setShow1(true);
                 }
                 else{
@@ -346,15 +346,15 @@ export default function Register() {
 
     return (
         <div className= "register-wrapper">
-            <ToastContainer position='top-end' className='position-fixed'>
-                <Toast bg='success' className='p-1' show={show} >
+            <ToastContainer position='top-end' className='position-fixed' >
+                <Toast bg='success' className='p-1' show={show} onClose={() => setShow(false)} delay={2000} autohide>
                     <ToastBody>
                         Registered successfully!
                     </ToastBody>
                 </Toast>
             </ToastContainer>
             <ToastContainer position='top-end' className='position-fixed'>
-                <Toast bg='danger' className='p-1' show={show1} >
+                <Toast bg='danger' className='p-1' show={show1} delay={2000} autohide onClose={() => setShow1(false)}>
                     <ToastBody>
                         User already exists.
                     </ToastBody>
