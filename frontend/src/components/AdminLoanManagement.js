@@ -2,7 +2,8 @@ import React, {useEffect,useState} from 'react'
 import { Link,useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import EmptyTable from './EmptyTable';
-
+import AdminNavbar from './AdminNavbar';
+import './AdminLoanManagement.css'
 export default function AdminLoanManagement() {
     const [loans, setLoans] = useState([]);
     const navigate = useNavigate();
@@ -37,6 +38,8 @@ export default function AdminLoanManagement() {
     }
   return (
     <div>
+            <AdminNavbar />
+        <div className='loan-management-container'>
         <button onClick={AddLoan}>Create New Loan</button>
         <table class="table table-striped">
             <thead>
@@ -67,7 +70,7 @@ export default function AdminLoanManagement() {
 
             </thead>
             </table>
-
+            </div>
     </div>
   )
 }

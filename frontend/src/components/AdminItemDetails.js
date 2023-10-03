@@ -5,7 +5,8 @@ import {Link,useNavigate} from 'react-router-dom';
 import EmptyTable from './EmptyTable';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-
+import AdminNavbar from './AdminNavbar';
+import './AdminItemDetails.css'
 export default function AdminItemDetails() {
     //const {empID} = useParams();
     const [items, setItems] = useState([]);
@@ -44,6 +45,8 @@ export default function AdminItemDetails() {
     
   return (
     <div>
+      <AdminNavbar />
+      <div className='admin-item-details-container'>
     <h2>Item Details</h2>
     <button onClick={AddItems}>Create New Item</button>
     
@@ -82,6 +85,7 @@ export default function AdminItemDetails() {
 
       </thead>
     </Table>
+    </div>
     </div>
   )
 }
