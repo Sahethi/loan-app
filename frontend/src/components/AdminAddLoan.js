@@ -38,8 +38,7 @@ export default function AdminAddLoan() {
         <div className= "register-wrapper">
             
             <div className='register-form'>
-            <h2 className='pb-3'>Loan Management Application</h2>
-            <h3 className='pb-3'>Loan Cards Master Data Details</h3>
+            <h3 className='pb-3'>Enter Loan Cards Details</h3>
             <form action="" onSubmit={handleSubmit}>
                 <div className='form-group'>
                     <label for="loan_id" >Loan Id:</label>
