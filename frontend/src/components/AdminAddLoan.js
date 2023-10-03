@@ -67,7 +67,7 @@ export default function AdminAddLoan() {
                 setLoan({...loan, [name] : value});
                 return;
             case 'duration_in_years':
-                if( !/^\d+$/.test(value)){
+                if( !/^[1-9][0-9]*$/.test(value)){
                     setError(errors => {
                         return {
                             ...errors,

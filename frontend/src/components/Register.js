@@ -471,6 +471,8 @@ export default function Register() {
             </form>
             <br></br>
             <p>Already a user? Click <Link to = "/login"><a style={{textDecoration:'none'}}>here</a></Link> to login</p>
+            <a href = "/"> Back to Home</a>
+            <br></br>
             <br></br>
             </div>
             

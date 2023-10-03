@@ -176,6 +176,7 @@ function Login() {
                     </div>
                     <p>New to KarzaLo? Click <Link to = "/register"><a style={{textDecoration:'none'}}>here</a></Link> to register</p>
                     <br></br>
+                    <a href = "/"> Back to Home</a>
                 </div>
             
                 </div>

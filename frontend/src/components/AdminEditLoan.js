@@ -32,7 +32,8 @@ export default function AdminEditLoan() {
     const handleInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        if(!value.replace(/\s/g,'').length || !/^\d+$/.test(value)) {
+        
+        if(!value.replace(/\s/g,'').length || !/^[1-9][0-9]*$/.test(value)) {
             setError(err => {return "Please enter a valid value"});
         } else {
             setError(err => {return ""});
