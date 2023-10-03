@@ -133,8 +133,8 @@ function AdminItem(){
                  <label for="email" class="form-label">Issue Status:</label>
                  <select id="issue_status" className = "form-control" onChange={issueHandler}value={issue_status}>
                     <option value="">Select..</option>
-                    <option value="y">Y</option>
-                    <option value="n">N</option>
+                    <option value="Y">Y</option>
+                    <option value="N">N</option>
                  </select>
                  <span style={{color:"red"}}>{error.issue_status}</span>
                  </div>
@@ -144,8 +144,10 @@ function AdminItem(){
                  {/* <input className="inputField" type="text" onChange={categoryHandler}value={item_category}required/> */}
                  <select className="form-control" id="item_category" onChange={categoryHandler} value={item_category}>
                     <option value="">Select..</option>
-                    <option value="furniture">Furniture</option>
-                    <option value="crockery">Crockery</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Crockery">Crockery</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Stationery">Stationery</option>
                  </select>
                  <span style={{color:"red"}}>{error.item_category}</span>
                  </div>

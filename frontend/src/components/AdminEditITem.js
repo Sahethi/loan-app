@@ -143,8 +143,8 @@ export default function AdminEditItem() {
                     <label for="issue_status">Issue Status:</label>
                     <select name="issue_status" className = "form-control" value={items.issue_status} onChange={handleInput}>
                         <option disabled value="">Select</option>
-                        <option value="y">Yes</option>
-                        <option value="n">No</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
                         
                     </select>
                     <span style={{color:"red"}}>{error.issue_status}</span>
@@ -154,16 +154,24 @@ export default function AdminEditItem() {
                     <label for="issue_status">Item Make:</label>
                     <select name="item_make" className = "form-control" value={items.item_make} onChange={handleInput}>
                         <option disabled value="">Select</option>
-                        <option value="Wooden">WoodeN</option>
+                        <option value="Wooden">Wooden</option>
                         <option value="Glass">Glass</option>
+                        <option value="Plastic">Plastic</option>
+                        <option value="Metal">Metal</option>
                         
                     </select>
                     <span style={{color:"red"}}>{error.item_make}</span>
 
                 </div>
                 <div className='form-group'>
-                    <label for="item_category" >Item Category:</label>
-                    <input type="text" className = "form-control" name="item_category" value={items.item_category} onChange={handleInput}/>
+                    <label for="item_category">Item Category</label>
+                    <select name="item_category" className = "form-control" value={items.item_category}  onChange={handleInput}>
+                        <option disabled value="">Select</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Crockery">Crockery</option>
+                        <option value="Stationery">Stationery</option>
+                        <option value="Electronics">Electronics</option>
+                    </select>
                     <br/>
                 </div>
                 <span style={{color:"red"}}>{error.item_category}</span>

@@ -37,6 +37,20 @@ export default function AddEmployee() {
     const [submit, isSubmit] = useState(false);
 
     const navigate = useNavigate();
+    async function sendToLogin(response1){
+        try{
+            const response = await axios.post(`http://localhost:8080/saveLogin`, {
+                username: addEmployee.employee_id,
+                password: addEmployee.password
+            }).then((response)=>{
+                console.log(response.data);
+            });
+            console.log(response1); 
+        } catch (err) {
+            console.log("Error:" + err);
+        }
+    }
+
     // const [loginRegistration, setLoginRegistration] = useState({
     //     username:"",
     //     password:""
@@ -151,6 +165,101 @@ export default function AddEmployee() {
         setaddEmployee({...addEmployee, [name] : value});
 
                 return;
+                case 'doj':
+                    console.log("doj");
+                    if(!value.replace(/\s/g,'').length){
+                        console.log("x");
+                        setError(errors => {
+                            return {
+                                ...errors,
+                                [name]: "Field cannot be blank"
+                            }
+                        });
+                    }
+                    else if (error.dob == "" ) {
+                        const vb = new Date(addEmployee.dob).getTime();
+                        const vj = new Date(value).getTime();
+                        console.log("vb " + vb);
+                        console.log("vj " + vj);
+                        if(vj < vb) {
+                            setError(errors => {
+                                return {
+                                    ...errors,
+                                    dob: "",
+                                    [name]: "Date of joining cannot be less than date of birth"
+                                }
+                            });
+                        }
+                        else {
+                            setError(errors => {
+                                return {
+                                    ...errors,
+                                    [name]: "",
+                                    dob:""
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        setError(errors => {
+                            return {
+                                ...errors,
+                                [name]: ""
+                            }
+                        });
+                    }
+                    setaddEmployee({...addEmployee, [name] : value});
+
+                return;
+                case 'dob':
+                    if(!value.replace(/\s/g,'').length){
+                       
+                        setError(errors => {
+                            return {
+                                ...errors,
+                                [name]: "Field cannot be blank"
+                            }
+                        });
+                    }
+                    else if (error.doj == "" ) {
+                        const vb = new Date(value).getTime();
+                        const vj = new Date(addEmployee.doj).getTime();
+                        console.log("vb " + vb);
+                        console.log("vj " + vj);
+                        if(vj < vb) {
+                            setError(errors => {
+                                return {
+                                    ...errors,
+                                    doj: "Date of joining cannot be less than date of birth",
+                                    dob:""
+                                }
+                            });
+                            
+                        }
+                        else {
+                            setError(errors => {
+                                return {
+                                    ...errors,
+                                    doj: "",
+                                    dob:""
+                                }
+                            });
+                            
+                        }
+                    }
+                    else {
+                        console.log("DOB sert");
+                        setError(errors => {
+                            return {
+                                ...errors,
+                                dob: "",
+                                doj:""
+                            }
+                        });
+                    }
+                    setaddEmployee({...addEmployee, dob : value});
+
+                return;
             default:
                 if(!value.replace(/\s/g,'').length){
                     setError(errors => {
@@ -200,8 +309,8 @@ export default function AddEmployee() {
             await axios.post("http://localhost:8080/saveEmployee", {
                 ...addEmployee
             }, config).then((res) => {
-                // alert("User Added Successfully")
-                // sendToLogin(res);
+                alert("User Added Successfully")
+                sendToLogin(res);
                 console.log(res.data);
                 
                 navigate("/adminEmployee");

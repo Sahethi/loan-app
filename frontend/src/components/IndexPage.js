@@ -27,7 +27,7 @@ const IndexPage = () => {
             <Navbar homeButton={HomeButton}>        
                 <a href="http://localhost:3000/" className='text-white'>Home</a>
                 <a href="http://localhost:3000/register"  className='text-white'>Register</a>
-                </Navbar>
+            </Navbar>
             
             <Container className="container-center position-absolute top-50 start-50 translate-middle">
                 <Card style={{ width: '60%', boxShadow: '0 8px 16px rgba(0.2, 0, 0, 0.2)', margin:"10%", marginLeft:"5%" }}>

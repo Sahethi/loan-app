@@ -49,7 +49,6 @@ function App() {
               <Route path="/adminEditLoan/:loanID" element={<AdminEditLoan/>} />
               <Route path="/adminEditEmployee/:employeeID" element={<AdminEditEmployee/>} />
               <Route path="/admin/login" element={<AdminLogin/>} />
-
               <Route path="*" element={<PageNotFound/>} />
 
             </Routes>

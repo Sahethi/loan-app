@@ -71,8 +71,8 @@ function ApplyLoan(){
     }
 
     const handleSubmit = async (e) => {
-        console.log("yo");
-        e.preventDefault();           
+        e.preventDefault();    
+               
         try {
             let x =items.find(item => (item.item_description === currDesc && item.item_make === currMake));
             if(x)x=x.item_valuation;

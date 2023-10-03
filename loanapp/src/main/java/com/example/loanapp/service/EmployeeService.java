@@ -51,8 +51,17 @@ public class EmployeeService {
 	
 	//save employee
 	public Employee saveEmployee(Employee u) {
-		Employee obj = empRepo.save(u);
-		return obj;
+		Optional<Employee> emp = empRepo.findById(u.getEmployee_id());
+		System.out.println("Employee obj"+emp);
+		if(emp.isPresent()) {
+			System.out.println("Hello1");
+			return null;
+		}else {
+			Employee obj = empRepo.save(u);
+			return obj;
+		
+		}
+		
 	}
 
 	@Transactional

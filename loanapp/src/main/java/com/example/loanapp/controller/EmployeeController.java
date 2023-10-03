@@ -51,9 +51,12 @@ public class EmployeeController {
 		
 //		save Employee
 		@PostMapping("/saveEmployee")		
-		public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody Employee u) {
-
-			return new ResponseEntity<Employee>(empService.saveEmployee(u),HttpStatus.CREATED);
+		public ResponseEntity<Object> saveEmployee(@Valid @RequestBody Employee u) {
+			Employee rse = empService.saveEmployee(u);
+			if(rse == null) {
+				return new ResponseEntity<>("Employee already exists", HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<>(rse,HttpStatus.CREATED);
 		}		
 		
 		// save item

@@ -10,9 +10,12 @@
     padding : 20px 40px;
 }
 .register-form{
-
     /* height : fit-content; */
     overflow: scroll;
     width : 40%;
     padding : 50px 30px;
+}
+.toast-com{
+    position: fixed;
+    left:40%;
 }
