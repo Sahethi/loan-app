@@ -315,7 +315,8 @@ export default function Register() {
                 else{
                     setShow(true);
                 }
-                // setTimeout(sendToLogin(res), 3000);
+                setTimeout(() => {sendToLogin(res)}, 3000);
+                //sendToLogin(res);
                 console.log(res.data);
                 
             }, fail => {

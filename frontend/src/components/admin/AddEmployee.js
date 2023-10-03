@@ -37,6 +37,20 @@ export default function AddEmployee() {
     const [submit, isSubmit] = useState(false);
 
     const navigate = useNavigate();
+    async function sendToLogin(response1){
+        try{
+            const response = await axios.post(`http://localhost:8080/saveLogin`, {
+                username: addEmployee.employee_id,
+                password: addEmployee.password
+            }).then((response)=>{
+                console.log(response.data);
+            });
+            console.log(response1); 
+        } catch (err) {
+            console.log("Error:" + err);
+        }
+    }
+
     // const [loginRegistration, setLoginRegistration] = useState({
     //     username:"",
     //     password:""
@@ -295,8 +309,8 @@ export default function AddEmployee() {
             await axios.post("http://localhost:8080/saveEmployee", {
                 ...addEmployee
             }, config).then((res) => {
-                // alert("User Added Successfully")
-                // sendToLogin(res);
+                alert("User Added Successfully")
+                sendToLogin(res);
                 console.log(res.data);
                 
                 navigate("/adminEmployee");
