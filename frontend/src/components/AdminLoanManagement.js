@@ -62,8 +62,8 @@ export default function AdminLoanManagement() {
                     <td>{loan.loan_type}</td>
                     <td>{loan.duration_in_years}</td>
                     <td>
-                        <button><Link to={"/adminEditLoan/"+loan.loan_id}>Edit</Link></button><br></br>
-                        <button onClick={deleteLoan(loan.loan_id)}>Delete</button>
+                        <button className='btn btn-primary text-white'><Link to={"/adminEditLoan/"+loan.loan_id}>Edit</Link></button><br></br>
+                        <button className='btn btn-primary' onClick={deleteLoan(loan.loan_id)}>Delete</button>
                     </td>
                     </tr>
                 ))
