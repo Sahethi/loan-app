@@ -10,3 +10,7 @@
     margin : 50px auto;
     height : fit-content;
 }
+.toast-com{
+    position: fixed;
+    left:40%;
+}

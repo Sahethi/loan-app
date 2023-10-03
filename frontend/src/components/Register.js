@@ -346,22 +346,23 @@ export default function Register() {
 
     return (
         <div className= "register-wrapper">
-            <ToastContainer position='top-end' className='position-fixed' >
+            
+            
+            <div className='register-form'>
+            <ToastContainer className='toast-com position-fixed' >
                 <Toast bg='success' className='p-1' show={show} onClose={() => setShow(false)} delay={2000} autohide>
                     <ToastBody>
                         Registered successfully!
                     </ToastBody>
                 </Toast>
             </ToastContainer>
-            <ToastContainer position='top-end' className='position-fixed'>
-                <Toast bg='danger' className='p-1' show={show1} delay={2000} autohide onClose={() => setShow1(false)}>
+            <ToastContainer className='toast-com position-fixed'>
+                <Toast bg='danger' className='p-1' show={show1} autohide delay={2000} onClose={() => setShow1(false)}>
                     <ToastBody>
                         User already exists.
                     </ToastBody>
                 </Toast>
             </ToastContainer>
-            
-            <div className='register-form'>
             <h2 className='pb-3'>Register</h2>
             <form action="" onSubmit={handleSubmit}>
                 <div className='form-group'>
