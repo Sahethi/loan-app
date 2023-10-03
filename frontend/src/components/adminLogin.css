@@ -9,9 +9,8 @@
     height: min-content;
 }
 
-.wrapper{
-    border-radius: 7px ;
-    background-color: rgb(236, 177, 67);
+.Container a{
+  padding : 20px;
 }
 
 .admin-login{

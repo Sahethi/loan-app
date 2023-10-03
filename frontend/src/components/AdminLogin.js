@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {Navigate, useNavigate} from 'react-router-dom';
+import {Navigate, useNavigate,Link} from 'react-router-dom';
 import './adminLogin.css';
 
 
@@ -72,6 +72,7 @@ const AdminLogin = () => {
     }
     return (
         <div className='Container'>
+            <a href = "/"> Back to Home</a>
             <div className='Row d-flex align-items-center justify-content-center outer'>
                 <Col xs={5}>
                     <div className=" d-flex align-items-center justify-content-center w-100 wrapper ">
