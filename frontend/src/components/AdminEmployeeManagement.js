@@ -42,7 +42,9 @@ export default function AdminEmployeeManagement() {
     <div>
         <AdminNavbar />
         <div className='manage-employee-container'>
-        <button onClick={AddEmployee}>Create New Employee</button>
+        
+            <div className='manage-employee-header'><h2>Customer Details</h2>
+        <button className = 'btn btn-primary mb-2' onClick={AddEmployee}>Create New Employee +</button></div>
         <table class="table table-striped">
             <thead>
                 <tr>

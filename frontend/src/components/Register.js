@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import './Register.css'
 import { useNavigate } from 'react-router';
+import { Toast, ToastBody, ToastContainer } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 
 
@@ -37,6 +39,10 @@ export default function Register() {
         doj:"Field cannot be blank"
     });
     const [submit, isSubmit] = useState(false);
+
+    //toast
+    const [show,setShow] = useState(false);
+    const [show1, setShow1] = useState(false);
 
     const navigate = useNavigate();
     const [loginRegistration, setLoginRegistration] = useState({
@@ -175,6 +181,7 @@ export default function Register() {
                             setError(errors => {
                                 return {
                                     ...errors,
+                                    dob: "",
                                     [name]: "Date of joining cannot be less than date of birth"
                                 }
                             });
@@ -183,7 +190,8 @@ export default function Register() {
                             setError(errors => {
                                 return {
                                     ...errors,
-                                    [name]: ""
+                                    [name]: "",
+                                    dob:""
                                 }
                             });
                         }
@@ -201,6 +209,7 @@ export default function Register() {
                 return;
                 case 'dob':
                     if(!value.replace(/\s/g,'').length){
+                       
                         setError(errors => {
                             return {
                                 ...errors,
@@ -217,36 +226,30 @@ export default function Register() {
                             setError(errors => {
                                 return {
                                     ...errors,
-                                    doj: "Date of joining cannot be less than date of birth"
+                                    doj: "Date of joining cannot be less than date of birth",
+                                    dob:""
                                 }
                             });
-                            setError(errors => {
-                                return {
-                                    ...errors,
-                                    dob: ""
-                                }
-                            });
+                            
                         }
                         else {
                             setError(errors => {
                                 return {
                                     ...errors,
-                                    doj: ""
+                                    doj: "",
+                                    dob:""
                                 }
                             });
-                            setError(errors => {
-                                return {
-                                    ...errors,
-                                    dob: ""
-                                }
-                            });
+                            
                         }
                     }
                     else {
+                        console.log("DOB sert");
                         setError(errors => {
                             return {
                                 ...errors,
-                                doj: ""
+                                dob: "",
+                                doj:""
                             }
                         });
                     }
@@ -299,8 +302,6 @@ export default function Register() {
               'Access-Control-Allow-Headers': '*',
             }
         }
-
-        console.log("yo");
         console.log(userRegistration);
         
         try {
@@ -308,14 +309,23 @@ export default function Register() {
                 ...userRegistration
             }, config).then((res) => {
                 // alert("User Registered Successfully");
-                sendToLogin(res);
+                if(res.status==404) {
+                    setShow1(true);
+                }
+                else{
+                    setShow(true);
+                }
+                // setTimeout(sendToLogin(res), 3000);
                 console.log(res.data);
                 
             }, fail => {
+                setShow1(true);
                 console.error(fail); // Error!
             });
         } catch (err) {
-            alert(err);
+            setShow1(true);
+
+            // alert(err);
         }   
     }
 
@@ -336,6 +346,20 @@ export default function Register() {
 
     return (
         <div className= "register-wrapper">
+            <ToastContainer position='top-end' className='position-fixed'>
+                <Toast bg='success' className='p-1' show={show} >
+                    <ToastBody>
+                        Registered successfully!
+                    </ToastBody>
+                </Toast>
+            </ToastContainer>
+            <ToastContainer position='top-end' className='position-fixed'>
+                <Toast bg='danger' className='p-1' show={show1} >
+                    <ToastBody>
+                        User already exists.
+                    </ToastBody>
+                </Toast>
+            </ToastContainer>
             
             <div className='register-form'>
             <h2 className='pb-3'>Register</h2>
@@ -445,6 +469,9 @@ export default function Register() {
                 
                 <button type="submit" disabled = {!submit} className= "btn btn-primary d-block w-100">Submit</button>
             </form>
+            <br></br>
+            <p>Already a user? Click <Link to = "/login"><a style={{textDecoration:'none'}}>here</a></Link> to login</p>
+            <br></br>
             </div>
             
         </div>

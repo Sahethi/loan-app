@@ -40,7 +40,8 @@ export default function AdminLoanManagement() {
     <div>
             <AdminNavbar />
         <div className='loan-management-container'>
-        <button onClick={AddLoan}>Create New Loan</button>
+            <div className='loan-management-header'><h2>Loan Card Details</h2><button className = "btn btn-primary" onClick={AddLoan}>Create New Loan +</button></div>
+        
         <table class="table table-striped">
             <thead>
                 <tr>

@@ -84,6 +84,7 @@ function ApplyLoan(){
                 item_valuation:x
             }).then((res) => {
                 // alert("Loan Applied")
+                window.location.replace("http://localhost:3000/UserDashboard");
                 console.log(res.data);
                 
             }, fail => {

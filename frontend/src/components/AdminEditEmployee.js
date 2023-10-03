@@ -101,6 +101,101 @@ export default function AdminEditEmployee() {
         setEmployee({...employee, [name] : value});
 
                 return;
+                case 'doj':
+                    console.log("doj");
+                    if(!value.replace(/\s/g,'').length){
+                        console.log("x");
+                        setError(errors => {
+                            return {
+                                ...errors,
+                                [name]: "Field cannot be blank"
+                            }
+                        });
+                    }
+                    else if (error.dob == "" ) {
+                        const vb = new Date(employee.dob).getTime();
+                        const vj = new Date(value).getTime();
+                        console.log("vb " + vb);
+                        console.log("vj " + vj);
+                        if(vj < vb) {
+                            setError(errors => {
+                                return {
+                                    ...errors,
+                                    dob: "",
+                                    [name]: "Date of joining cannot be less than date of birth"
+                                }
+                            });
+                        }
+                        else {
+                            setError(errors => {
+                                return {
+                                    ...errors,
+                                    [name]: "",
+                                    dob:""
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        setError(errors => {
+                            return {
+                                ...errors,
+                                [name]: ""
+                            }
+                        });
+                    }
+                    setEmployee({...employee, [name] : value});
+
+                return;
+                case 'dob':
+                    if(!value.replace(/\s/g,'').length){
+                       
+                        setError(errors => {
+                            return {
+                                ...errors,
+                                [name]: "Field cannot be blank"
+                            }
+                        });
+                    }
+                    else if (error.doj == "" ) {
+                        const vb = new Date(value).getTime();
+                        const vj = new Date(employee.doj).getTime();
+                        console.log("vb " + vb);
+                        console.log("vj " + vj);
+                        if(vj < vb) {
+                            setError(errors => {
+                                return {
+                                    ...errors,
+                                    doj: "Date of joining cannot be less than date of birth",
+                                    dob:""
+                                }
+                            });
+                            
+                        }
+                        else {
+                            setError(errors => {
+                                return {
+                                    ...errors,
+                                    doj: "",
+                                    dob:""
+                                }
+                            });
+                            
+                        }
+                    }
+                    else {
+                        console.log("DOB sert");
+                        setError(errors => {
+                            return {
+                                ...errors,
+                                dob: "",
+                                doj:""
+                            }
+                        });
+                    }
+                    setEmployee({...employee, dob : value});
+
+                return;
             
             
             default:
